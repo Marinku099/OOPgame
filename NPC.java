@@ -1,33 +1,85 @@
+import java.util.Random;
+
 public abstract class NPC {
+    // --- Attributes (ตรงตาม UML) ---
     protected String name;
-    protected int knowledgeLevel; // Level ของ NPC (ยิ่งสูง ยิ่งดูของปลอมออก)
-    protected int patience = 3;   // ความอดทนในการต่อรอง (จำนวนครั้ง)
-    protected double greedFactor; // ตัวคูณความงก (เช่น 1.2)
+    protected int knowledgeLevel;    // Level 1, 2, 3, 4
+    protected int patience;          // ความอดทน
+    protected double greedFactor;    // ความงก
+    protected double perceivedValue; // ราคาที่ประเมินได้
+    protected double negotiationLimit; // ราคาสูงสุด/ต่ำสุดที่รับได้
+    protected Random rand;
 
-    // ข้อมูลลับที่ NPC คิดในใจ (ผู้เล่นมองไม่เห็น)
-    protected double perceivedValue;   // ราคาที่ NPC คิดว่าของชิ้นนี้มีค่าเท่าไหร่
-    protected double negotiationLimit; // จุดลิมิตที่ NPC ยอมรับได้ (Floor/Ceiling)
-
-    public NPC(String name, int level) {
+    // --- Constructor ---
+    public NPC(String name) {
         this.name = name;
-        this.knowledgeLevel = level;
+        this.rand = new Random();
+
+        //รอ DayManage
+        generateStats(DayManager.getCurrentWeek());
     }
 
-    // ฟังก์ชันหลัก: ส่องของ -> ประเมินราคา -> ตั้งธงในใจ
-    public void evaluateItem(ClothingItem item) {
-        // NPC ใช้ Level ตัวเองไปส่องของ (ถ้า Level ถึงจะเห็นราคาจริง ถ้าไม่ถึงจะเห็นราคาหลอก)
-        this.perceivedValue = item.getPerceivedPrice(this.knowledgeLevel);
+    // --- Method 1: คำนวณ Stats ตามสัปดาห์ ---
+    // week รอ DayManage
+    public void generateStats(int week) {
+        this.knowledgeLevel = calculateLevelByWeek(week);
+        this.greedFactor = calculateGreedByWeek(week);
         
-        // คำนวณขอบเขตราคาที่รับได้ทันที
-        calculateLimit(); 
+        // สุ่มความอดทน (เช่น 2++ ครั้ง)
+        this.patience = 2 + rand.nextInt(3); 
     }
 
-    public String getName() {
-        return name;
+    // 🔥 Method 2: Logic สุ่ม Level ตามเงื่อนไขใหม่ 🔥
+    private int calculateLevelByWeek(int week) {
+        if (week == 1) {
+            // Week 1: ได้ Level 1 แน่นอน
+            return 1;
+        } 
+        else if (week == 2) {
+            // Week 2: สุ่ม Level 1 - 2
+            // nextInt(2) ได้ 0,1 -> +1 กลายเป็น 1,2
+            return rand.nextInt(2) + 1;
+        } 
+        else if (week == 3) {
+            // Week 3: สุ่ม Level 1 - 3
+            // nextInt(3) ได้ 0,1,2 -> +1 กลายเป็น 1,2,3
+            return rand.nextInt(3) + 1;
+        } 
+        else {
+            // Week 4+: สุ่ม Level 2 - 4
+            // nextInt(3) ได้ 0,1,2 -> +2 กลายเป็น 2,3,4
+            return rand.nextInt(3) + 2;
+        }
     }
 
-    // Abstract Methods ให้ลูกหลานไปกำหนดพฤติกรรมเอง
-    protected abstract void calculateLimit();        // คำนวณจุดที่ยอมรับข้อเสนอได้
-    public abstract double getStartingOffer();       // ราคาเปิด
-    public abstract String checkOffer(double offer); // ตรวจสอบข้อเสนอผู้เล่น
+    private double calculateGreedByWeek(int week) {
+        // สุ่ม Factor ความงกในช่วง 0.9 - 1.1
+        return 0.9 + (rand.nextDouble() * 0.2);
+    }
+
+    // --- Method 3: ประเมินสินค้า (Main Logic) ---
+    public void evaluateItem(ClothingItem item) {
+
+        // 1. ถามราคาประเมินจาก Item (ส่งพลังการมองเห็นไป)
+        this.perceivedValue = item.getPerceivedPrice(this.knowledgeLevel);
+
+        // 2. เช็คของปลอม
+        // ถ้าเป็นของปลอม AND ความเนียนสู้พลังเราไม่ได้ -> จับได้!
+        if (item.isFake && item.checkIfDetected(this.knowledgeLevel)) {
+            System.out.println(name + ": Wait... this looks FAKE!");
+            this.perceivedValue = 0; // ราคาเหลือ 0 ทันที
+        }
+
+        // 3. คำนวณขอบเขตราคา (ให้ Class ลูกไปทำต่อ)
+        calculateLimit();
+    }
+
+    // --- Abstract Methods (ต้องไปเขียนใน Seller/Buyer) ---
+    protected abstract void calculateLimit();
+    public abstract double getStartingOffer();
+    public abstract String checkOffer(double offer);
+
+    // --- Getters ---
+    public String getName() { return name; }
+    public int getKnowledgeLevel() { return knowledgeLevel; }
 }

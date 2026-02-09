@@ -2,11 +2,14 @@ import java.util.Random;
 
 // --- 1. ประเภทสินค้าและราคาฐาน ---
 enum ClothingType {
-    T_SHIRT(500.0),
-    HOODIE(1200.0),
-    JACKET(2500.0),
-    SNEAKERS(4000.0),
-    ACCESSORY(1500.0);
+    T_SHIRT(100.0),
+    HOODIE(130.0),
+    JACKET(150.0),
+    Sweater(110.0),
+    Polo(100),
+    CropTop(80),
+    Camisole(30),
+    Shirt(100);
 
     private final double defaultBasePrice;
 

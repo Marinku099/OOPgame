@@ -85,8 +85,8 @@ abstract class ClothingItem {
         this.size = Size.values()[rand.nextInt(Size.values().length)]; // สุ่มไซส์
 
         // 3. ดึง Week ปัจจุบันจาก DayManager เพื่อคำนวณของปลอม **รอสร้าง DayManager**
-        int currentWeek = DayManager.getCurrentWeek();
-        calculateFakeStatus(currentWeek);
+        //int currentWeek = DayManager.getCurrentWeek();
+        //calculateFakeStatus(currentWeek);
     }
 
     // --- Logic การคำนวณของปลอม ---

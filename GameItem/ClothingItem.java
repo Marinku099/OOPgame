@@ -1,59 +1,9 @@
+package GameItem;
 import java.util.Random;
 
-// --- 1. ประเภทสินค้าและราคาฐาน ---
-enum ClothingType {
-    T_SHIRT(100.0),
-    HOODIE(130.0),
-    JACKET(150.0),
-    Sweater(110.0),
-    Polo(100),
-    CropTop(80),
-    Camisole(30),
-    Shirt(100);
-
-    private final double defaultBasePrice;
-
-    ClothingType(double price) {
-        this.defaultBasePrice = price;
-    }
-
-    public double getBasePrice() {
-        return this.defaultBasePrice;
-    }
-}
-
-// --- 2. ระดับความหายาก (ตัวคูณราคา) ---
-enum Rarity {
-    COMMON(1.0),
-    RARE(2.5),
-    LEGENDARY(10.0);
-
-    public final double multiplier;
-
-    Rarity(double m) {
-        this.multiplier = m;
-    }
-}
-
-// --- 3. ขนาด (ตัวคูณราคาตามความนิยม) ---
-enum Size {
-    XS(0.5),   // เล็กไป ราคาตก 50%
-    S(0.8),    // เล็กนิดหน่อย
-    M(1.0),    // มาตรฐาน
-    L(1.2),    // ไซส์นิยม ราคาบวกเพิ่ม 20%
-    XL(1.0),   // มาตรฐาน
-    XXL(0.6);  // ใหญ่ไป ราคาตก 40%
-
-    private final double priceMultiplier;
-
-    Size(double m) {
-        this.priceMultiplier = m;
-    }
-
-    public double getMultiplier() {
-        return this.priceMultiplier;
-    }
-}
+import InspectionResult;
+import Type.ClothingType;
+import Type.Rarity;
 
 abstract class ClothingItem {
     protected static final Random rand = new Random();
@@ -179,12 +129,5 @@ abstract class ClothingItem {
     public String toString() {
         return String.format("[%s] %s (%s) | Size:%s (x%.1f) | Cond:%.2f | Fake:%b (Auth:%.2f)", 
             type, name, rarity, size, size.getMultiplier(), condition, isFake, fakeAuthenticity);
-    }
-}
-
-// --- Concrete Class สำหรับใช้งานจริง ---
-class FashionItem extends ClothingItem {
-    public FashionItem(String name, String description, ClothingType type, Rarity rarity) {
-        super(name, description, type, rarity);
     }
 }

@@ -1,3 +1,6 @@
+package OOPGameCharacter;
+import GameItem.ClothingItem;
+
 public class BuyerNPC extends NPC {
     private ClothingItem wantItem;
 

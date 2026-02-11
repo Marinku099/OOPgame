@@ -1,4 +1,7 @@
+package OOPGameCharacter;
 import java.util.Random;
+
+import GameItem.ClothingItem;
 
 public abstract class NPC {
     protected String name;

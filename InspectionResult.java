@@ -1,3 +1,5 @@
+import Type.Rarity;
+
 public class InspectionResult {
     // ใช้ public final เพื่อให้อ่านค่าได้อย่างเดียว (Immutable) ปลอดภัยและเขียนสั้น
     public final double displayPrice;   // ราคาที่ผู้เล่นเห็น (อาจเป็นราคาหลอกถ้าดูไม่ออก)

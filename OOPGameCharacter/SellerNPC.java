@@ -1,4 +1,7 @@
+package OOPGameCharacter;
 import java.util.List;
+
+import GameItem.ClothingItem;
 
 public class SellerNPC extends NPC {
     private ClothingItem currentStock; // ของที่ถืออยู่

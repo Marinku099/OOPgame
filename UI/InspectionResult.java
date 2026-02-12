@@ -1,4 +1,6 @@
+package UI;
 import Type.Rarity;
+import Type.Size;
 
 public class InspectionResult {
     // ใช้ public final เพื่อให้อ่านค่าได้อย่างเดียว (Immutable) ปลอดภัยและเขียนสั้น
@@ -9,6 +11,7 @@ public class InspectionResult {
     public final double condition;      // สภาพสินค้า (0.0 - 1.0)
     public final Rarity rarity;         // ระดับความหายาก
     public final Size size;             // ขนาด
+    //Type เสื้อ
 
     // Constructor รับค่าทุกอย่างมาเก็บไว้
     public InspectionResult(double displayPrice, 

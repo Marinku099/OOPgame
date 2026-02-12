@@ -1,133 +1,68 @@
 package GameItem;
-import java.util.Random;
 
-import InspectionResult;
 import Type.ClothingType;
 import Type.Rarity;
+import Type.Size;
 
-abstract class ClothingItem {
-    protected static final Random rand = new Random();
-
-    // Attributes ที่กำหนดตอนสร้าง (Fixed)
+// ลบ FakeStatsGeneratorByWeek และ UI ออก
+public abstract class ClothingItem implements CalculateClothPrice {
+    
+    // --- Attributes ---
     protected String name;
     protected String description;
     protected ClothingType type;
     protected Rarity rarity;
     protected double basePrice;
 
-    // Attributes ที่สุ่ม (Randomized)
     protected Size size;
-    protected double condition;       // 0.0 - 1.0
-    protected boolean isFake;         // ของปลอมไหม
-    protected double fakeAuthenticity;// ความเนียน (0.0 - 1.0)
+    protected double condition;
+    protected boolean isFake;
+    protected double fakeAuthenticity;
 
-    // --- Constructor หลัก ---
-    public ClothingItem(String name, String description, ClothingType type, Rarity rarity) {
-        // 1. รับค่าที่กำหนด
+    // --- Constructor ---
+    public ClothingItem(String name, String description, ClothingType type, Rarity rarity, 
+                        Size size, double condition, boolean isFake, double fakeAuthenticity) {
+        
         this.name = name;
         this.description = description;
         this.type = type;
         this.rarity = rarity;
         this.basePrice = type.getBasePrice();
 
-        // 2. สุ่มค่าพื้นฐาน
-        this.condition = 0.1 + (0.9 * rand.nextDouble()); // Min 0.1, Max 1.0
-        this.size = Size.values()[rand.nextInt(Size.values().length)]; // สุ่มไซส์
-
-        // 3. ดึง Week ปัจจุบันจาก DayManager เพื่อคำนวณของปลอม **รอสร้าง DayManager**
-        //int currentWeek = DayManager.getCurrentWeek();
-        //calculateFakeStatus(currentWeek);
+        // ค่าพวกนี้ควรสุ่มมาจากข้างนอก แล้วส่งเข้ามา
+        this.size = size;
+        this.condition = condition;
+        this.isFake = isFake;
+        this.fakeAuthenticity = fakeAuthenticity;
     }
 
-    // --- Logic การคำนวณของปลอม ---
-    private void calculateFakeStatus(int week) {
-        int roll = rand.nextInt(100); // 0-99
+    // --- Implement: CalculateClothPrice (Getters) ---
+    @Override public double getBasePrice() { return basePrice; }
+    @Override public Rarity getRarity() { return rarity; }
+    @Override public Size getSize() { return size; }
+    @Override public double getCondition() { return condition; }
+    @Override public boolean isFake() { return isFake; }
+    @Override public double getFakeAuthenticity() { return fakeAuthenticity; }
 
-        // โอกาสเจอของปลอมตาม Week
-        if (week == 1) this.isFake = (roll < 10);      // 10%
-        else if (week == 2) this.isFake = (roll < 30); // 30%
-        else this.isFake = (roll < 40);                // 40% (Week 3+)
-
-        // ถ้าเป็นของปลอม -> คำนวณความเนียน (Authenticity)
-        if (this.isFake) {
-            if (week == 1) {
-                // Week 1: ปลอมไม่เนียน (0.1 - 0.5)
-                this.fakeAuthenticity = 0.1 + (0.4 * rand.nextDouble());
-            } else if (week == 2) {
-                // Week 2: ปลอมเกรด B (0.4 - 0.8)
-                this.fakeAuthenticity = 0.4 + (0.4 * rand.nextDouble());
-            } else {
-                // Week 3+: ปลอมเกรด Mirror AAA (0.7 - 1.0)
-                this.fakeAuthenticity = 0.7 + (0.3 * rand.nextDouble());
-            }
-        } else {
-            this.fakeAuthenticity = 0.0; // ของแท้
-        }
-    }
-
-    // --- Logic การคำนวณราคา ---
-
-    // 1. ราคาประเมิน (Appraised Value) - ราคาที่ "ควรจะเป็น" ถ้าเป็นของแท้
-    protected double calculateAppraisedValue() {
-        // สูตร: ราคาฐาน * ความหายาก * ขนาด * สภาพ
-        return basePrice 
-               * rarity.multiplier 
-               * size.getMultiplier() 
-               * condition;
-    }
-
-    // 2. ราคาจริง (Real Value) - ถ้าปลอมราคาตก
-    public double calculateRealValue() {
-        double appraised = calculateAppraisedValue();
-        
-        if (!isFake) return appraised; // ของแท้ราคาเต็ม
-
-        // สูตรของปลอม: 5% + (ความเนียน * 45%) ของราคาประเมิน
-        double fakeFactor = 0.05 + (fakeAuthenticity * 0.45);
-        return appraised * fakeFactor;
-    }
-
-    // 3. ตรวจสอบการมองเห็น (Detection)
-    protected boolean checkIfDetected(int viewerLevel) {
-        if (!isFake) return true; // ของแท้ ดูยังไงก็คือของแท้
-
-        // Level 1=25%, 2=50%, 3=75%, 4=100% Detection Chance
-        double detectionPower = viewerLevel * 0.25;
-        
-        // ถ้าพลังการมองเห็น >= ความเนียน -> จับได้
-        return detectionPower >= this.fakeAuthenticity;
-    }
-
-    // --- Public API ---
-
-    // ราคาที่คนคนหนึ่งมองเห็น (ขึ้นอยู่กับ Level)
-    public double getPerceivedPrice(int viewerLevel) {
-        boolean detected = checkIfDetected(viewerLevel);
-        return detected ? calculateRealValue() : calculateAppraisedValue();
-    }
-
-    // ส่งข้อมูลไปแสดงบนหน้าจอ
-    public InspectionResult inspectForUI(int viewerLevel) {
-        boolean detected = checkIfDetected(viewerLevel);
-        double priceToShow = detected ? calculateRealValue() : calculateAppraisedValue();
-        
-        String desc = detected && isFake ? "[FAKE DETECTED] " + description : description;
-        
-        return new InspectionResult(
-            priceToShow, 
-            this.name, 
-            desc, 
-            detected, 
-            this.condition, 
-            this.rarity,
-            this.size
-        );
-    }
-    
-    // Debug Info มีไว้เช็ค
-    @Override
-    public String toString() {
-        return String.format("[%s] %s (%s) | Size:%s (x%.1f) | Cond:%.2f | Fake:%b (Auth:%.2f)", 
-            type, name, rarity, size, size.getMultiplier(), condition, isFake, fakeAuthenticity);
-    }
+    // --- Getters ทั่วไป ---
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public ClothingType getType() { return type; }
 }
+
+/*
+อาจจะอยู่ใน คลาสที่ใช้สร้าง Item
+public void spawnDailyItems(int week) {
+    GameRNG rng = GameRNG.getInstance();
+    
+    // 1. สุ่มค่าต่างๆ ข้างนอก Item
+    boolean isFake = rng.genIsFake(week);
+    double authenticity = isFake ? rng.genFakeAuthenticity(week) : 0.0;
+    Size size = rng.genSize();
+    double condition = rng.genCondition();
+
+    // 2. สร้าง Item ที่สมบูรณ์แล้ว (ไม่ต้องไปสั่ง generate อีก)
+    ClothingItem newItem = new FashionItem(ชื่อ จาก csv, Description จาก csv, Type จาก csv, Rarity จาก csv
+    , size สุ่ม, condition สุ่ม, isFake สุ่ม, authenticity สุ่ม);
+}
+*/

@@ -7,70 +7,39 @@ import GameSystem.GameRNG;
 public class SellerNPC extends NPC {
     private ClothingItem itemForSale;
 
-    public SellerNPC(String name) {
-        super(name);
+    public SellerNPC(String name, int level, double greed, int patience) {
+        super(name, level, greed, patience);
+    }
+
+    @Override
+    public boolean isBuyer() {
+        return false;
     }
 
     @Override
     public void setItem(List<ClothingItem> possibleItems) {
-        /*
         this.itemForSale = GameRNG.getInstance().pickRandomItem(possibleItems);
-        if (this.itemForSale == null) return;
+        if (this.itemForSale == null)
+            return;
 
         evaluateItem(this.itemForSale);
-        calculateLimit();
 
-        this.currentOfferPrice = getStartingOffer();
-        */
-    }
-
-    // --- Implement: CalculateNPC ---
-    @Override
-    public void calculateLimit() {
+        // คำนวณ Limit (คนขายคูณความงก)
         this.absolutePriceLimit = this.estimatedBaseValue * this.greedMultiplier;
-    }
 
-    @Override
-    public double getStartingOffer() {
-        return this.absolutePriceLimit * 1.5;
-    }
-
-    @Override
-    public void recalculatePrice(double playerProposedPrice) {
-        double negotiationStepPercent = GameRNG.getInstance().genNegotiationStep();
-        double adjustmentFactor = negotiationStepPercent / this.greedMultiplier;
-
-        double priceDifference = this.currentOfferPrice - playerProposedPrice;
-        double priceDecreaseAmount = priceDifference * adjustmentFactor;
-        
-        this.currentOfferPrice -= priceDecreaseAmount;
-
-        if (this.currentOfferPrice < this.absolutePriceLimit) {
-            this.currentOfferPrice = this.absolutePriceLimit;
-        }
-    }
-
-    @Override
-    public double calculateSuccessChance(double playerProposedPrice) {
-        double priceDifference = this.currentOfferPrice - playerProposedPrice;
-        double negotiationRange = this.currentOfferPrice - this.absolutePriceLimit;
-
-        if (negotiationRange <= 0) return 0;
-        
-        double successProbability = (negotiationRange - priceDifference) / negotiationRange;
-
-        return Math.max(0, successProbability);
+        // ใช้ Default Method
+        this.currentOfferPrice = getStartingOffer();
     }
 
     @Override
     public void processOffer(double playerProposedPrice, Player player) {
-        // 1. ถ้าราคาผู้เล่น OK (>= 80% ของราคาป้าย และไม่ต่ำกว่าทุน)
+        // 1. ถ้าราคาผู้เล่น OK
         if (playerProposedPrice >= this.currentOfferPrice * 0.8 && playerProposedPrice >= this.absolutePriceLimit) {
             performTransaction(player, playerProposedPrice);
             return;
         }
 
-        // 2. ถ้าผู้เล่นต่อราคาโหดเกิน (ต่ำกว่า 40% ของทุน)
+        // 2. ถ้าต่อโหดเกินไป
         if (playerProposedPrice <= this.absolutePriceLimit * 0.4) {
             System.out.println(characterName + ": ขาดทุน ไม่ขาย!");
             this.currentPatience = 0;
@@ -87,10 +56,9 @@ public class SellerNPC extends NPC {
     }
 
     private void performTransaction(Player player, double finalAgreedPrice) {
-        System.out.println(">> ตกลงซื้อที่ราคา " + (int) finalAgreedPrice);
+        System.out.println(">> ตกลงขายที่ราคา " + (int) finalAgreedPrice);
         // player.deductMoney(finalAgreedPrice);
         // player.addItem(this.itemForSale);
-        // this.itemForSale = null;
         this.currentPatience = 0;
     }
 

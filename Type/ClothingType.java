@@ -1,7 +1,7 @@
 package Type;
 // --- 1. ประเภทสินค้าและราคาฐาน ---
 
-enum ClothingType {
+public enum ClothingType {
     T_SHIRT(100.0),
     HOODIE(130.0),
     JACKET(150.0),

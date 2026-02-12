@@ -1,40 +1,42 @@
 package OOPGameCharacter;
 
 import java.util.List;
-import java.util.Random;
 import GameItem.ClothingItem;
+import GameSystem.CalculateNPC;
+import GameSystem.GameRNG;
+import GameSystem.StatsGenerator;
 
-public abstract class NPC {
-    protected String name;
-    protected int knowledgeLevel;
-    protected int patience;
-    protected double greedFactor;
-    protected double perceivedValue;
-    protected double negotiationLimit;        // ราคาสิ้นสุด (Limit)
-    protected double currentNegotiationPrice; // ราคาปัจจุบันที่คุยกัน
-    protected Random rand;
+public abstract class NPC implements StatsGenerator, CalculateNPC {
+    protected String characterName;
+    protected int appraisalLevel;          
+    protected int currentPatience;
+    protected double greedMultiplier;
+    
+    // ตัวแปรสำหรับการเจรจา
+    protected double estimatedBaseValue;   
+    protected double absolutePriceLimit;   
+    protected double currentOfferPrice;    
 
     public NPC(String name) {
-        this.name = name;
-        this.rand = new Random();
+        this.characterName = name;
     }
 
+    // --- Implement: StatsGenerator ---
+    @Override
     public void generateStats(int week) {
-        this.knowledgeLevel = (week < 4) ? rand.nextInt(week) + 1 : rand.nextInt(3) + 2;
-        this.greedFactor = 0.9 + (rand.nextDouble() * 0.2); // 0.9 - 1.1
-        this.patience = 2 + rand.nextInt(3); 
+        GameRNG rng = GameRNG.getInstance();
+        this.appraisalLevel = rng.genKnowledgeLevel(week);
+        this.greedMultiplier = rng.genGreedFactor();
+        this.currentPatience = rng.genPatience();
     }
 
+    // --- Shared Logic ---
     protected void evaluateItem(ClothingItem item) {
-        this.perceivedValue = item.getPerceivedPrice(this.knowledgeLevel);
+        this.estimatedBaseValue = item.getPerceivedPrice(this.appraisalLevel);
     }
 
-    // --- Abstract Methods (ต้องมีเพื่อให้ Game Loop เรียกใช้ได้) ---
-    public abstract void setItem(List<ClothingItem> items); // Setup ของ
-    protected abstract void calculateLimit();               // คำนวณเพดานราคา
-    public abstract void processOffer(double playerOffer, Player player); // ประมวลผลดีล
+    public abstract void setItem(List<ClothingItem> items);
 
-    // --- Getters ---
-    public String getName() { return name; }
-    public double getCurrentNegotiationPrice() { return currentNegotiationPrice; }
+    public String getName() { return characterName; }
+    public double getCurrentNegotiationPrice() { return currentOfferPrice; }
 }

@@ -2,9 +2,10 @@ package OOPGameCharacter;
 
 import java.util.List;
 import GameItem.ClothingItem;
+import GameSystem.GameRNG;
 
 public class BuyerNPC extends NPC {
-    private ClothingItem wantItem;
+    private ClothingItem desiredItem;
 
     public BuyerNPC(String name) {
         super(name);
@@ -12,77 +13,93 @@ public class BuyerNPC extends NPC {
 
     @Override
     public void setItem(List<ClothingItem> playerInventory) {
-        if (playerInventory == null || playerInventory.isEmpty())
-            return;
+        // Player: ขอ List ของที่มีในตัว (Inventory) เพื่อเอามาสุ่มเลือก
+        /*
+        this.desiredItem = GameRNG.getInstance().pickRandomItem(playerInventory);
+        if (this.desiredItem == null) return;
 
-        // เลือกของจากกระเป๋าผู้เล่น
-        // this.wantItem = Stock.random Get from Stock;
-
-        evaluateItem(this.wantItem);
+        evaluateItem(this.desiredItem);
         calculateLimit();
 
-        // เปิดราคาต่ำ (60% ของ Limit)
-        this.currentNegotiationPrice = this.negotiationLimit * 0.6;
-        // แสดงราคา
-        // ผ่าน UI
+        this.currentOfferPrice = getStartingOffer();
+        */
+    }
+
+    // --- ส่วนคำนวณ ---
+    @Override
+    public void calculateLimit() {
+        this.absolutePriceLimit = this.estimatedBaseValue / this.greedMultiplier;
     }
 
     @Override
-    protected void calculateLimit() {
-        // Limit คนซื้อ = ราคาสูงสุดที่จ่ายไหว
-        this.negotiationLimit = this.perceivedValue / this.greedFactor;
+    public double getStartingOffer() {
+        return this.absolutePriceLimit * 0.6;
     }
 
     @Override
-    public void processOffer(double playerOffer, Player player) {
-        // 1. ผู้เล่นยอมขายในราคาที่ NPC เสนอ (หรือถูกกว่า)
-        if (playerOffer <= this.currentNegotiationPrice) {
-            performTransaction(player, this.currentNegotiationPrice);
-            return;
-        }
+    public void recalculatePrice(double playerProposedPrice) {
+        double negotiationStepPercent = GameRNG.getInstance().genNegotiationStep();
+        double adjustmentFactor = negotiationStepPercent / this.greedMultiplier;
 
-        // 2. ผู้เล่นโก่งราคาเกินงบ
-        if (playerOffer > this.negotiationLimit) {
-            System.out.println(name + ": แพงไป ไม่มีเงินจ่าย!");
-            this.patience = 0;
-            return;
-        }
+        double priceDifference = playerProposedPrice - this.currentOfferPrice;
+        double priceIncreaseAmount = priceDifference * adjustmentFactor;
+        
+        this.currentOfferPrice += priceIncreaseAmount;
 
-        // 3. คำนวณความน่าจะเป็น (Gap ยิ่งน้อย ยิ่งมีโอกาสผ่าน)
-        double gap = playerOffer - this.currentNegotiationPrice;
-        double range = this.negotiationLimit - this.currentNegotiationPrice;
-        double chance = (range > 0) ? (range - gap) / range : 0;
-
-        if (rand.nextDouble() < chance) {
-            // จ่ายเงิน
-            performTransaction(player, playerOffer);
-        } else {
-            counterOffer(playerOffer);
+        if (this.currentOfferPrice > this.absolutePriceLimit) {
+            this.currentOfferPrice = this.absolutePriceLimit;
         }
     }
 
-    private void performTransaction(Player player, double finalPrice) {
-        // ให้เงิน player
-        // ลบของออกจาก Stock
-        this.wantItem = null;
-        this.patience = 0;
+    @Override
+    public double calculateSuccessChance(double playerProposedPrice) {
+        double priceDifference = playerProposedPrice - this.currentOfferPrice;
+        double negotiationRange = this.absolutePriceLimit - this.currentOfferPrice;
+
+        if (negotiationRange <= 0) return 0;
+        
+        double successProbability = (negotiationRange - priceDifference) / negotiationRange;
+
+        return Math.max(0, successProbability);
     }
 
-    private void counterOffer(double playerOffer) {
-        // เพิ่มราคาขึ้น 20% ของส่วนต่าง
-        double increase = (playerOffer - this.currentNegotiationPrice) * 0.2;
-        this.currentNegotiationPrice += increase;
-
-        if (this.currentNegotiationPrice > this.negotiationLimit) {
-            this.currentNegotiationPrice = this.negotiationLimit;
+    @Override
+    public void processOffer(double playerProposedPrice, Player player) {
+        // 1. ถ้าผู้เล่นยอมขาย (ราคาเสนอ <= 120% ของที่ NPC ให้ และไม่เกิน Limit)
+        if (playerProposedPrice <= this.currentOfferPrice * 1.2 && playerProposedPrice <= this.absolutePriceLimit) {
+            performTransaction(player, playerProposedPrice);
+            return;
         }
 
-        this.patience--;
-        if (this.patience <= 0) {
-            //ไม่ซื้อแล้ว
+        // 2. ถ้าผู้เล่นโก่งราคาเกินงบ (เกิน 140% ของ Limit)
+        if (playerProposedPrice >= this.absolutePriceLimit * 1.4) {
+            System.out.println(characterName + ": แพงไป ไม่มีเงินจ่าย!");
+            this.currentPatience = 0;
+            return;
+        }
+
+        // 3. คำนวณโอกาสสำเร็จ
+        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerProposedPrice))) {
+            performTransaction(player, playerProposedPrice);
         } else {
-            //Update UI เพิ่มราคา
-            System.out.println(name + ": เพิ่มให้ได้แค่ " + (int) this.currentNegotiationPrice + " บาท ขายไหม?");
+            recalculatePrice(playerProposedPrice);
+            decreasePatience();
         }
+    }
+
+    private void performTransaction(Player player, double finalAgreedPrice) {
+        System.out.println(">> ตกลงขายที่ราคา " + (int) finalAgreedPrice);
+        // player.addMoney(finalAgreedPrice);
+        // player.removeItem(this.desiredItem);
+        // this.desiredItem = null;
+        this.currentPatience = 0;
+    }
+
+    private void decreasePatience() {
+        this.currentPatience--;
+        if (this.currentPatience <= 0)
+            System.out.println(characterName + ": ไม่เอาแล้ว (เดินหนี)");
+        else
+            System.out.println(characterName + ": เพิ่มให้เป็น " + (int) this.currentOfferPrice + " บาท เอาไหม?");
     }
 }

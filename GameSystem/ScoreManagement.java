@@ -1,4 +1,4 @@
-package GameSystem.java;
+package GameSystem;
 
 public class ScoreManagement {
     

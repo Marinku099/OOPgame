@@ -12,6 +12,12 @@ public class BuyerNPC extends NPC {
     }
 
     @Override
+    public double getStartingOffer() {
+        // คนซื้อ -> เริ่มจากราคาต่ำกว่าราคาประเมิน
+        return estimatedValue * (1 - greed);
+    }
+
+    @Override
     public boolean isBuyer() { return true; }
 
     //ต้องแก้

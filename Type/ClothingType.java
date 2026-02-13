@@ -2,14 +2,14 @@ package Type;
 // --- 1. ประเภทสินค้าและราคาฐาน ---
 
 public enum ClothingType {
-    T_SHIRT(100.0),
-    HOODIE(130.0),
-    JACKET(150.0),
-    Sweater(110.0),
-    Polo(100),
-    CropTop(80),
-    Camisole(30),
-    Shirt(100);
+    Camisole(50),
+    CropTop(120),
+    T_SHIRT(200),
+    Shirt(200),
+    Polo(250),
+    Sweater(350),
+    HOODIE(450),
+    JACKET(550);
 
     private final double defaultBasePrice;
 

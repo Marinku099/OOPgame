@@ -3,8 +3,10 @@ package Type;
 // --- 2. ระดับความหายาก (ตัวคูณราคา) ---
 public enum Rarity {
     COMMON(1.0),
-    RARE(2.5),
-    LEGENDARY(10.0);
+    UNCOMMON(1.2),
+    RARE(2.0),
+    VINTAGE(3.5),
+    LEGENDARY(6.05);
 
     private final double multiplier;
 

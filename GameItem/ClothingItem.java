@@ -62,7 +62,7 @@ public void spawnDailyItems(int week) {
     double condition = rng.genCondition();
 
     // 2. สร้าง Item ที่สมบูรณ์แล้ว (ไม่ต้องไปสั่ง generate อีก)
-    ClothingItem newItem = new FashionItem(ชื่อ จาก csv, Description จาก csv, Type จาก csv, Rarity จาก csv
+    ClothingItem newItem = new FashionItem(ชื่อ จาก csv, Type จาก csv, Rarity จาก csv, Description จาก csv
     , size สุ่ม, condition สุ่ม, isFake สุ่ม, authenticity สุ่ม);
 }
 */

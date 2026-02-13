@@ -3,12 +3,13 @@ import java.util.ArrayList;
 
 import GameItem.ClothingItem;
 
-public class Player {
+public class Player extends GameCharacter {
     private int balance;
     private int luck;
     private ArrayList<ClothingItem> items;
 
-    public Player(int balance, int luck) {
+    public Player(String name, int knowledge, int balance, int luck) {
+        super(name, knowledge);
         this.balance = balance;
         this.luck = luck;
         this.items = new ArrayList<>();

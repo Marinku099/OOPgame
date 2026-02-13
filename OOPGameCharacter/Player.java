@@ -27,7 +27,7 @@ public class Player extends GameCharacter {
         if (item != null) {
            int price = (int) item.calculateRealValue();
            if (balance >= price) {
-            balance -= price;
+            setBalance(balance - price);
             items.add(item);
            }
         }
@@ -37,8 +37,21 @@ public class Player extends GameCharacter {
     public void sellItemTo(Buyer buyer) {
         if (!items.isEmpty()) {
             ClothingItem item = items.remove(0);
-            balance += buyer.buyItem(item);
+            setBalance(balance + buyer.buyItem(item));
         }
+    }
+
+    //Getter
+    public int getBalance() {
+        return balance;
+    }
+
+    public int getLuck() {
+        return luck;
+    }
+
+    public ArrayList<ClothingItem> getItems() {
+        return items;
     }
 
     private void setBalance(int n) {

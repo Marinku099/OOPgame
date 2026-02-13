@@ -1,8 +1,8 @@
 package OOPGameCharacter;
 
-import java.util.List;
 import GameItem.ClothingItem;
 import GameSystem.GameRNG;
+import java.util.List;
 
 public class BuyerNPC extends NPC {
     private ClothingItem wantedItem;

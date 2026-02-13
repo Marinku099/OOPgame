@@ -1,44 +1,37 @@
 package OOPGameCharacter;
-import java.util.ArrayList;
 
 import GameItem.ClothingItem;
 
 public class Player extends GameCharacter {
     private int balance;
     private int luck;
-    private ArrayList<ClothingItem> items;
+    private Stock stock;
 
     public Player(String name, int knowledge, int balance, int luck) {
         super(name, knowledge);
         this.balance = balance;
         this.luck = luck;
-        this.items = new ArrayList<>();
+        this.stock = new Stock();
     }
     
-    //ส่งข้อเสนอไปให้ item
+    // เริ่มการเจรจา (เลือกของ)
     public void sentOfferTo(NPC npc, ClothingItem item) {
         npc.receiveOffer(this,item);
     }
 
-    //ซื้อของจาก Seller
-    public void buyItemFrom(Seller seller) {
-        ClothingItem item = seller.sellItem();
-
-        if (item != null) {
-           int price = (int) item.calculateRealValue();
-           if (balance >= price) {
-            setBalance(balance - price);
-            items.add(item);
-           }
-        }
+    // ต่อราคา (ซื้อ)
+    public void buyItemFrom(SellerNPC seller , double price) {
+        seller.processOffer(price, this);
     }
 
-    //ขายของให้ Buyer
-    public void sellItemTo(Buyer buyer) {
-        if (!items.isEmpty()) {
-            ClothingItem item = items.remove(0);
-            setBalance(balance + buyer.buyItem(item));
-        }
+    // ต่อราคา (ขาย)
+    public void sellItemTo(BuyerNPC buyer , double price) {
+        buyer.processOffer(price, this);   
+    }
+
+    // Stock
+    public Stock geStock() {
+        return stock;
     }
 
     //Getter
@@ -50,15 +43,11 @@ public class Player extends GameCharacter {
         return luck;
     }
 
-    public ArrayList<ClothingItem> getItems() {
-        return items;
+    private void setBalance(int amount) {
+        this.balance += amount;
     }
 
-    private void setBalance(int n) {
-        this.balance = n;
-    }
-
-    private void setLuck(int n) {
-        this.luck = n;
+    private void addLuck() {
+        this.luck += 1;
     }
 }

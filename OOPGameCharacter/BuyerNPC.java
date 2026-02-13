@@ -14,6 +14,7 @@ public class BuyerNPC extends NPC {
     @Override
     public boolean isBuyer() { return true; }
 
+    //ต้องแก้
     @Override
     public void chooseItem(List<ClothingItem> playerItems) {
         // เลือกของจากกระเป๋าผู้เล่น

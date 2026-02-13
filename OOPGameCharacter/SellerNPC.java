@@ -14,6 +14,7 @@ public class SellerNPC extends NPC {
     @Override
     public boolean isBuyer() { return false; }
 
+    //ต้องแก้
     @Override
     public void chooseItem(List<ClothingItem> possibleItems) {
         // สุ่มของที่จะมาขาย

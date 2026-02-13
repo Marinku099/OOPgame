@@ -46,7 +46,7 @@ public abstract class NPC implements CalculateNPC {
 public static NPC createRandomNPC(int week, List<ClothingItem> playerItems) {
     GameRNG rng = GameRNG.getInstance();
 
-    String name = "Customer " + rng.getRandomInt(1, 100);
+    String name = "Customer ";
 
     int knowledge = rng.getKnowledge(week);
     double greed = rng.getGreed();
@@ -54,6 +54,7 @@ public static NPC createRandomNPC(int week, List<ClothingItem> playerItems) {
     
     boolean isBuyer;
 
+    เช็คว่า Stock player ว่างไหม
     if (playerItems.isEmpty()) {
         isBuyer = false; 
     } else {
@@ -66,4 +67,6 @@ public static NPC createRandomNPC(int week, List<ClothingItem> playerItems) {
         return new SellerNPC(name, knowledge, greed, patience);
     }
 }
+
+ถ้ามี Update Stat โดยไม่ new ต้องสร้าง func เพิ่มรูปแบบคล้ายๆกับ createRandomNPC
 */

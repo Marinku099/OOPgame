@@ -4,9 +4,7 @@ import java.util.List;
 import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
 
-public abstract class NPC implements CalculateNPC {
-    protected String name;
-    protected int knowledge;
+public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;
     protected double greed;
 
@@ -15,8 +13,7 @@ public abstract class NPC implements CalculateNPC {
     protected double currentOffer;
 
     public NPC(String name, int knowledge, double greed, int patience) {
-        this.name = name;
-        this.knowledge = knowledge;
+        super(name, knowledge);
         this.greed = greed;
         this.patience = patience;
     }

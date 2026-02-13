@@ -4,14 +4,12 @@ import OOPGameCharacter.Player;
 
 public interface CalculateNPC {
 
-    // --- Accessors: ต้องดึงค่าพวกนี้มาใช้ใน Default Method ---
     boolean isBuyer();
     double getLimit();
-    double getGreedMultiplier();            // เพิ่ม: ดึงค่าความงก
-    double getCurrentNegotiationPrice();    // เพิ่ม: ดึงราคาปัจจุบัน
-    void setCurrentNegotiationPrice(double price); // เพิ่ม: สั่งแก้ราคาปัจจุบัน
+    double getGreed();
+    double getCurrentOffer();
+    void setCurrentOffer(double price);
 
-    // --- 1. Default Method: ราคาเปิด ---
     default double getStartingOffer() {
         if (isBuyer()) {
             return getLimit() * 0.6;
@@ -20,49 +18,37 @@ public interface CalculateNPC {
         }
     }
 
-    // --- 2. Default Method: คำนวณโอกาสสำเร็จ ---
-    default double calculateSuccessChance(double playerProposedPrice) {
-        double current = getCurrentNegotiationPrice();
-        double limit = getLimit();
+    default double calculateSuccessChance(double playerPrice) {
+        double current = getCurrentOffer();
+        double range = Math.abs(getLimit() - current);
+        double diff = Math.abs(playerPrice - current);
 
-        double negotiationRange = Math.abs(limit - current);
-        
+        if (range <= 0) return 0;
 
-        double priceDifference = Math.abs(playerProposedPrice - current);
-
-        if (negotiationRange <= 0) return 0;
-
-        double chance = (negotiationRange - priceDifference) / negotiationRange;
+        double chance = (range - diff) / range;
         return Math.max(0, chance);
     }
 
-    // --- 3. Default Method: คิดราคาใหม่ ---
-    default void recalculatePrice(double playerProposedPrice) {
-        // ใช้ Math.abs หาความต่างราคา
-        double priceDifference = Math.abs(getCurrentNegotiationPrice() - playerProposedPrice);
+    default void recalculatePrice(double playerPrice) {
+        double current = getCurrentOffer();
+        double diff = Math.abs(current - playerPrice);
         
-        // คำนวณ Step การขยับราคา
-        double negotiationStepPercent = GameRNG.getInstance().genNegotiationStep();
-        double adjustmentFactor = negotiationStepPercent / getGreedMultiplier();
-        double changeAmount = priceDifference * adjustmentFactor;
+        double step = GameRNG.getInstance().genNegotiationStep();
+        double change = (diff * step) / getGreed();
 
-        double current = getCurrentNegotiationPrice();
-        double limit = getLimit();
         double newPrice;
+        double limit = getLimit();
 
         if (isBuyer()) {
-            // คนซื้อ: เพิ่มราคาขึ้น (แต่ไม่เกิน Limit)
-            newPrice = current + changeAmount;
+            newPrice = current + change;
             if (newPrice > limit) newPrice = limit;
         } else {
-            // คนขาย: ลดราคาลง (แต่ไม่ต่ำกว่า Limit)
-            newPrice = current - changeAmount;
+            newPrice = current - change;
             if (newPrice < limit) newPrice = limit;
         }
 
-        setCurrentNegotiationPrice(newPrice);
+        setCurrentOffer(newPrice);
     }
 
-    // --- Abstract Methods: ---
-    void processOffer(double playerOffer, Player player);
+    void processOffer(double playerPrice, Player player);
 }

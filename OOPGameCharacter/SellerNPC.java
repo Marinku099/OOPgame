@@ -5,69 +5,69 @@ import GameItem.ClothingItem;
 import GameSystem.GameRNG;
 
 public class SellerNPC extends NPC {
-    private ClothingItem itemForSale;
+    private ClothingItem sellingItem; // เดิม: itemForSale
 
-    public SellerNPC(String name, int level, double greed, int patience) {
-        super(name, level, greed, patience);
+    public SellerNPC(String name, int knowledge, double greed, int patience) {
+        super(name, knowledge, greed, patience);
     }
 
     @Override
-    public boolean isBuyer() {
-        return false;
+    public boolean isBuyer() { return false; }
+
+    @Override
+    public void chooseItem(List<ClothingItem> possibleItems) {
+        // สุ่มของที่จะมาขาย
+        this.sellingItem = GameRNG.getInstance().pickRandomItem(possibleItems);
+        
+        if (this.sellingItem == null) return;
+
+        // 1. ประเมินราคา
+        inspectItem(this.sellingItem);
+
+        // 2. คำนวณลิมิต (คนขายเอาแพง -> คูณความงก)
+        this.limitPrice = this.estimatedValue * this.greed;
+
+        // 3. ตั้งราคาเริ่มต้น
+        this.currentOffer = getStartingOffer();
     }
 
     @Override
-    public void setItem(List<ClothingItem> possibleItems) {
-        this.itemForSale = GameRNG.getInstance().pickRandomItem(possibleItems);
-        if (this.itemForSale == null)
-            return;
-
-        evaluateItem(this.itemForSale);
-
-        // คำนวณ Limit (คนขายคูณความงก)
-        this.absolutePriceLimit = this.estimatedBaseValue * this.greedMultiplier;
-
-        // ใช้ Default Method
-        this.currentOfferPrice = getStartingOffer();
-    }
-
-    @Override
-    public void processOffer(double playerProposedPrice, Player player) {
-        // 1. ถ้าราคาผู้เล่น OK
-        if (playerProposedPrice >= this.currentOfferPrice * 0.8 && playerProposedPrice >= this.absolutePriceLimit) {
-            performTransaction(player, playerProposedPrice);
+    public void processOffer(double playerPrice, Player player) {
+        // 1. ถ้าราคาผู้เล่น OK (ไม่ต่ำกว่า 0.8 ของที่เสนอ และไม่ต่ำกว่าลิมิต)
+        if (playerPrice >= this.currentOffer * 0.8 && playerPrice >= this.limitPrice) {
+            makeDeal(player, playerPrice);
             return;
         }
 
-        // 2. ถ้าต่อโหดเกินไป
-        if (playerProposedPrice <= this.absolutePriceLimit * 0.4) {
-            System.out.println(characterName + ": ขาดทุน ไม่ขาย!");
-            this.currentPatience = 0;
+        // 2. ถ้าต่อราคาโหดเกินไป (ต่ำกว่า 40% ของลิมิต)
+        if (playerPrice <= this.limitPrice * 0.4) {
+            System.out.println(name + ": ขาดทุน ไม่ขาย!");
+            this.patience = 0;
             return;
         }
 
         // 3. วัดดวง
-        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerProposedPrice))) {
-            performTransaction(player, playerProposedPrice);
+        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerPrice))) {
+            makeDeal(player, playerPrice);
         } else {
-            recalculatePrice(playerProposedPrice);
-            decreasePatience();
+            recalculatePrice(playerPrice);
+            reducePatience();
         }
     }
 
-    private void performTransaction(Player player, double finalAgreedPrice) {
-        System.out.println(">> ตกลงขายที่ราคา " + (int) finalAgreedPrice);
-        // player.deductMoney(finalAgreedPrice);
-        // player.addItem(this.itemForSale);
-        this.currentPatience = 0;
+    private void makeDeal(Player player, double finalPrice) {
+        System.out.println(">> ตกลงขายที่ราคา " + (int) finalPrice);
+        // player.deductMoney(finalPrice);
+        // player.addItem(this.sellingItem);
+        this.patience = 0;
     }
 
-    private void decreasePatience() {
-        this.currentPatience--;
-        if (this.currentPatience <= 0) {
-            System.out.println(characterName + ": ไม่ขายแล้ว รำคาญ (เดินหนี)");
+    private void reducePatience() {
+        this.patience--;
+        if (this.patience <= 0) {
+            System.out.println(name + ": ไม่ขายแล้ว รำคาญ (เดินหนี)");
         } else {
-            System.out.println(characterName + ": ลดให้เหลือ " + (int) this.currentOfferPrice + " บาท เอาไหม?");
+            System.out.println(name + ": ลดให้เหลือ " + (int) this.currentOffer + " บาท เอาไหม?");
         }
     }
 }

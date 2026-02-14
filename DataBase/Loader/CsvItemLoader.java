@@ -38,8 +38,10 @@ public class CsvItemLoader extends CsvLoader<Map<Rarity, List<ItemData>>> implem
                 ClothingType type = ClothingType.valueOf(row[1].trim().toUpperCase());
                 Rarity rarity = Rarity.valueOf(row[2].trim().toUpperCase());
                 String description = row[3].trim();
+                String imagepath = "Image/item/" + name + ".png";
+                // หาpathimage ของitem จากimage
 
-                result.get(rarity).add(new ItemData(name, type, rarity,description));
+                result.get(rarity).add(new ItemData(name, type, rarity,description,imagepath));
             } catch (IllegalArgumentException e) {
                 System.out.println("Skip invalid line: " + line);
             }

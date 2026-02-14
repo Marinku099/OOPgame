@@ -1,14 +1,20 @@
 package OOPGameCharacter;
 
-import java.util.List;
 import GameItem.ClothingItem;
 import GameSystem.GameRNG;
+import java.util.List;
 
 public class SellerNPC extends NPC {
     private ClothingItem sellingItem; // เดิม: itemForSale
 
     public SellerNPC(String name, int knowledge, double greed, int patience) {
         super(name, knowledge, greed, patience);
+    }
+
+    @Override
+    public double getStartingOffer() {
+        // คนขาย -> ตั้งราคาเริ่ม "แพงกว่าราคาประเมิน"
+        return estimatedValue * (1 + greed);
     }
 
     @Override

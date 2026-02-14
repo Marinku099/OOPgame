@@ -1,8 +1,8 @@
 package OOPGameCharacter;
 
-import java.util.List;
 import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
+import java.util.List;
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;
@@ -17,12 +17,24 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
         this.greed = greed;
         this.patience = patience;
     }
-
+    
+    // ตัวรับการเริ่มเจรจา
+    public void receiveOffer(Player player , ClothingItem item) {
+        inspectItem(item); // ประเมินของ
+        this.currentOffer = getStartingOffer(); // ตั้งราคาเปิด
+    }
+    
     protected void inspectItem(ClothingItem item) {
         this.estimatedValue = item.getPerceivedPrice(this.knowledge);
     }
 
     public abstract void chooseItem(List<ClothingItem> items);
+
+    // ให้ Buyer / Seller กำหนดราคาเปิดเอง
+    public abstract double getStartingOffer();
+
+    // ต่อราคา
+    public abstract void processOffer(double price , Player player);
 
     @Override 
     public double getLimit() { return this.limitPrice; }

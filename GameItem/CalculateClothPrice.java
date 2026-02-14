@@ -33,6 +33,7 @@ public interface CalculateClothPrice {
     }
 
     // 3. ตรวจสอบว่ามองออกไหม (Detection)
+    // เอาไปไว้ interface อื่น
     default boolean checkIfDetected(int viewerLevel) {
         if (!isFake()) return true; 
 

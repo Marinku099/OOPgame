@@ -20,22 +20,23 @@ public class SellerNPC extends NPC {
     @Override
     public boolean isBuyer() { return false; }
 
-    //ต้องแก้
     @Override
-    public void chooseItem(List<ClothingItem> possibleItems) {
-        // สุ่มของที่จะมาขาย
-        this.sellingItem = GameRNG.getInstance().pickRandomItem(possibleItems);
+    public void chooseItem(List<ClothingItem> allItems) {
         
+        String selectedRarity = GameRNG.getInstance().getRandomRarityByWeek(); //สัปดาห์นี้ NPC ควรจะเอาของระดับไหนมาขาย?
+        List<ClothingItem> filteredItems = allItems.stream().filter(item -> item.getRarity().toString().equalsIgnoreCase(selectedRarity)).toList();//กรองเฉพาะไอเทมที่มี Rarity ตรงกับที่สุ่มได้
+
+        if (filteredItems.isEmpty()) { // ถ้าไม่มีของในระดับนั้นเลย(กันพลาด) ให้ใช้ของทั้งหมดที่มี
+            filteredItems = allItems;
+        }
+        
+        this.sellingItem = GameRNG.getInstance().pickRandomItem(filteredItems); // สุ่มเลือกมา 1 ชิ้นจากรายการที่กรองแล้ว
         if (this.sellingItem == null) return;
 
-        // 1. ประเมินราคา
+        // --- ส่วนการประเมินราคา ---
         inspectItem(this.sellingItem);
-
-        // 2. คำนวณลิมิต (คนขายเอาแพง -> คูณความงก)
-        this.limitPrice = this.estimatedValue * this.greed;
-
-        // 3. ตั้งราคาเริ่มต้น
-        this.currentOffer = getStartingOffer();
+        this.limitPrice = this.estimatedValue * this.greed; // คำนวณลิมิต (คนขายเอาแพง -> คูณความงก)
+        this.currentOffer = getStartingOffer(); // ตั้งราคาเริ่มต้น
     }
 
     @Override

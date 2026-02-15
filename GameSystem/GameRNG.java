@@ -95,4 +95,43 @@ public class GameRNG {
             return 0.7 + (0.3 * random.nextDouble());
         }
     }
+
+    // เรียกใช้จากภายนอก (เพื่อเอาชื่อ Rarity ไป Query ใน Database)
+    public String getRandomRarityByWeek() {
+        int week = TimeManagement.getWeek(); // เรียกใช้ Singleton ของ TimeManagement (ตรวจสอบให้แน่ใจว่าคลาสนั้นมี getInstance())
+        return determineRarity(week);
+    }
+
+    // คำนวณเปอร์เซ็นต์ Rarity
+    private String determineRarity(int week) {
+        double roll = random.nextDouble() * 100; // สุ่มเลข 0.0 - 100.0
+
+        if (week == 1) {
+            if (roll < 70) return "Common";
+            if (roll < 95) return "Uncommon";
+            return "Rare";
+        } 
+        else if (week == 2) {
+            if (roll < 65) return "Common";
+            if (roll < 93) return "Uncommon";
+            if (roll < 99) return "Rare";
+            return "Vintage";
+        } 
+        else if (week == 3) {
+            if (roll < 65) return "Uncommon";
+            if (roll < 90) return "Rare";
+            return "Vintage";
+        } 
+        else if (week == 4) {
+            if (roll < 50) return "Uncommon";
+            if (roll < 85) return "Rare";
+            if (roll < 98) return "Vintage";
+            return "Legendary";
+        } 
+        else { // Week 5 เป็นต้นไป
+            if (roll < 60) return "Rare";
+            if (roll < 90) return "Vintage";
+            return "Legendary";
+        }
+    } 
 }

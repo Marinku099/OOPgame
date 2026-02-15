@@ -16,7 +16,7 @@ public class TimeManagement {
         return currentDay;
     }
 
-    public int getWeek(){
+    public static int getWeek(){
         return currentWeek;
     }
 }

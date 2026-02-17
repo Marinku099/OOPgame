@@ -5,7 +5,7 @@ import java.util.Map;
 
 import DataBase.Loader.ItemLoader;
 import DataBase.Loader.NameLoader;
-import Type.Rarity;
+import Enums.Rarity;
 
 public class Database {
     

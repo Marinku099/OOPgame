@@ -2,7 +2,8 @@ package GameSystem;
 
 import java.util.List;
 import java.util.Random;
-import Type.Size;
+
+import Enums.Size;
 
 public class GameRNG {
     private static GameRNG instance;

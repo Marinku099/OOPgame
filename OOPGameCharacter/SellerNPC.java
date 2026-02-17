@@ -4,6 +4,8 @@ import GameItem.ClothingItem;
 import GameSystem.GameRNG;
 import java.util.List;
 
+import Enums.OfferState;
+
 public class SellerNPC extends NPC {
     private ClothingItem sellingItem; // เดิม: itemForSale
 
@@ -40,7 +42,7 @@ public class SellerNPC extends NPC {
     }
 
     @Override
-    public void processOffer(double playerPrice, Player player) {
+    public OfferState processOffer(double playerPrice, Player player) {
         // 1. ถ้าราคาผู้เล่น OK (ไม่ต่ำกว่า 0.8 ของที่เสนอ และไม่ต่ำกว่าลิมิต)
         if (playerPrice >= this.currentOffer * 0.8 && playerPrice >= this.limitPrice) {
             makeDeal(player, playerPrice);

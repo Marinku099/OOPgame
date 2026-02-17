@@ -1,7 +1,7 @@
 package DataBase;
 
-import Type.ClothingType;
-import Type.Rarity;
+import Enums.ClothingType;
+import Enums.Rarity;
 
 public class ItemData {
     public String name;

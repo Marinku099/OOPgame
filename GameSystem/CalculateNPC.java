@@ -1,5 +1,6 @@
 package GameSystem;
 
+import Enums.OfferState;
 import OOPGameCharacter.Player;
 
 public interface CalculateNPC {
@@ -50,5 +51,5 @@ public interface CalculateNPC {
         setCurrentOffer(newPrice);
     }
 
-    void processOffer(double playerPrice, Player player);
+    OfferState processOffer(double playerPrice, Player player);
 }

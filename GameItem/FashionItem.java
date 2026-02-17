@@ -1,8 +1,8 @@
 package GameItem;
 
-import Type.ClothingType;
-import Type.Rarity;
-import Type.Size;
+import Enums.ClothingType;
+import Enums.Rarity;
+import Enums.Size;
 
 public class FashionItem extends ClothingItem {
 

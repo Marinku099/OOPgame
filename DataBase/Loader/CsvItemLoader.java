@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import DataBase.ItemData;
-import Type.ClothingType;
-import Type.Rarity;
+import Enums.ClothingType;
+import Enums.Rarity;
 
 public class CsvItemLoader extends CsvLoader<Map<Rarity, List<ItemData>>> implements ItemLoader {
 

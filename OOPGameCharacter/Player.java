@@ -6,6 +6,8 @@ public class Player extends GameCharacter {
     private int balance;
     private int luck;
     private Stock stock;
+    private int sellAmount;
+    private int buyAmount;
 
     public Player(String name, int knowledge, int balance, int luck) {
         super(name, knowledge);
@@ -29,6 +31,8 @@ public class Player extends GameCharacter {
         buyer.processOffer(price, this);   
     }
 
+    // getter อาจจะไม่ต้อง public หมด, encapsulate ไว้บ้างก็ดีตามความเหมาะสม
+
     // Stock
     public Stock geStock() {
         return stock;
@@ -41,6 +45,22 @@ public class Player extends GameCharacter {
 
     public int getLuck() {
         return luck;
+    }
+
+    public int getSellAmount(){
+        return sellAmount;
+    }
+
+    public int getBuyAmount(){
+        return buyAmount;
+    }
+
+    public void updateSellAmount(){
+        this.sellAmount++;
+    }
+
+    public void updateBuyAmount(){
+        this.buyAmount++;
     }
 
     private void setBalance(int amount) {

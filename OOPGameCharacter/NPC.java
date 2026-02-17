@@ -4,6 +4,8 @@ import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
 import java.util.List;
 
+import Enums.OfferState;
+
 public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;
     protected double greed;
@@ -34,7 +36,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     public abstract double getStartingOffer();
 
     // ต่อราคา
-    public abstract void processOffer(double price , Player player);
+    public abstract OfferState processOffer(double price , Player player);
 
     @Override 
     public double getLimit() { return this.limitPrice; }

@@ -38,7 +38,7 @@ public class Database {
 
 /*
 // 1. ใส่ไฟล์ Path
-DataLoader itemLoader = new CsvItemLoader("Csv/Game_OOP.csv");
+DataLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
 NameLoader nameLoader = new CsvNameLoader("Csv/CustomerNames.csv");
 
 // 2. สร้าง Database

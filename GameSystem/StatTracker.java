@@ -31,7 +31,9 @@ public class StatTracker {
         this.current = curr;
     }
 
-    public void updateBest(int newValue){
+    public void updateWithNewValue(int newValue){
+        this.previous = this.current;
+        this.current = newValue;
         this.best = Math.max(best, newValue);
     }
 }

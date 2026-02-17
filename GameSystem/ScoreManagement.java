@@ -18,8 +18,41 @@ public class ScoreManagement {
     }
 
     public void scoreByDay(){
-        int newBalance = player.getBalance();
-        int newSellAmount = player.;
-        int newBuyAmount = ;
+        this.balance.updateWithNewValue(player.getBalance());
+        this.sellAmount.updateWithNewValue(player.getSellAmount());
+        this.buyAmount.updateWithNewValue(player.getBuyAmount());
+        updateSummaryScore();
     }
+
+    private void updateSummaryScore(){
+        this.summaryBalance += balance.getCurrent();
+        this.summarySellAmount += sellAmount.getCurrent();
+        this.summaryBuyAmount += buyAmount.getCurrent();
+    }
+
+    public StatTracker getBalance() {
+        return balance;
+    }
+
+    public StatTracker getSellAmount() {
+        return sellAmount;
+    }
+
+    public StatTracker getBuyAmount() {
+        return buyAmount;
+    }
+
+    public int getSummarySellAmount() {
+        return summarySellAmount;
+    }
+
+    public int getSummaryBuyAmount() {
+        return summaryBuyAmount;
+    }
+
+    public int getSummaryBalance() {
+        return summaryBalance;
+    }
+
+    
 }

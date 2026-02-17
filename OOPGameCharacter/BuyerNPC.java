@@ -45,22 +45,23 @@ public class BuyerNPC extends NPC {
         // 1. ถ้าราคาผู้เล่น OK (ไม่เกิน 1.2 เท่าของที่เสนอ และไม่เกินลิมิต)
         if (playerPrice <= this.currentOffer * 1.2 && playerPrice <= this.limitPrice) {
             makeDeal(player, playerPrice);
-            return;
+            return OfferState.SUCCESS;
         }
 
         // 2. ถ้าแพงเกินไปมาก (เกิน 1.4 เท่าของลิมิต)
         if (playerPrice >= this.limitPrice * 1.4) {
             System.out.println(name + ": แพงเกินไป ไม่มีเงินจ่าย!");
             this.patience = 0;
-            return;
+            return OfferState.FAIL;
         }
 
         // 3. วัดดวง (ใช้ Logic จาก Interface)
         if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerPrice))) {
             makeDeal(player, playerPrice);
+            return OfferState.SUCCESS;
         } else {
             recalculatePrice(playerPrice); // คำนวณราคาเสนอใหม่
-            reducePatience();
+            return reducePatience();
         }
     }
 
@@ -71,11 +72,15 @@ public class BuyerNPC extends NPC {
         this.patience = 0;
     }
 
-    private void reducePatience() {
+    private OfferState reducePatience() {
         this.patience--;
-        if (this.patience <= 0)
+        if (this.patience <= 0) {
             System.out.println(name + ": ไม่เอาแล้ว (เดินหนี)");
-        else
+            return OfferState.FAIL;
+        }
+        else {
             System.out.println(name + ": เพิ่มให้เป็น " + (int) this.currentOffer + " บาท เอาไหม?");
+            return OfferState.PENDING;
+        }
     }
 }

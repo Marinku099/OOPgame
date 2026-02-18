@@ -42,16 +42,19 @@ public class GameRNG {
         return list.get(random.nextInt(list.size()));
     }
 
+    // ทำไม getter อยู่ในนี้?
     // สุ่มค่าความโลภของ NPC (ส่งผลต่อลิมิตราคาที่รับได้)
     public double getGreed() {
         return 0.9 + (random.nextDouble() * 0.4);
     }
 
+    // ทำไม getter อยู่ในนี้?
     // สุ่มค่าความอดทนของ NPC (จำนวนรอบที่ยอมให้ต่อรองราคา)
     public int getPatience() {
         return getRandomInt(2, 4);
     }
 
+    // ทำไม getter อยู่ในนี้?
     // สุ่มระดับความรู้ของ NPC ในการประเมินราคาของ (ขึ้นอยู่กับสัปดาห์ในเกม)
     public int getKnowledge(int week) {
         if (week < 4) return getRandomInt(1, week);

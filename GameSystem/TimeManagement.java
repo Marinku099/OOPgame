@@ -1,5 +1,7 @@
 package GameSystem;
 
+import OOPGameCharacter.GameCharacter;
+
 public class TimeManagement {
     private static int currentWeek = 1;
     private static int currentDay = 1;
@@ -18,5 +20,9 @@ public class TimeManagement {
 
     public static int getWeek(){
         return currentWeek;
-    }    
+    }
+    
+    public void weeklyUpdate(GameCharacter chr){
+
+    }
 }

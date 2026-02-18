@@ -8,7 +8,7 @@ import Enums.Size;
 public class GameRNG {
     private static GameRNG instance;
     private final Random random;
-
+ 
     private GameRNG() {
         this.random = new Random();
     }

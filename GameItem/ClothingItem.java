@@ -3,6 +3,7 @@ package GameItem;
 import Enums.ClothingType;
 import Enums.Rarity;
 import Enums.Size;
+import GameSystem.GameRNG;
 
 // ลบ FakeStatsGeneratorByWeek และ UI ออก
 public abstract class ClothingItem implements CalculateClothPrice {
@@ -38,6 +39,7 @@ public abstract class ClothingItem implements CalculateClothPrice {
 
     // All random
     // public ClothingItem (){
+        
     //     this.name = ;
     //     this.description = ;
     //     this.type = ;

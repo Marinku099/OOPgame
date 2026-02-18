@@ -14,10 +14,10 @@ public class Database {
 
     public Database(ItemLoader itemLoader, NameLoader nameLoader) {
         this.itemMap = itemLoader.loadItems();
-        System.out.println("Item Database Loaded Successfully"); //ทำไม print ในนี้???
+        System.out.println("Item Database Loaded Successfully");
 
         this.customerNames = nameLoader.loadNames();
-        System.out.println("Customer Names Loaded Loaded Successfully"); //ทำไม print ในนี้???
+        System.out.println("Customer Names Loaded Loaded Successfully");
     }
 
     //ดูเฉพาะ rarity นั้นๆ

@@ -19,6 +19,7 @@ public class BuyerNPC extends NPC {
         return estimatedValue * (1 - greed);
     }
 
+    // ต้องเช็กด้วยหรอ?
     @Override
     public boolean isBuyer() { return true; }
 

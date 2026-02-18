@@ -53,6 +53,5 @@ public class ScoreManagement {
     public int getSummaryBalance() {
         return summaryBalance;
     }
-
-    
+ 
 }

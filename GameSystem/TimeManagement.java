@@ -18,5 +18,5 @@ public class TimeManagement {
 
     public static int getWeek(){
         return currentWeek;
-    }
+    }    
 }

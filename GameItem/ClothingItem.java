@@ -36,6 +36,20 @@ public abstract class ClothingItem implements CalculateClothPrice {
         this.fakeAuthenticity = fakeAuthenticity;
     }
 
+    // All random
+    // public ClothingItem (){
+    //     this.name = ;
+    //     this.description = ;
+    //     this.type = ;
+    //     this.rarity = ;
+    //     this.basePrice = ;
+
+    //     this.size = ;
+    //     this.condition = ;
+    //     this.isFake = ;
+    //     this.fakeAuthenticity = ;
+    // }
+
     // --- Implement: CalculateClothPrice (Getters) ---
     @Override public double getBasePrice() { return basePrice; }
     @Override public Rarity getRarity() { return rarity; }

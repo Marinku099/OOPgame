@@ -42,38 +42,30 @@ public class BuyerNPC extends NPC {
     }
 
     @Override
-    public OfferState processOffer(double playerPrice, Player player) {
-        // 1. ถ้าราคาผู้เล่น OK (ไม่เกิน 1.2 เท่าของที่เสนอ และไม่เกินลิมิต)
-        if (playerPrice <= this.currentOffer * 1.2 && playerPrice <= this.limitPrice) {
-            makeDeal(player, playerPrice);
-            return OfferState.SUCCESS;
-        }
-
-        // 2. ถ้าแพงเกินไปมาก (เกิน 1.4 เท่าของลิมิต)
-        if (playerPrice >= this.limitPrice * 1.4) {
-            System.out.println(name + ": แพงเกินไป ไม่มีเงินจ่าย!");
-            this.patience = 0;
-            return OfferState.FAIL;
-        }
-
-        // 3. วัดดวง (ใช้ Logic จาก Interface)
-        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerPrice))) {
-            makeDeal(player, playerPrice);
-            return OfferState.SUCCESS;
-        } else {
-            recalculatePrice(playerPrice); // คำนวณราคาเสนอใหม่
-            return reducePatience();
-        }
+    protected boolean isPriceAcceptable(double playerPrice){
+        return playerPrice <= this.currentOffer * 1.2 && playerPrice <= this.limitPrice;
     }
 
-    private void makeDeal(Player player, double finalPrice) {
+    @Override
+    protected boolean isPriceTooExploit(double playerPrice){
+        return playerPrice >= this.limitPrice * 1.4;
+    }
+
+    @Override
+    protected String OfferDialogue(){
+        return ": แพงเกินไป ไม่มีเงินจ่าย!";
+    }
+
+    @Override
+    protected void makeDeal(Player player, double finalPrice) {
         System.out.println(">> ตกลงรับซื้อที่ราคา " + (int) finalPrice);
         // player.addMoney(finalPrice);
         // player.removeItem(this.wantedItem);
         this.patience = 0;
     }
 
-    private OfferState reducePatience() {
+    @Override
+    protected OfferState reducePatience() {
         this.patience--;
         if (this.patience <= 0) {
             System.out.println(name + ": ไม่เอาแล้ว (เดินหนี)");

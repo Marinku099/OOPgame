@@ -2,6 +2,8 @@ package OOPGameCharacter;
 
 import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
+import GameSystem.GameRNG;
+
 import java.util.List;
 
 import Enums.OfferState;
@@ -35,8 +37,35 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     // ให้ Buyer / Seller กำหนดราคาเปิดเอง
     public abstract double getStartingOffer();
 
+    protected abstract void makeDeal(Player player, double finalPrice);
+    protected abstract boolean isPriceAcceptable(double playerPrice);
+    protected abstract boolean isPriceTooExploit(double playerPrice);
+    protected abstract String OfferDialogue();
+
     // ต่อราคา
-    public abstract OfferState processOffer(double price , Player player);
+    public OfferState processOffer(double playerPrice, Player player) {
+        if (isPriceAcceptable(playerPrice)) {
+            makeDeal(player, playerPrice);
+            return OfferState.SUCCESS;
+        }
+
+        if (isPriceTooExploit(playerPrice)) {
+            System.out.println(name + OfferDialogue());
+            this.patience = 0;
+            return OfferState.FAIL;
+        }
+
+        // 3. วัดดวง
+        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerPrice))) {
+            makeDeal(player, playerPrice);
+            return OfferState.SUCCESS;
+        } else {
+            recalculatePrice(playerPrice);
+            return reducePatience();
+        }
+    }
+
+    protected abstract OfferState reducePatience();
 
     @Override 
     public double getLimit() { return this.limitPrice; }

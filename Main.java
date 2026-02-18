@@ -1,5 +1,77 @@
+import Enums.OfferState;
+import GameSystem.GameRNG;
+import OOPGameCharacter.*;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Main {
     public static void main(String[] args) {
-        
+        Player player = new Player("Player", 2, 1000, 0);
+        GameRNG rng = GameRNG.getInstance();
+
+        int day = 1;
+        int maxDay = 5;
+
+        // ===== LOOP ใหญ่ : วันในเกม =====
+        while (day <= maxDay && player.getBalance() > 0) {
+            System.out.println("\n===== DAY " + day + " =====");
+
+            // คำนวณจำนวน NPC วันนี้
+            int npcLeftToday = rng.getRandomInt(1, 5);
+            Queue<NPC> npcQueue = new LinkedList<>();
+
+            // เจน NPC ตัวแรก
+            npcQueue.add(createNPC(player, day));
+
+            // ===== LOOP รอง : คิว NPC =====
+            while (!npcQueue.isEmpty()) {
+                NPC currentNPC = npcQueue.poll();
+                npcLeftToday--;
+
+                // ให้ NPC เลือก item
+                currentNPC.chooseItem(player.geStock().getItems());
+
+                OfferState state = OfferState.PENDING;
+
+                // ===== LOOP ต่อรอง =====
+                while (state == OfferState.PENDING) {
+
+                    double playerOffer = currentNPC.getCurrentOffer(); 
+                    // (ถ้ามี input ผู้เล่น ค่อยเปลี่ยนตรงนี้)
+
+                    if (currentNPC instanceof BuyerNPC buyer) {
+                        state = player.sellItemTo(buyer, playerOffer);
+                    } else if (currentNPC instanceof SellerNPC seller) {
+                        state = player.buyItemFrom(seller, playerOffer);
+                    }
+                }
+
+                System.out.println("ผลลัพธ์ดีล: " + state);
+
+                // ===== จบดีล → เจน NPC ใหม่ =====
+                if (npcLeftToday > 0) {
+                    npcQueue.add(createNPC(player, day));
+                }
+            }
+            // ===== สรุปผลรายวัน =====
+            System.out.println("----- END DAY " + day + " -----");
+            System.out.println("Balance: " + player.getBalance());
+            System.out.println("Stock: " + player.geStock().getItems().size());
+            day++;
+        }
+        System.out.println("\n=== GAME OVER ===");
+    }
+    // ===== สร้าง NPC ตามเงื่อนไขโจทย์ =====
+    private static NPC createNPC(Player player, int week) {
+        GameRNG rng = GameRNG.getInstance();
+
+        String name = "NPC";
+        int knowledge = rng.getKnowledge(week);
+        double greed = rng.getGreed();
+        int patience = rng.getPatience();
+        boolean isBuyer = !player.geStock().getItems().isEmpty() && rng.getRandomBoolean();
+        return isBuyer
+                ? new BuyerNPC(name, knowledge, greed, patience)
+                : new SellerNPC(name, knowledge, greed, patience);
     }
 }

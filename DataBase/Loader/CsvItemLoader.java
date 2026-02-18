@@ -1,13 +1,12 @@
 package DataBase.Loader;
 
+import DataBase.ItemData;
+import Enums.ClothingType;
+import Enums.Rarity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import DataBase.ItemData;
-import Enums.ClothingType;
-import Enums.Rarity;
 
 public class CsvItemLoader extends CsvLoader<Map<Rarity, List<ItemData>>> implements ItemLoader {
 

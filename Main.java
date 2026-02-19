@@ -18,6 +18,7 @@ public class Main {
 
             // คำนวณจำนวน NPC วันนี้
             int npcLeftToday = rng.getRandomInt(1, 5);
+            // ไม่ได้ยึดตามดวงของ player
             Queue<NPC> npcQueue = new LinkedList<>();
 
             // เจน NPC ตัวแรก
@@ -56,6 +57,7 @@ public class Main {
             // ===== สรุปผลรายวัน =====
             System.out.println("----- END DAY " + day + " -----");
             System.out.println("Balance: " + player.getBalance());
+            // ไปเรียกมาจาก Scoremenagement
             System.out.println("Stock: " + player.geStock().getItems().size());
             day++;
         }

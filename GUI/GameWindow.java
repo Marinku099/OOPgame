@@ -2,16 +2,23 @@ package GUI;
 import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import OOPGameCharacter.Player;
 
 public class GameWindow extends JFrame{
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Dimension screenSize;
+    int screenWidth;
+    int screenHight;
 
+    public GameWindow(Player player){
+        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.screenWidth = screenSize.width;
+        this.screenHight = screenSize.height;
 
-    public GameWindow(String GameName, String logoPath){
-        
+        String GameName = "Geme name";
         this.setTitle(GameName);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
 
         this.setResizable(false);
         this.setSize(screenSize);
@@ -21,6 +28,7 @@ public class GameWindow extends JFrame{
 
         this.setVisible(true);
 
+        String logoPath = "path";
         ImageIcon icon = new ImageIcon(logoPath);
         this.setIconImage(icon.getImage());
         // this.getContentPane().setBackground(new Color(255, 255, 255));

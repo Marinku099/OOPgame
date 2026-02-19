@@ -1,5 +1,10 @@
 package GUI;
 
-public class GameOpeningPanel {
-    
+import javax.swing.JPanel;
+
+public class GameOpeningPanel extends JPanel {
+     
+    public GameOpeningPanel(){
+        
+    }
 }

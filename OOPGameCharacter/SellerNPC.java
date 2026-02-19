@@ -5,6 +5,7 @@ import GameSystem.GameRNG;
 import java.util.List;
 
 import Enums.OfferState;
+import Enums.Rarity;
 
 public class SellerNPC extends NPC {
     private ClothingItem sellingItem; // เดิม: itemForSale
@@ -26,14 +27,14 @@ public class SellerNPC extends NPC {
     @Override
     public void chooseItem(List<ClothingItem> allItems) {
         
-        String selectedRarity = GameRNG.getInstance().getRandomRarityByWeek(); //สัปดาห์นี้ NPC ควรจะเอาของระดับไหนมาขาย?
-        List<ClothingItem> filteredItems = allItems.stream().filter(item -> item.getRarity().toString().equalsIgnoreCase(selectedRarity)).toList();//กรองเฉพาะไอเทมที่มี Rarity ตรงกับที่สุ่มได้
+        Rarity selectedRarity = GameRNG.genRandomRarityByWeek(); //สัปดาห์นี้ NPC ควรจะเอาของระดับไหนมาขาย?
+        List<ClothingItem> filteredItems = allItems.stream().filter(item -> selectedRarity.equals(item.getRarity())).toList();//กรองเฉพาะไอเทมที่มี Rarity ตรงกับที่สุ่มได้
 
         if (filteredItems.isEmpty()) { // ถ้าไม่มีของในระดับนั้นเลย(กันพลาด) ให้ใช้ของทั้งหมดที่มี
             filteredItems = allItems;
         }
         
-        this.sellingItem = GameRNG.getInstance().pickRandomItem(filteredItems); // สุ่มเลือกมา 1 ชิ้นจากรายการที่กรองแล้ว
+        this.sellingItem = GameRNG.pickRandomItem(filteredItems); // สุ่มเลือกมา 1 ชิ้นจากรายการที่กรองแล้ว
         if (this.sellingItem == null) return;
 
         // --- ส่วนการประเมินราคา ---

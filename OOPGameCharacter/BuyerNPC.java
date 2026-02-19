@@ -27,7 +27,7 @@ public class BuyerNPC extends NPC {
     @Override
     public void chooseItem(List<ClothingItem> playerItems) {
         // เลือกของจากกระเป๋าผู้เล่น
-        this.wantedItem = GameRNG.getInstance().pickRandomItem(playerItems);
+        this.wantedItem = GameRNG.pickRandomItem(playerItems);
         
         if (this.wantedItem == null) return;
 

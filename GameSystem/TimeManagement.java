@@ -3,6 +3,7 @@ package GameSystem;
 import OOPGameCharacter.GameCharacter;
 
 public class TimeManagement {
+    // แก้เป็น singleton
     private static int currentWeek = 1;
     private static int currentDay = 1;
 

@@ -56,7 +56,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
         }
 
         // 3. วัดดวง
-        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerPrice))) {
+        if (GameRNG.succeedOnChance(calculateSuccessChance(playerPrice))) {
             makeDeal(player, playerPrice);
             return OfferState.SUCCESS;
         } else {

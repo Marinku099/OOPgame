@@ -34,7 +34,7 @@ public interface CalculateNPC {
         double current = getCurrentOffer();
         double diff = Math.abs(current - playerPrice);
         
-        double step = GameRNG.getInstance().genNegotiationStep();
+        double step = GameRNG.genNegotiationStep();
         double change = (diff * step) / getGreed();
 
         double newPrice;

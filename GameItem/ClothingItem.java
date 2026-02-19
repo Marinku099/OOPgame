@@ -1,5 +1,7 @@
 package GameItem;
 
+import DataBase.Database;
+import DataBase.ItemData;
 import Enums.ClothingType;
 import Enums.Rarity;
 import Enums.Size;
@@ -38,19 +40,19 @@ public abstract class ClothingItem implements CalculateClothPrice {
     }
 
     // All random
-    // public ClothingItem (){
-        
-    //     this.name = ;
-    //     this.description = ;
-    //     this.type = ;
-    //     this.rarity = ;
-    //     this.basePrice = ;
+    public ClothingItem (Database database){
+        ItemData item = GameRNG.pickRandomItem(database);
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.type = item.getType();
+        this.rarity = item.getRarity();
+        this.basePrice = item.getType().getBasePrice();
 
-    //     this.size = ;
-    //     this.condition = ;
-    //     this.isFake = ;
-    //     this.fakeAuthenticity = ;
-    // }
+        this.size = GameRNG.genSize();
+        this.condition = GameRNG.genCondition();
+        this.isFake = GameRNG.genIsFake();
+        this.fakeAuthenticity = GameRNG.genFakeAuthenticity();
+    }
 
     // --- Implement: CalculateClothPrice (Getters) ---
     @Override public double getBasePrice() { return basePrice; }

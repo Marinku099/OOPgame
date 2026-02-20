@@ -1,7 +1,6 @@
 package OOPGameCharacter;
 
 import Enums.OfferState;
-import GameItem.ClothingItem;
 
 public class Player extends GameCharacter {
     private int balance;
@@ -54,6 +53,10 @@ public class Player extends GameCharacter {
 
     public int getBuyAmount(){
         return buyAmount;
+    }
+
+    public Stock getStock() {
+        return this.stock;
     }
 
     public void updateSellAmount(){

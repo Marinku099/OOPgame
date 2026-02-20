@@ -1,76 +1,136 @@
 import DataBase.Database;
-import DataBase.Loader.ItemLoader;
+import DataBase.ItemData;
+import DataBase.Loader.*;
+import Enums.OfferState;
+import Enums.Rarity;
+import GameItem.ClothingItem;
+import GameItem.FashionItem;
 import GameSystem.*;
 import OOPGameCharacter.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Main {
-
     public static void main(String[] args) {
 
-        // 1. สร้าง Database กลาง
-        Database database = new Database();
+        /* ================= INIT DATABASE ================= */
+        ItemLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
+        NameLoader nameLoader = new CsvNameLoader("Csv/NPC_name.csv");
+        Database database = new Database(itemLoader, nameLoader);
 
-        // 2. โหลด Item จาก CSV
-        ItemLoader itemLoader = new ItemLoader(database);
-        itemLoader.loadItems(); // ← ใช้ชื่อ method จริงของคุณ
-
-        Player player = new Player("PlayerOne", 1000);
+        /* ================= INIT SYSTEM ================= */
+        Player player = new Player("Player", 2, 1000, 0);
+        TimeManagement time = TimeManagement.getInstance();
         ScoreManagement score = new ScoreManagement(player);
 
-        System.out.println("=== ยินดีต้อนรับสู่ OOP Merchant Game ===");
+        System.out.println("=== OOP Merchant Game ===");
 
-        // 5 สัปดาห์
-        while (TimeManagement.getWeek() <= 5 && player.getBalance() > 0) {
+        /* ================= GAME LOOP : 5 WEEKS ================= */
+        while (time.getWeek() <= 5 && player.getBalance() > 0) {
 
-            System.out.println("\n===== สัปดาห์ที่ " + TimeManagement.getWeek() + " =====");
+            System.out.println("\n===== WEEK " + time.getWeek() + " =====");
 
-            // 7 วันต่อสัปดาห์
-            for (int day = 1; day <= 7; day++) {
-                System.out.println("\n--- วันที่ " + day + " ---");
+            /* ================= 7 DAYS / WEEK ================= */
+            while (time.getDay() <= 7) {
 
-                int npcToday = GameRNG.getRandomInt(2, 4);
+                System.out.println("\n--- DAY " + time.getDay() + " ---");
 
-                for (int i = 0; i < npcToday; i++) {
-                    interactWithNPC(player, database);
+                int npcToday = GameRNG.getRandomInt(1, 5);
+                Queue<NPC> npcQueue = new LinkedList<>();
+
+                npcQueue.add(createNPC(player, database, time.getWeek()));
+
+                /* ================= NPC LOOP ================= */
+                while (!npcQueue.isEmpty()) {
+
+                    NPC npc = npcQueue.poll();
+                    npcToday--;
+
+                    /* ===== NPC CHOOSE ITEM ===== */
+                    if (npc instanceof BuyerNPC) {
+                        npc.chooseItem(player.getStock().getItems());
+                    } else if (npc instanceof SellerNPC) {
+                        // 1. สุ่ม rarity
+                        Rarity rarity = GameRNG.genRandomRarityByWeek();
+
+                        // 2. ดึง ItemData จาก Database
+                        List<ItemData> rawItems = database.getItemsByRarity(rarity);
+
+                        // 3. สุ่ม 1 ชิ้น
+                        ItemData raw = GameRNG.pickRandomItem(rawItems);
+
+                        // 4. แปลงเป็น ClothingItem
+                        ClothingItem item = new FashionItem(
+                            raw.getName(),
+                            raw.getDescription(),
+                            raw.getType(),
+                            raw.getRarity(),
+                            GameRNG.genSize(),
+                            GameRNG.genCondition(),
+                            GameRNG.genIsFake(),
+                            GameRNG.genFakeAuthenticity()
+                        );
+
+                        // 5. ส่งให้ NPC
+                        List<ClothingItem> items = new ArrayList<>();
+                        items.add(item);
+
+                        npc.chooseItem(items);
+                    }
+
+                    OfferState state = OfferState.PENDING;
+
+                    /* ===== DEAL LOOP ===== */
+                    while (state == OfferState.PENDING) {
+                        double offer = npc.getCurrentOffer();
+
+                        if (npc instanceof BuyerNPC buyer) {
+                            state = player.sellItemTo(buyer, offer);
+                        } else if (npc instanceof SellerNPC seller) {
+                            state = player.buyItemFrom(seller, offer);
+                        }
+                    }
+
+                    score.updateDeal(state);
+                    System.out.println("ผลลัพธ์ดีล: " + state);
+
+                    if (npcToday > 0) {
+                        npcQueue.add(createNPC(player, database, time.getWeek()));
+                    }
                 }
 
+                /* ================= END DAY ================= */
                 score.scoreByDay();
-                TimeManagement.updateDay();
+                score.printDailySummary();
+
+                time.nextDay();
             }
 
-            System.out.println("\n[สรุปสัปดาห์]");
-            System.out.println("เงินสะสม: " + score.getSummaryBalance());
-            System.out.println("ขายไปทั้งหมด: " + score.getSummarySellAmount());
-            System.out.println("ซื้อทั้งหมด: " + score.getSummaryBuyAmount());
-
-            TimeManagement.updateWeek();
+            /* ================= END WEEK ================= */
+            score.printWeeklySummary();
+            time.nextWeek();
         }
 
-        System.out.println("\n=== จบเกม ===");
+        System.out.println("\n=== GAME OVER ===");
     }
 
-    private static void interactWithNPC(Player player, Database database) {
-        NPC npc = createNPC(TimeManagement.getWeek());
+    /* ================= CREATE NPC ================= */
+    private static NPC createNPC(Player player, Database database, int week) {
 
-        if (npc instanceof SellerNPC seller) {
-            var item = GameRNG.pickRandomItem(database);
-            player.buyItemFrom(seller, item);
-
-        } else if (npc instanceof BuyerNPC buyer) {
-            if (!player.getInventory().isEmpty()) {
-                var item = player.getRandomItemFromInventory();
-                player.sellItemTo(buyer, item);
-            }
-        }
-    }
-
-    private static NPC createNPC(int week) {
-        int knowledge = GameRNG.genKnowledge(week);
+        int knowledge = GameRNG.genKnowledge();
         double greed = GameRNG.genGreed();
         int patience = GameRNG.genPatience();
 
-        return GameRNG.getRandomBoolean()
-                ? new BuyerNPC("Buyer_" + GameRNG.getRandomInt(10, 99), knowledge, greed, patience)
-                : new SellerNPC("Seller_" + GameRNG.getRandomInt(10, 99), knowledge, greed, patience);
+        boolean isBuyer =
+                !player.getStock().getItems().isEmpty()
+                && GameRNG.getRandomBoolean();
+
+        String name = GameRNG.pickRandomItem(database.getAllCustomerNames());
+
+        return isBuyer
+                ? new BuyerNPC(name, knowledge, greed, patience)
+                : new SellerNPC(name, knowledge, greed, patience);
     }
 }

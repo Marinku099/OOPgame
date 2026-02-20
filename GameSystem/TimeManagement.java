@@ -1,29 +1,57 @@
 package GameSystem;
 
-import OOPGameCharacter.GameCharacter;
+import java.util.List;
 
 public class TimeManagement {
     // แก้เป็น singleton
-    private static int currentWeek = 1;
-    private static int currentDay = 1;
+    private static TimeManagement instance;
+    private int currentWeek;
+    private int currentDay;
 
-    protected static void updateDay(){
+    private TimeManagement() {
+        this.currentDay = 1;
+        this.currentWeek = 1;
+    }
+
+    public static TimeManagement getInstance(){
+        if (instance == null) {
+            instance = new TimeManagement();
+        }
+        return instance;
+    }
+
+    protected  void updateDay(){
         currentDay++;
     }
     
-    protected static void updateWeek(){
+    protected  void updateWeek(){
         currentWeek++;
     }
 
-    public static int getDay(){
+    public int getDay(){
         return currentDay;
     }
 
-    public static int getWeek(){
+    public int getWeek(){
         return currentWeek;
     }
     
-    public void weeklyUpdate(GameCharacter chr){
+    public void weeklyUpdate(List<WeeklyListener> objects){
+        for (WeeklyListener listener : objects) {
+            listener.weeklyAction();
+        }
+    }
 
+    public void nextDay() {
+        updateDay();
+
+        if (currentDay > 7) {
+            currentDay = 1;
+            nextWeek();
+        }
+    }
+
+    public void nextWeek() {
+        updateWeek();
     }
 }

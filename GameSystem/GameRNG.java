@@ -1,16 +1,15 @@
 package GameSystem;
 
+import DataBase.Database;
+import DataBase.ItemData;
 import Enums.Rarity;
 import Enums.Size;
 import java.util.List;
 import java.util.Random;
 
-import DataBase.Database;
-import DataBase.ItemData;
-
 public class GameRNG implements WeeklyListener{
     private static final Random random = new Random();
-    private static int week = TimeManagement.getWeek();
+    private static int week = TimeManagement.getInstance().getWeek();
  
     private GameRNG() { }
 
@@ -36,26 +35,28 @@ public class GameRNG implements WeeklyListener{
         return list.get(random.nextInt(list.size()));
     }
 
-    public static ItemData pickRandomItem(Database database){
+    public static ItemData pickRandomCloth(Database database){
         Rarity rarity = genRandomRarityByWeek();
         return pickRandomItem(database.getItemsByRarity(rarity));
     }
 
-    // ทำไม getter อยู่ในนี้?
+    public static String pickRandomNPCName(Database database){
+        return pickRandomItem(database.getAllCustomerNames());
+    }
+
     // สุ่มค่าความโลภของ NPC (ส่งผลต่อลิมิตราคาที่รับได้)
     public static double genGreed() {
         return 0.9 + (random.nextDouble() * 0.4);
     }
 
-    // ทำไม getter อยู่ในนี้?
     // สุ่มค่าความอดทนของ NPC (จำนวนรอบที่ยอมให้ต่อรองราคา)
     public static int genPatience() {
         return getRandomInt(2, 4);
     }
 
-    // ทำไม getter อยู่ในนี้?
     // สุ่มระดับความรู้ของ NPC ในการประเมินราคาของ (ขึ้นอยู่กับสัปดาห์ในเกม)
-    public static int genKnowledge(int week) {
+    public static int genKnowledge() {
+        //int week = TimeManagement.getInstance().getWeek();
         if (week < 4) return getRandomInt(1, week);
         return getRandomInt(2, 4);
     }
@@ -78,7 +79,9 @@ public class GameRNG implements WeeklyListener{
 
     // สุ่มโอกาสที่สินค้าจะเป็นของปลอม (โอกาสสูงขึ้นตามสัปดาห์ที่เล่น)
     public static boolean genIsFake() {
+        //int week = TimeManagement.getInstance().getWeek();
         int roll = random.nextInt(100);
+
         if (week == 1) 
             return roll < 10;
         else if (week == 2) 
@@ -89,6 +92,7 @@ public class GameRNG implements WeeklyListener{
 
     // สุ่มค่าความเนียนของของปลอม (ยิ่งสัปดาห์มาก ยิ่งดูเหมือนของจริงมาก)
     public static double genFakeAuthenticity() {
+        //int week = TimeManagement.getInstance().getWeek(); 
         if (week == 1) {
             return 0.1 + (0.4 * random.nextDouble());
         } else if (week == 2) {
@@ -139,6 +143,6 @@ public class GameRNG implements WeeklyListener{
 
     @Override
     public void weeklyAction(){
-        week = TimeManagement.getWeek();
+        week = TimeManagement.getInstance().getWeek();
     }
 }

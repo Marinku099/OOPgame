@@ -1,4 +1,5 @@
 package GameSystem;
+import Enums.OfferState;
 import OOPGameCharacter.*;
 
 public class ScoreManagement {
@@ -30,6 +31,37 @@ public class ScoreManagement {
         this.summaryBuyAmount += buyAmount.getCurrent();
     }
 
+     public void updateDeal(OfferState state) {
+        switch (state) {
+            case SUCCESS -> {
+                summarySellAmount += 1;
+                summaryBalance += 10;
+            }
+            case FAIL -> {
+                summaryBalance -= 5;
+            }
+            case WALK_AWAY -> {
+                summaryBalance -= 2;
+            }
+        }
+    }
+
+    public void printDailySummary() {
+    System.out.println("----- DAILY SUMMARY -----");
+    System.out.println("Balance: " + player.getBalance());
+    System.out.println("Sell Amount Today: " + sellAmount.getCurrent());
+    System.out.println("Buy Amount Today: " + buyAmount.getCurrent());
+    System.out.println("-------------------------");
+    }
+
+    public void printWeeklySummary() {
+    System.out.println("===== WEEK SUMMARY =====");
+    System.out.println("Total Balance Score: " + summaryBalance);
+    System.out.println("Total Sell Amount: " + summarySellAmount);
+    System.out.println("Total Buy Amount: " + summaryBuyAmount);
+    System.out.println("========================");
+    }
+    
     public StatTracker getBalance() {
         return balance;
     }

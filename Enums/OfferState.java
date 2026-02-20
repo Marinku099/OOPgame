@@ -1,5 +1,5 @@
 package Enums;
 
 public enum OfferState {
-    SUCCESS, FAIL, PENDING;
+    SUCCESS, FAIL, PENDING, WALK_AWAY;
 }

@@ -2,6 +2,7 @@ package DataBase;
 
 import Enums.ClothingType;
 import Enums.Rarity;
+import GameItem.ClothingItem;
 
 public class ItemData {
     private String name;
@@ -36,5 +37,9 @@ public class ItemData {
 
     public String getImagepath() {
         return imagepath;
+    }
+
+    public ClothingItem toClothingItem(){
+        return new ClothingItem(this);
     }
 }

@@ -1,17 +1,15 @@
 package OOPGameCharacter;
 
 import GameItem.ClothingItem;
-import GameSystem.GameRNG;
 import java.util.List;
 
 import Enums.OfferState;
-import Enums.Rarity;
 
 public class SellerNPC extends NPC {
-    private ClothingItem sellingItem; // เดิม: itemForSale
+    // private ClothingItem sellingItem; // เดิม: itemForSale
 
-    public SellerNPC(String name, int knowledge, double greed, int patience) {
-        super(name, knowledge, greed, patience);
+    public SellerNPC(List<ClothingItem> cloths, List<String> names) {
+        super(cloths, names);
     }
 
     @Override
@@ -25,20 +23,11 @@ public class SellerNPC extends NPC {
     public boolean isBuyer() { return false; }
 
     @Override
-    public void chooseItem(List<ClothingItem> allItems) {
-        
-        Rarity selectedRarity = GameRNG.genRandomRarityByWeek(); //สัปดาห์นี้ NPC ควรจะเอาของระดับไหนมาขาย?
-        List<ClothingItem> filteredItems = allItems.stream().filter(item -> selectedRarity.equals(item.getRarity())).toList();//กรองเฉพาะไอเทมที่มี Rarity ตรงกับที่สุ่มได้
-
-        if (filteredItems.isEmpty()) { // ถ้าไม่มีของในระดับนั้นเลย(กันพลาด) ให้ใช้ของทั้งหมดที่มี
-            filteredItems = allItems;
-        }
-        
-        this.sellingItem = GameRNG.pickRandomItem(filteredItems); // สุ่มเลือกมา 1 ชิ้นจากรายการที่กรองแล้ว
-        if (this.sellingItem == null) return;
+    public void chooseItem() {
+        if (this.item == null) return;
 
         // --- ส่วนการประเมินราคา ---
-        inspectItem(this.sellingItem);
+        inspectItem();
         this.limitPrice = this.estimatedValue * this.greed; // คำนวณลิมิต (คนขายเอาแพง -> คูณความงก)
         this.currentOffer = getStartingOffer(); // ตั้งราคาเริ่มต้น
     }

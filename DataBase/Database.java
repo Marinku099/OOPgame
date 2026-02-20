@@ -6,6 +6,7 @@ import java.util.Map;
 import DataBase.Loader.ItemLoader;
 import DataBase.Loader.NameLoader;
 import Enums.Rarity;
+import GameItem.ClothingItem;
 
 public class Database {
     
@@ -26,7 +27,7 @@ public class Database {
     }
     
     //ดูทุก items
-    public Map<Rarity, List<ItemData>> getAllDataItem() {
+    public Map<Rarity, List<ItemData>> getItemDataByRarityMap() {
         return itemMap;
     }
 
@@ -34,16 +35,8 @@ public class Database {
     public List<String> getAllCustomerNames() {
         return customerNames;
     }
+
+    public List<ClothingItem> getListClothingItems(){
+        return itemMap.values().stream().flatMap(List::stream).map(ItemData::toClothingItem).toList();
+    }
 }
-
-/*
-// 1. ใส่ไฟล์ Path
-DataLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
-NameLoader nameLoader = new CsvNameLoader("Csv/CustomerNames.csv");
-
-// 2. สร้าง Database
-Database db = new Database(itemLoader, nameLoader);
-
-// 3. ใช้งานได้ (ตัวอย่าง)
-List<String> names = db.getCustomerNames();
-*/

@@ -6,8 +6,6 @@ public class Player extends GameCharacter {
     private int balance;
     private int luck;
     private Stock stock;
-    private int sellAmount;
-    private int buyAmount;
 
     public Player(String name, int knowledge, int balance, int luck) {
         super(name, knowledge);
@@ -47,31 +45,22 @@ public class Player extends GameCharacter {
         return luck;
     }
 
-    public int getSellAmount(){
-        return sellAmount;
-    }
-
-    public int getBuyAmount(){
-        return buyAmount;
-    }
-
     public Stock getStock() {
         return this.stock;
     }
 
-    public void updateSellAmount(){
-        this.sellAmount++;
-    }
-
-    public void updateBuyAmount(){
-        this.buyAmount++;
-    }
-
-    private void setBalance(int amount) {
+    private void setBalance(double amount) {
         this.balance += amount;
     }
 
     private void addLuck() {
         this.luck += 1;
+    }
+
+    public void updateBalance(OfferState state, NPC npc){
+        if (state != OfferState.SUCCESS) return;
+        
+        if (npc instanceof BuyerNPC) setBalance(npc.getCurrentOffer());
+        else setBalance(-npc.getCurrentOffer());
     }
 }

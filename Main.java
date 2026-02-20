@@ -6,6 +6,7 @@ import java.util.Queue;
 
 public class Main {
     public static void main(String[] args) {
+        // สร้าง list<WeeklyListener> เพื่ออัปเดตค่าทุกสัปดาห์
         // ไม่ได้เรียก Database ให้มาทำงานในนี้?
         Player player = new Player("Player", 2, 1000, 0);
         // GameRNG rng = GameRNG.getInstance();
@@ -25,7 +26,7 @@ public class Main {
             // ถ้าไม่เพิ่มเข้าทีเดียวไม่ต้องใช้ queue ก็ได้?
 
             // เจน NPC ตัวแรก
-            npcQueue.add(createNPC(player, day));
+            npcQueue.add(createNPC(player));
 
             // ===== LOOP รอง : คิว NPC =====
             while (!npcQueue.isEmpty()) {
@@ -55,7 +56,7 @@ public class Main {
 
                 // ===== จบดีล → เจน NPC ใหม่ =====
                 if (npcLeftToday > 0) {
-                    npcQueue.add(createNPC(player, day));
+                    npcQueue.add(createNPC(player));
                 }
             }
             // ===== สรุปผลรายวัน =====
@@ -68,11 +69,11 @@ public class Main {
         System.out.println("\n=== GAME OVER ===");
     }
     // ===== สร้าง NPC ตามเงื่อนไขโจทย์ =====
-    private static NPC createNPC(Player player, int week) {
+    private static NPC createNPC(Player player) {
         // GameRNG rng = GameRNG.getInstance();
 
         String name = "NPC";
-        int knowledge = GameRNG.genKnowledge(week);
+        int knowledge = GameRNG.genKnowledge();
         double greed = GameRNG.genGreed();
         int patience = GameRNG.genPatience();
         boolean isBuyer = !player.geStock().getItems().isEmpty() && GameRNG.getRandomBoolean();

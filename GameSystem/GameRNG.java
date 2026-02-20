@@ -10,7 +10,7 @@ import DataBase.ItemData;
 
 public class GameRNG implements WeeklyListener{
     private static final Random random = new Random();
-    private static int week = TimeManagement.getWeek();
+    private static int week = TimeManagement.getInstance().getWeek();
  
     private GameRNG() { }
 
@@ -36,26 +36,27 @@ public class GameRNG implements WeeklyListener{
         return list.get(random.nextInt(list.size()));
     }
 
-    public static ItemData pickRandomItem(Database database){
+    public static ItemData pickRandomCloth(Database database){
         Rarity rarity = genRandomRarityByWeek();
         return pickRandomItem(database.getItemsByRarity(rarity));
     }
 
-    // ทำไม getter อยู่ในนี้?
+    public static String pickRandomNPCName(Database database){
+        return pickRandomItem(database.getAllCustomerNames());
+    }
+
     // สุ่มค่าความโลภของ NPC (ส่งผลต่อลิมิตราคาที่รับได้)
     public static double genGreed() {
         return 0.9 + (random.nextDouble() * 0.4);
     }
 
-    // ทำไม getter อยู่ในนี้?
     // สุ่มค่าความอดทนของ NPC (จำนวนรอบที่ยอมให้ต่อรองราคา)
     public static int genPatience() {
         return getRandomInt(2, 4);
     }
 
-    // ทำไม getter อยู่ในนี้?
     // สุ่มระดับความรู้ของ NPC ในการประเมินราคาของ (ขึ้นอยู่กับสัปดาห์ในเกม)
-    public static int genKnowledge(int week) {
+    public static int genKnowledge() {
         if (week < 4) return getRandomInt(1, week);
         return getRandomInt(2, 4);
     }
@@ -139,6 +140,6 @@ public class GameRNG implements WeeklyListener{
 
     @Override
     public void weeklyAction(){
-        week = TimeManagement.getWeek();
+        week = TimeManagement.getInstance().getWeek();
     }
 }

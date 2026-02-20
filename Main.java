@@ -6,20 +6,23 @@ import java.util.Queue;
 
 public class Main {
     public static void main(String[] args) {
+        // ไม่ได้เรียก Database ให้มาทำงานในนี้?
         Player player = new Player("Player", 2, 1000, 0);
-        GameRNG rng = GameRNG.getInstance();
+        // GameRNG rng = GameRNG.getInstance();
 
         int day = 1;
         int maxDay = 5;
+        int maxWeek = 5;
 
         // ===== LOOP ใหญ่ : วันในเกม =====
         while (day <= maxDay && player.getBalance() > 0) {
             System.out.println("\n===== DAY " + day + " =====");
 
             // คำนวณจำนวน NPC วันนี้
-            int npcLeftToday = rng.getRandomInt(1, 5);
-            // ไม่ได้ยึดตามดวงของ player
+            int npcLeftToday = GameRNG.getRandomInt(1, 5);
+            // ไม่ได้ยึดตามดวงของ player?
             Queue<NPC> npcQueue = new LinkedList<>();
+            // ถ้าไม่เพิ่มเข้าทีเดียวไม่ต้องใช้ queue ก็ได้?
 
             // เจน NPC ตัวแรก
             npcQueue.add(createNPC(player, day));
@@ -31,6 +34,7 @@ public class Main {
 
                 // ให้ NPC เลือก item
                 currentNPC.chooseItem(player.geStock().getItems());
+                // ถ้าเป็น seller จะเลือกขายของที่ player มีอยู่แล้วหรอ?
 
                 OfferState state = OfferState.PENDING;
 
@@ -65,13 +69,13 @@ public class Main {
     }
     // ===== สร้าง NPC ตามเงื่อนไขโจทย์ =====
     private static NPC createNPC(Player player, int week) {
-        GameRNG rng = GameRNG.getInstance();
+        // GameRNG rng = GameRNG.getInstance();
 
         String name = "NPC";
-        int knowledge = rng.getKnowledge(week);
-        double greed = rng.getGreed();
-        int patience = rng.getPatience();
-        boolean isBuyer = !player.geStock().getItems().isEmpty() && rng.getRandomBoolean();
+        int knowledge = GameRNG.genKnowledge(week);
+        double greed = GameRNG.genGreed();
+        int patience = GameRNG.genPatience();
+        boolean isBuyer = !player.geStock().getItems().isEmpty() && GameRNG.getRandomBoolean();
         return isBuyer
                 ? new BuyerNPC(name, knowledge, greed, patience)
                 : new SellerNPC(name, knowledge, greed, patience);

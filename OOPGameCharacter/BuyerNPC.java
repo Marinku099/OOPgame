@@ -1,16 +1,15 @@
 package OOPGameCharacter;
 
 import GameItem.ClothingItem;
-import GameSystem.GameRNG;
 import java.util.List;
 
 import Enums.OfferState;
 
 public class BuyerNPC extends NPC {
-    private ClothingItem wantedItem;
+    // private ClothingItem wantedItem;
 
-    public BuyerNPC(String name, int knowledge, double greed, int patience) {
-        super(name, knowledge, greed, patience);
+    public BuyerNPC(List<ClothingItem> cloths, List<String> names) {
+        super(cloths, names);
     }
 
     @Override
@@ -25,14 +24,11 @@ public class BuyerNPC extends NPC {
 
     //ต้องแก้
     @Override
-    public void chooseItem(List<ClothingItem> playerItems) {
-        // เลือกของจากกระเป๋าผู้เล่น
-        this.wantedItem = GameRNG.pickRandomItem(playerItems);
-        
-        if (this.wantedItem == null) return;
+    public void chooseItem() {
+        if (this.item == null) return;
 
         // 1. ประเมินราคา (Logic จากแม่)
-        inspectItem(this.wantedItem);
+        inspectItem();
 
         // 2. คำนวณลิมิต (คนซื้อเอาถูก -> หารด้วยความงก)
         this.limitPrice = this.estimatedValue / this.greed;

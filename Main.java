@@ -1,15 +1,13 @@
 import DataBase.Database;
-import DataBase.ItemData;
 import DataBase.Loader.*;
+
 import Enums.OfferState;
-import Enums.Rarity;
-import GameItem.ClothingItem;
-import GameItem.FashionItem;
+
 import GameSystem.*;
+
 import OOPGameCharacter.*;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class Main {
@@ -37,10 +35,11 @@ public class Main {
 
                 System.out.println("\n--- DAY " + day + " ---");
 
-                int npcToday = GameRNG.getRandomInt(1, 5);
+                int npcToday = GameRNG.getRandomInt(2, 5);
                 Queue<NPC> npcQueue = new LinkedList<>();
 
-                npcQueue.add(createNPC(player, database, time.getWeek()));
+                // npcQueue.add(createNPC(player, database, time.getWeek()));
+                npcQueue.add(createNPC(player, database));
 
                 /* ================= NPC LOOP ================= */
                 while (!npcQueue.isEmpty()) {
@@ -49,39 +48,43 @@ public class Main {
                     npcToday--;
 
                     /* ===== NPC CHOOSE ITEM ===== */
-                    if (npc instanceof BuyerNPC) {
-                        npc.chooseItem(player.getStock().getItems());
-                    } else if (npc instanceof SellerNPC) {
-                        // 1. สุ่ม rarity
-                        Rarity rarity = GameRNG.genRandomRarityByWeek();
+                    npc.chooseItem();
+                    // if (npc instanceof BuyerNPC) {
+                    //     npc.chooseItem();
+                    // } else if (npc instanceof SellerNPC) {
+                    //     // // 1. สุ่ม rarity
+                    //     // Rarity rarity = GameRNG.genRandomRarityByWeek();
 
-                        // 2. ดึง ItemData จาก Database
-                        List<ItemData> rawItems = database.getItemsByRarity(rarity);
+                    //     // // 2. ดึง ItemData จาก Database
+                    //     // List<ItemData> rawItems = database.getItemsByRarity(rarity);
 
-                        // 3. สุ่ม 1 ชิ้น
-                        ItemData raw = GameRNG.pickRandomItem(rawItems);
-                        if (raw == null) {
-                            // ข้าม NPC ตัวนี้ไปเลย
-                            continue;
-                        }
-                        // 4. แปลงเป็น ClothingItem
-                        ClothingItem item = new FashionItem(
-                            raw.getName(),
-                            raw.getDescription(),
-                            raw.getType(),
-                            raw.getRarity(),
-                            GameRNG.genSize(),
-                            GameRNG.genCondition(),
-                            GameRNG.genIsFake(),
-                            GameRNG.genFakeAuthenticity()
-                        );
+                    //     // // 3. สุ่ม 1 ชิ้น
+                    //     // ItemData raw = GameRNG.pickRandomItem(rawItems);
+                    //     // if (raw == null) {
+                    //     //     // ข้าม NPC ตัวนี้ไปเลย
+                    //     //     continue;
+                    //     // }
+                    //     // // 4. แปลงเป็น ClothingItem
+                    //     // ClothingItem item = new FashionItem(
+                    //     //     raw.getName(),
+                    //     //     raw.getDescription(),
+                    //     //     raw.getType(),
+                    //     //     raw.getRarity(),
+                    //     //     GameRNG.genSize(),
+                    //     //     GameRNG.genCondition(),
+                    //     //     GameRNG.genIsFake(),
+                    //     //     GameRNG.genFakeAuthenticity()
+                    //     // );
 
-                        // 5. ส่งให้ NPC
-                        List<ClothingItem> items = new ArrayList<>();
-                        items.add(item);
+                    //     // ClothingItem item = new ClothingItem(database);
 
-                        npc.chooseItem(items);
-                    }
+                    //     // 5. ส่งให้ NPC
+                    //     // List<ClothingItem> items = new ArrayList<>();
+                    //     // items.add(item);
+
+                    //     // ตอนสร้างมันสุ่มภายในตัวเองอยู่แล้ว
+                    //     npc.chooseItem();
+                    // }
 
                     OfferState state = OfferState.PENDING;
 
@@ -96,11 +99,11 @@ public class Main {
                         }
                     }
 
-                    score.updateDeal(state);
+                    score.updateDeal(state, npc);
                     System.out.println("ผลลัพธ์ดีล: " + state);
 
                     if (npcToday > 0) {
-                        npcQueue.add(createNPC(player, database, time.getWeek()));
+                        npcQueue.add(createNPC(player, database));
                     }
                 }
 
@@ -118,20 +121,31 @@ public class Main {
     }
 
     /* ================= CREATE NPC ================= */
-    private static NPC createNPC(Player player, Database database, int week) {
+    // private static NPC createNPC(Player player, Database database, int week) {
 
-        int knowledge = GameRNG.genKnowledge();
-        double greed = GameRNG.genGreed();
-        int patience = GameRNG.genPatience();
+    //     int knowledge = GameRNG.genKnowledge();
+    //     double greed = GameRNG.genGreed();
+    //     int patience = GameRNG.genPatience();
 
-        boolean isBuyer =
-                !player.getStock().getItems().isEmpty()
-                && GameRNG.getRandomBoolean();
+    //     boolean isBuyer =
+    //             !player.getStock().getItems().isEmpty()
+    //             && GameRNG.getRandomBoolean();
 
-        String name = GameRNG.pickRandomItem(database.getAllCustomerNames());
+    //     String name = GameRNG.pickRandomItem(database.getAllCustomerNames());
 
-        return isBuyer
-                ? new BuyerNPC(name, knowledge, greed, patience)
-                : new SellerNPC(name, knowledge, greed, patience);
+    //     return isBuyer
+    //             ? new BuyerNPC(name, knowledge, greed, patience)
+    //             : new SellerNPC(name, knowledge, greed, patience);
+    // }
+
+    private static NPC createNPC(Player player, Database database){
+        boolean isBuyer = !player.getStock().getItems().isEmpty()
+                            && GameRNG.getRandomBoolean();
+        if (isBuyer) {
+            return new BuyerNPC(player.getStock().getItems(), database.getAllCustomerNames());
+        }
+        else {
+            return new SellerNPC(database.getListClothingItems(), database.getAllCustomerNames());
+        }
     }
 }

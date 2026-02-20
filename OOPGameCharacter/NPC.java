@@ -6,6 +6,7 @@ import GameSystem.GameRNG;
 
 import java.util.List;
 
+import DataBase.Database;
 import Enums.OfferState;
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {
@@ -15,24 +16,40 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected double estimatedValue;
     protected double limitPrice;
     protected double currentOffer;
+    protected ClothingItem item;
 
-    public NPC(String name, int knowledge, double greed, int patience) {
+    public NPC(String name, int knowledge, double greed, int patience, List<ClothingItem> cloths) {
         super(name, knowledge);
         this.greed = greed;
         this.patience = patience;
+        this.item = GameRNG.pickRandomCloth(cloths);
     }
+
+    public NPC(List<ClothingItem> cloths, List<String> names) {
+        super(GameRNG.pickRandomNPCName(names), GameRNG.genKnowledge());
+        this.greed = GameRNG.genGreed();
+        this.patience = GameRNG.genPatience();
+        this.item = GameRNG.pickRandomCloth(cloths);
+    }
+
+    // public NPC(Database database){
+    //     super(GameRNG.pickRandomNPCName(database), GameRNG.genKnowledge());
+    //     this.greed = GameRNG.genGreed();
+    //     this.patience = GameRNG.genPatience();
+    //     this.item = GameRNG.pickRandomCloth(database.getListClothingItems());
+    // }
     
     // ตัวรับการเริ่มเจรจา
-    public void receiveOffer(Player player , ClothingItem item) {
-        inspectItem(item); // ประเมินของ
+    public void receiveOffer(Player player) {
+        inspectItem(); // ประเมินของ
         this.currentOffer = getStartingOffer(); // ตั้งราคาเปิด
     }
     
-    protected void inspectItem(ClothingItem item) {
+    protected void inspectItem() {
         this.estimatedValue = item.getPerceivedPrice(this.knowledge);
     }
 
-    public abstract void chooseItem(List<ClothingItem> items);
+    public abstract void chooseItem();
 
     // ให้ Buyer / Seller กำหนดราคาเปิดเอง
     public abstract double getStartingOffer();

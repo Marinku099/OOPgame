@@ -33,9 +33,9 @@ public class Main {
             System.out.println("\n===== WEEK " + time.getWeek() + " =====");
 
             /* ================= 7 DAYS / WEEK ================= */
-            while (time.getDay() <= 7) {
+           for (int day = 1; day <= 7; day++) {
 
-                System.out.println("\n--- DAY " + time.getDay() + " ---");
+                System.out.println("\n--- DAY " + day + " ---");
 
                 int npcToday = GameRNG.getRandomInt(1, 5);
                 Queue<NPC> npcQueue = new LinkedList<>();
@@ -60,7 +60,10 @@ public class Main {
 
                         // 3. สุ่ม 1 ชิ้น
                         ItemData raw = GameRNG.pickRandomItem(rawItems);
-
+                        if (raw == null) {
+                            // ข้าม NPC ตัวนี้ไปเลย
+                            continue;
+                        }
                         // 4. แปลงเป็น ClothingItem
                         ClothingItem item = new FashionItem(
                             raw.getName(),
@@ -104,8 +107,6 @@ public class Main {
                 /* ================= END DAY ================= */
                 score.scoreByDay();
                 score.printDailySummary();
-
-                time.nextDay();
             }
 
             /* ================= END WEEK ================= */

@@ -1,39 +1,43 @@
 package GameSystem;
 
 public class StatTracker {
-    private int previous;
-    private int current;
-    private int best;
+    private double previous;
+    private double current;
+    private double best;
 
-    public StatTracker(int prev, int curr, int best){
+    public StatTracker(double prev, double curr, double best){
         this.previous = prev;
         this.current = curr;
         this.best = best;
     }
 
-    public int getPrevious(){
+    public double getPrevious(){
         return this.previous;
     }
 
-    public int getCurrent(){
+    public double getCurrent(){
         return this.current;
     }
 
-    public int getBest(){
+    public double getBest(){
         return this.best;
     }
 
-    public void setPrevious(int prev){
-        this.previous = prev;
-    }
-
-    public void setCurrent(int curr){
+    private void setCurrent(double curr){
         this.current = curr;
     }
 
-    public void updateWithNewValue(int newValue){
+    public void resetCurr(){
+        setCurrent(0);
+    }
+
+    public void updateCurr(double value){
+        this.current += value;
+    }
+
+    public void updateByDay(){
         this.previous = this.current;
-        this.current = newValue;
-        this.best = Math.max(best, newValue);
+        this.best = Math.max(best, this.current);
+        this.current = 0;
     }
 }

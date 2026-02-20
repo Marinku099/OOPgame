@@ -19,10 +19,10 @@ public class ScoreManagement {
     }
 
     public void scoreByDay(){
-        this.balance.updateWithNewValue(player.getBalance());
-        this.sellAmount.updateWithNewValue(player.getSellAmount());
-        this.buyAmount.updateWithNewValue(player.getBuyAmount());
         updateSummaryScore();
+        this.balance.updateByDay();
+        this.sellAmount.updateByDay();
+        this.buyAmount.updateByDay();
     }
 
     private void updateSummaryScore(){
@@ -31,19 +31,12 @@ public class ScoreManagement {
         this.summaryBuyAmount += buyAmount.getCurrent();
     }
 
-     public void updateDeal(OfferState state) {
-        switch (state) {
-            case SUCCESS -> {
-                summarySellAmount += 1;
-                summaryBalance += 10;
-            }
-            case FAIL -> {
-                summaryBalance -= 5;
-            }
-            case WALK_AWAY -> {
-                summaryBalance -= 2;
-            }
-        }
+    public void updateDeal(OfferState state, NPC npc) {
+        if (state != OfferState.SUCCESS) return ;
+
+        if (npc instanceof BuyerNPC) sellAmount.updateCurr(1);
+        else buyAmount.updateCurr(1);
+        balance.updateCurr(npc.getCurrentOffer());
     }
 
     public void printDailySummary() {

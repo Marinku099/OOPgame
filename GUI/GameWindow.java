@@ -1,7 +1,11 @@
 package GUI;
 import java.awt.*;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import OOPGameCharacter.Player;
 
 public class GameWindow extends JFrame{
@@ -18,7 +22,7 @@ public class GameWindow extends JFrame{
         String GameName = "Geme name";
         this.setTitle(GameName);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+        settingLayout();
 
         this.setResizable(false);
         this.setSize(screenSize);
@@ -28,9 +32,17 @@ public class GameWindow extends JFrame{
 
         this.setVisible(true);
 
-        String logoPath = "path";
-        ImageIcon icon = new ImageIcon(logoPath);
-        this.setIconImage(icon.getImage());
+        // String logoPath = "path";
+        // ImageIcon icon = new ImageIcon(logoPath);
+        // this.setIconImage(icon.getImage());
         // this.getContentPane().setBackground(new Color(255, 255, 255));
+    }
+
+    private void settingLayout(){
+        this.setLayout(new BorderLayout());
+
+        // JPanel basePane = (JPanel) this.getContentPane();
+
+        // basePane.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     }
 }

@@ -6,7 +6,6 @@ import GameSystem.GameRNG;
 
 import java.util.List;
 
-import DataBase.Database;
 import Enums.OfferState;
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {

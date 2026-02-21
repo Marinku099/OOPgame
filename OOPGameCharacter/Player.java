@@ -31,11 +31,6 @@ public class Player extends GameCharacter {
 
     // getter อาจจะไม่ต้อง public หมด, encapsulate ไว้บ้างก็ดีตามความเหมาะสม
 
-    // Stock
-    public Stock geStock() {
-        return stock;
-    }
-
     //Getter
     public int getBalance() {
         return balance;

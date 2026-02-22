@@ -1,17 +1,19 @@
 import DataBase.Database;
 import DataBase.Loader.*;
-
 import Enums.OfferState;
-
 import GameSystem.*;
-
 import OOPGameCharacter.*;
-
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.Queue;
+//import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        //Scanner sc = new Scanner(System.in);
+        PrintWriter log = new PrintWriter(new FileWriter("Test_log.txt", true));
 
         /* ================= INIT DATABASE ================= */
         ItemLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
@@ -92,11 +94,24 @@ public class Main {
                     while (state == OfferState.PENDING) {
                         double offer = npc.getCurrentOffer();
 
+                        //System.out.println("NPC เสนอราคา : " + offer);
+                        //System.out.println("ใส่ราคาที่คุณจะเสนอ : ");
+
+                        //double playerOffer = sc.nextDouble();
+
                         if (npc instanceof BuyerNPC buyer) {
                             state = player.sellItemTo(buyer, offer);
                         } else if (npc instanceof SellerNPC seller) {
                             state = player.buyItemFrom(seller, offer);
                         }
+
+                        //log.println("Week " + time.getWeek() + " Day " + day);
+                        //log.println("NPC: " + npc.getClass().getSimpleName());
+                        //log.println("NPC Offer: " + offer);
+                        //log.println("Player Offer: " + playerOffer);
+                        //log.println("Result: " + state);
+                        //log.println("------------------");
+                        //log.flush();
                     }
 
                     score.updateDeal(state, npc);
@@ -118,6 +133,9 @@ public class Main {
         }
 
         System.out.println("\n=== GAME OVER ===");
+
+        //log.close();
+        //sc.close();
     }
 
     /* ================= CREATE NPC ================= */

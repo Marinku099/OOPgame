@@ -24,13 +24,11 @@ public class GameWindow extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         settingLayout();
 
-        this.setResizable(false);
+        this.setResizable(true);
         this.setSize(screenSize);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setMinimumSize(new Dimension(800, 600)); // not sure yet
         this.setLocationRelativeTo(null);
-
-        this.setVisible(true);
 
         // String logoPath = "path";
         // ImageIcon icon = new ImageIcon(logoPath);

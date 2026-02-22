@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,5 +16,7 @@ public class test {
         MainBackgroundPanel mainPanel = new MainBackgroundPanel();
         mainPanel.add(new SkillUpgradePanel(skills));
         gameWindow.add(mainPanel);
+
+        gameWindow.setVisible(true);
     }
 }

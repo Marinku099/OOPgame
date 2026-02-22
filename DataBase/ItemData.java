@@ -1,14 +1,15 @@
 package DataBase;
 
-import Type.ClothingType;
-import Type.Rarity;
+import Enums.ClothingType;
+import Enums.Rarity;
+import GameItem.ClothingItem;
 
 public class ItemData {
-    public String name;
-    public ClothingType type;
-    public Rarity rarity;
-    public String description;
-    public String imagepath;
+    private String name;
+    private ClothingType type;
+    private Rarity rarity;
+    private String description;
+    private String imagepath;
 
     public ItemData(String name, ClothingType type, Rarity rarity, String description, String imagepath) {
         this.name = name;
@@ -16,5 +17,29 @@ public class ItemData {
         this.rarity = rarity;
         this.description = description;
         this.imagepath = imagepath;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ClothingType getType() {
+        return type;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public ClothingItem toClothingItem(){
+        return new ClothingItem(this);
     }
 }

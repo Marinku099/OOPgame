@@ -1,6 +1,6 @@
 package UI;
-import Type.Rarity;
-import Type.Size;
+import Enums.Rarity;
+import Enums.Size;
 
 public class InspectionResult {
     // ใช้ public final เพื่อให้อ่านค่าได้อย่างเดียว (Immutable) ปลอดภัยและเขียนสั้น

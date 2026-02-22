@@ -1,5 +1,6 @@
 package GameSystem;
 
+import Enums.OfferState;
 import OOPGameCharacter.Player;
 
 public interface CalculateNPC {
@@ -33,7 +34,7 @@ public interface CalculateNPC {
         double current = getCurrentOffer();
         double diff = Math.abs(current - playerPrice);
         
-        double step = GameRNG.getInstance().genNegotiationStep();
+        double step = GameRNG.genNegotiationStep();
         double change = (diff * step) / getGreed();
 
         double newPrice;
@@ -50,5 +51,5 @@ public interface CalculateNPC {
         setCurrentOffer(newPrice);
     }
 
-    void processOffer(double playerPrice, Player player);
+    OfferState processOffer(double playerPrice, Player player);
 }

@@ -1,14 +1,15 @@
 package OOPGameCharacter;
 
 import GameItem.ClothingItem;
-import GameSystem.GameRNG;
 import java.util.List;
 
-public class BuyerNPC extends NPC {
-    private ClothingItem wantedItem;
+import Enums.OfferState;
 
-    public BuyerNPC(String name, int knowledge, double greed, int patience) {
-        super(name, knowledge, greed, patience);
+public class BuyerNPC extends NPC {
+    // private ClothingItem wantedItem;
+
+    public BuyerNPC(List<ClothingItem> cloths, List<String> names) {
+        super(cloths, names);
     }
 
     @Override
@@ -17,19 +18,17 @@ public class BuyerNPC extends NPC {
         return estimatedValue * (1 - greed);
     }
 
+    // ต้องเช็กด้วยหรอ?
     @Override
     public boolean isBuyer() { return true; }
 
     //ต้องแก้
     @Override
-    public void chooseItem(List<ClothingItem> playerItems) {
-        // เลือกของจากกระเป๋าผู้เล่น
-        this.wantedItem = GameRNG.getInstance().pickRandomItem(playerItems);
-        
-        if (this.wantedItem == null) return;
+    public void chooseItem() {
+        if (this.item == null) return;
 
         // 1. ประเมินราคา (Logic จากแม่)
-        inspectItem(this.wantedItem);
+        inspectItem();
 
         // 2. คำนวณลิมิต (คนซื้อเอาถูก -> หารด้วยความงก)
         this.limitPrice = this.estimatedValue / this.greed;
@@ -39,41 +38,38 @@ public class BuyerNPC extends NPC {
     }
 
     @Override
-    public void processOffer(double playerPrice, Player player) {
-        // 1. ถ้าราคาผู้เล่น OK (ไม่เกิน 1.2 เท่าของที่เสนอ และไม่เกินลิมิต)
-        if (playerPrice <= this.currentOffer * 1.2 && playerPrice <= this.limitPrice) {
-            makeDeal(player, playerPrice);
-            return;
-        }
-
-        // 2. ถ้าแพงเกินไปมาก (เกิน 1.4 เท่าของลิมิต)
-        if (playerPrice >= this.limitPrice * 1.4) {
-            System.out.println(name + ": แพงเกินไป ไม่มีเงินจ่าย!");
-            this.patience = 0;
-            return;
-        }
-
-        // 3. วัดดวง (ใช้ Logic จาก Interface)
-        if (GameRNG.getInstance().succeedOnChance(calculateSuccessChance(playerPrice))) {
-            makeDeal(player, playerPrice);
-        } else {
-            recalculatePrice(playerPrice); // คำนวณราคาเสนอใหม่
-            reducePatience();
-        }
+    protected boolean isPriceAcceptable(double playerPrice){
+        return playerPrice <= this.currentOffer * 1.2 && playerPrice <= this.limitPrice;
     }
 
-    private void makeDeal(Player player, double finalPrice) {
+    @Override
+    protected boolean isPriceTooExploit(double playerPrice){
+        return playerPrice >= this.limitPrice * 1.4;
+    }
+
+    @Override
+    protected String OfferDialogue(){
+        return ": แพงเกินไป ไม่มีเงินจ่าย!";
+    }
+
+    @Override
+    protected void makeDeal(Player player, double finalPrice) {
         System.out.println(">> ตกลงรับซื้อที่ราคา " + (int) finalPrice);
         // player.addMoney(finalPrice);
         // player.removeItem(this.wantedItem);
         this.patience = 0;
     }
 
-    private void reducePatience() {
+    @Override
+    protected OfferState reducePatience() {
         this.patience--;
-        if (this.patience <= 0)
+        if (this.patience <= 0) {
             System.out.println(name + ": ไม่เอาแล้ว (เดินหนี)");
-        else
+            return OfferState.FAIL;
+        }
+        else {
             System.out.println(name + ": เพิ่มให้เป็น " + (int) this.currentOffer + " บาท เอาไหม?");
+            return OfferState.PENDING;
+        }
     }
 }

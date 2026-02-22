@@ -1,4 +1,4 @@
-package Type;
+package Enums;
 
 // --- 3. ขนาด (ตัวคูณราคาตามความนิยม) ---
 public enum Size {

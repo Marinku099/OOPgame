@@ -1,4 +1,4 @@
-package Type;
+package Enums;
 
 // --- 2. ระดับความหายาก (ตัวคูณราคา) ---
 public enum Rarity {

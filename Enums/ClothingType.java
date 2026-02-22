@@ -1,4 +1,4 @@
-package Type;
+package Enums;
 // --- 1. ประเภทสินค้าและราคาฐาน ---
 
 public enum ClothingType {

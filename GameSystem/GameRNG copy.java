@@ -2,93 +2,92 @@ package GameSystem;
 
 import Enums.Rarity;
 import Enums.Size;
-import GameItem.ClothingItem;
-
 import java.util.List;
 import java.util.Random;
 
 import DataBase.Database;
 import DataBase.ItemData;
 
-public class GameRNG implements WeeklyListener{
-    private static final Random random = new Random();
-    private static int week = TimeManagement.getInstance().getWeek();
+public class GameRNG {
+    private static GameRNG instance;
+    private final Random random;
  
-    private GameRNG() { }
+    private GameRNG() {
+        this.random = new Random();
+    }
+
+    // คืนค่า Instance หลักของคลาส (Singleton Pattern)
+    public static GameRNG getInstance() {
+        if (instance == null) {
+            instance = new GameRNG();
+        }
+        return instance;
+    }
 
     // สุ่มตัวเลขจำนวนเต็มในช่วงที่กำหนด (รวมค่า min และ max)
-    public static int getRandomInt(int min, int max) {
+    public int getRandomInt(int min, int max) {
         if (min > max) return min;
         return random.nextInt((max - min) + 1) + min;
     }
 
     // สุ่มค่าความจริง (True หรือ False)
-    public static boolean getRandomBoolean() {
+    public boolean getRandomBoolean() {
         return random.nextBoolean();
     }
 
     // คำนวณผลลัพธ์ว่าสำเร็จหรือไม่ ตามความน่าจะเป็นที่กำหนด (0.0 - 1.0)
-    public static boolean succeedOnChance(double probability) {
+    public boolean succeedOnChance(double probability) {
         return random.nextDouble() < probability;
     }
 
     // สุ่มเลือกวัตถุหนึ่งชิ้นจากรายการ (List) ที่ส่งเข้ามา
-    private static <T> T pickRandomFromList(List<T> list) {
+    public <T> T pickRandomItem(List<T> list) {
         if (list == null || list.isEmpty()) return null;
         return list.get(random.nextInt(list.size()));
     }
 
-    public static ItemData pickRandomItemData(Database database){
-        Rarity rarity = genRandomRarityByWeek();
-        return pickRandomFromList(database.getItemsByRarity(rarity));
+    public ItemData pickRandomItem(Database database){
+        Rarity rarity = getRandomRarityByWeek();
+        return pickRandomItem(database.getItemsByRarity(rarity));
     }
 
-    public static ClothingItem pickRandomCloth(List<ClothingItem> clothingItems){
-        return pickRandomFromList(clothingItems.stream().filter(item -> item.getRarity() == genRandomRarityByWeek()).toList());
-    }
-
-    public static String pickRandomNPCName(Database database){
-        return pickRandomFromList(database.getAllCustomerNames());
-    }
-
-    public static String pickRandomNPCName(List<String> names){
-        return pickRandomFromList(names);
-    }
-
+    // ทำไม getter อยู่ในนี้?
     // สุ่มค่าความโลภของ NPC (ส่งผลต่อลิมิตราคาที่รับได้)
-    public static double genGreed() {
+    public double getGreed() {
         return 0.9 + (random.nextDouble() * 0.4);
     }
 
+    // ทำไม getter อยู่ในนี้?
     // สุ่มค่าความอดทนของ NPC (จำนวนรอบที่ยอมให้ต่อรองราคา)
-    public static int genPatience() {
+    public int getPatience() {
         return getRandomInt(2, 4);
     }
 
+    // ทำไม getter อยู่ในนี้?
     // สุ่มระดับความรู้ของ NPC ในการประเมินราคาของ (ขึ้นอยู่กับสัปดาห์ในเกม)
-    public static int genKnowledge() {
+    public int getKnowledge(int week) {
         if (week < 4) return getRandomInt(1, week);
         return getRandomInt(2, 4);
     }
 
     // สุ่มเปอร์เซ็นต์ช่วงราคาที่จะขยับในการต่อรองแต่ละครั้ง
-    public static double genNegotiationStep() {
+    public double genNegotiationStep() {
         return 0.10 + (random.nextDouble() * 0.40);
     }
 
     // สุ่มค่าสภาพของสินค้า (10% - 100%)
-    public static double genCondition() {
+    public double genCondition() {
         return 0.1 + (0.9 * random.nextDouble());
     }
 
     // สุ่มไซส์ของสินค้าจาก Enum Size
-    public static Size genSize() {
+    public Size genSize() {
         Size[] allSizes = Size.values();
         return allSizes[random.nextInt(allSizes.length)];
     }
 
     // สุ่มโอกาสที่สินค้าจะเป็นของปลอม (โอกาสสูงขึ้นตามสัปดาห์ที่เล่น)
-    public static boolean genIsFake() {
+    public boolean genIsFake(int week) {
         int roll = random.nextInt(100);
         if (week == 1) 
             return roll < 10;
@@ -99,7 +98,7 @@ public class GameRNG implements WeeklyListener{
     }
 
     // สุ่มค่าความเนียนของของปลอม (ยิ่งสัปดาห์มาก ยิ่งดูเหมือนของจริงมาก)
-    public static double genFakeAuthenticity() {
+    public double genFakeAuthenticity(int week) {
         if (week == 1) {
             return 0.1 + (0.4 * random.nextDouble());
         } else if (week == 2) {
@@ -110,13 +109,13 @@ public class GameRNG implements WeeklyListener{
     }
 
     // เรียกใช้จากภายนอก (เพื่อเอาชื่อ Rarity ไป Query ใน Database)
-    public static Rarity genRandomRarityByWeek() {
-        // int week = TimeManagement.getWeek(); // เรียกใช้ Singleton ของ TimeManagement (ตรวจสอบให้แน่ใจว่าคลาสนั้นมี getInstance())
-        return determineRarity();
+    public Rarity getRandomRarityByWeek() {
+        int week = TimeManagement.getWeek(); // เรียกใช้ Singleton ของ TimeManagement (ตรวจสอบให้แน่ใจว่าคลาสนั้นมี getInstance())
+        return determineRarity(week);
     }
 
     // คำนวณเปอร์เซ็นต์ Rarity
-    private static Rarity determineRarity() {
+    private Rarity determineRarity(int week) {
         double roll = random.nextDouble() * 100; // สุ่มเลข 0.0 - 100.0
 
         if (week == 1) {
@@ -147,9 +146,4 @@ public class GameRNG implements WeeklyListener{
             return Rarity.LEGENDARY /*"Legendary"*/;
         }
     } 
-
-    @Override
-    public void weeklyAction(){
-        week = TimeManagement.getInstance().getWeek();
-    }
 }

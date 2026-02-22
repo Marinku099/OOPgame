@@ -1,6 +1,6 @@
 package OOPGameCharacter;
 
-import GameItem.ClothingItem;
+import Enums.OfferState;
 
 public class Player extends GameCharacter {
     private int balance;
@@ -15,24 +15,21 @@ public class Player extends GameCharacter {
     }
     
     // เริ่มการเจรจา (เลือกของ)
-    public void sentOfferTo(NPC npc, ClothingItem item) {
-        npc.receiveOffer(this,item);
-    }
+    // public void sentOfferTo(NPC npc, ClothingItem item) {
+    //     npc.receiveOffer(this,item);
+    // }
 
     // ต่อราคา (ซื้อ)
-    public void buyItemFrom(SellerNPC seller , double price) {
-        seller.processOffer(price, this);
+    public OfferState buyItemFrom(SellerNPC seller , double price) {
+        return seller.processOffer(price, this);
     }
 
     // ต่อราคา (ขาย)
-    public void sellItemTo(BuyerNPC buyer , double price) {
-        buyer.processOffer(price, this);   
+    public OfferState sellItemTo(BuyerNPC buyer , double price) {
+        return buyer.processOffer(price, this);   
     }
 
-    // Stock
-    public Stock geStock() {
-        return stock;
-    }
+    // getter อาจจะไม่ต้อง public หมด, encapsulate ไว้บ้างก็ดีตามความเหมาะสม
 
     //Getter
     public int getBalance() {
@@ -43,11 +40,22 @@ public class Player extends GameCharacter {
         return luck;
     }
 
-    private void setBalance(int amount) {
+    public Stock getStock() {
+        return this.stock;
+    }
+
+    private void setBalance(double amount) {
         this.balance += amount;
     }
 
     private void addLuck() {
         this.luck += 1;
+    }
+
+    public void updateBalance(OfferState state, NPC npc){
+        if (state != OfferState.SUCCESS) return;
+        
+        if (npc instanceof BuyerNPC) setBalance(npc.getCurrentOffer());
+        else setBalance(-npc.getCurrentOffer());
     }
 }

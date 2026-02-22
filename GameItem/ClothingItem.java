@@ -1,11 +1,14 @@
 package GameItem;
 
-import Type.ClothingType;
-import Type.Rarity;
-import Type.Size;
+import DataBase.Database;
+import DataBase.ItemData;
+import Enums.ClothingType;
+import Enums.Rarity;
+import Enums.Size;
+import GameSystem.GameRNG;
 
 // ลบ FakeStatsGeneratorByWeek และ UI ออก
-public abstract class ClothingItem implements CalculateClothPrice {
+public class ClothingItem implements CalculateClothPrice {
     
     // --- Attributes ---
     protected String name;
@@ -34,6 +37,35 @@ public abstract class ClothingItem implements CalculateClothPrice {
         this.condition = condition;
         this.isFake = isFake;
         this.fakeAuthenticity = fakeAuthenticity;
+    }
+
+    // All random
+    public ClothingItem (Database database){
+        ItemData item = GameRNG.pickRandomItemData(database);
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.type = item.getType();
+        this.rarity = item.getRarity();
+        this.basePrice = item.getType().getBasePrice();
+
+        this.size = GameRNG.genSize();
+        this.condition = GameRNG.genCondition();
+        this.isFake = GameRNG.genIsFake();
+        this.fakeAuthenticity = GameRNG.genFakeAuthenticity();
+    }
+
+    // Random base on ItemData
+    public ClothingItem (ItemData item){
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.type = item.getType();
+        this.rarity = item.getRarity();
+        this.basePrice = this.type.getBasePrice();
+
+        this.size = GameRNG.genSize();
+        this.condition = GameRNG.genCondition();
+        this.isFake = GameRNG.genIsFake();
+        this.fakeAuthenticity = GameRNG.genFakeAuthenticity();
     }
 
     // --- Implement: CalculateClothPrice (Getters) ---

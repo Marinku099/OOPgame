@@ -1,7 +1,7 @@
 package GameItem;
 
-import Type.Rarity;
-import Type.Size;
+import Enums.Rarity;
+import Enums.Size;
 
 public interface CalculateClothPrice {
 

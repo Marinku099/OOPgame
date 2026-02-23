@@ -1,10 +1,10 @@
 package OOPGameCharacter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Enums.OfferState;
 import Enums.SkillType;
+import GameItem.ClothingItem;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Player extends GameCharacter {
     private int balance;
@@ -36,11 +36,21 @@ public class Player extends GameCharacter {
 
     // ต่อราคา (ซื้อ)
     public OfferState buyItemFrom(SellerNPC seller , double price) {
+        if (price <= 0) {
+            System.out.println("ราคาต้องมากกว่า 0");
+            return OfferState.FAIL;
+        }
+        seller.receiveOffer(this);
         return seller.processOffer(price, this);
     }
 
     // ต่อราคา (ขาย)
     public OfferState sellItemTo(BuyerNPC buyer , double price) {
+        if (price <= 0) {
+            System.out.println("ราคาต้องมากกว่า 0");
+            return OfferState.FAIL;
+        }
+        buyer.receiveOffer(this);
         return buyer.processOffer(price, this);   
     }
 
@@ -59,18 +69,37 @@ public class Player extends GameCharacter {
         return this.stock;
     }
 
-    private void setBalance(double amount) {
-        this.balance += amount;
-    }
+    //private void setBalance(double amount) {
+        //this.balance += amount;
+    //}
 
     private void addLuck() {
         this.luck += 1;
     }
 
-    public void updateBalance(OfferState state, NPC npc){
+    /*public void updateBalance(OfferState state, NPC npc, double finalPrice){
         if (state != OfferState.SUCCESS) return;
         
-        if (npc instanceof BuyerNPC) setBalance(npc.getCurrentOffer());
-        else setBalance(-npc.getCurrentOffer());
+        if (npc instanceof BuyerNPC) balance += finalPrice;
+        else balance -= finalPrice;
+    }
+
+    public void levelUpSkill(SkillType skill , int level) {
+        if (level <= 0) return;
+
+        int current = SkillLevel.getOrDefault(skill, 0);
+        SkillLevel.put(skill, current + level);
+    }*/
+
+    public void completeBuy(ClothingItem item, double price) {
+        if (balance < price) return;
+
+        this.balance -= price;
+        this.stock.addItem(item);
+    }
+
+    public void completeSell(ClothingItem item, double price) {
+        this.balance += price;
+        this.stock.removeItem(item);
     }
 }

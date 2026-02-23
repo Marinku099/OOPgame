@@ -30,7 +30,7 @@ public class CsvItemLoader extends CsvLoader<Map<Rarity, List<ItemData>>> implem
 
     @Override
     protected void processLine(String line, Map<Rarity, List<ItemData>> result) {
-        String[] row = line.split(",");
+        String[] row = line.split("," , 4);
         if (row.length >= 4) {
             try {
                 String name = row[0].trim();

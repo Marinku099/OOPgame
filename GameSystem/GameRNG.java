@@ -1,14 +1,12 @@
 package GameSystem;
 
+import DataBase.Database;
+import DataBase.ItemData;
 import Enums.Rarity;
 import Enums.Size;
 import GameItem.ClothingItem;
-
 import java.util.List;
 import java.util.Random;
-
-import DataBase.Database;
-import DataBase.ItemData;
 
 public class GameRNG implements WeeklyListener{
     private static final Random random = new Random();
@@ -44,7 +42,13 @@ public class GameRNG implements WeeklyListener{
     }
 
     public static ClothingItem pickRandomCloth(List<ClothingItem> clothingItems){
-        return pickRandomFromList(clothingItems.stream().filter(item -> item.getRarity() == genRandomRarityByWeek()).toList());
+        List<ClothingItem> filtered =
+        clothingItems.stream()
+            .filter(item -> item != null)
+            .filter(item -> item.getRarity() == genRandomRarityByWeek())
+            .toList();
+        if (filtered.isEmpty()) return null;
+        return pickRandomFromList(filtered);
     }
 
     public static String pickRandomNPCName(Database database){
@@ -67,7 +71,8 @@ public class GameRNG implements WeeklyListener{
 
     // สุ่มระดับความรู้ของ NPC ในการประเมินราคาของ (ขึ้นอยู่กับสัปดาห์ในเกม)
     public static int genKnowledge() {
-        if (week < 4) return getRandomInt(1, week);
+        int safeWeek = Math.max(week, 1);
+        if (safeWeek < 4) return getRandomInt(1, safeWeek);
         return getRandomInt(2, 4);
     }
 

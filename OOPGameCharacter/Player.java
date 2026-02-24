@@ -7,8 +7,9 @@ import Enums.OfferState;
 import Enums.SkillType;
 
 public class Player extends GameCharacter {
+    private static final int MAX_LV = 5;
     private int balance;
-    private int luck;
+    private int luck = 1;
     private Stock stock;
     Map<SkillType, Integer> SkillLevel = new HashMap<>();
 
@@ -23,11 +24,29 @@ public class Player extends GameCharacter {
         }
     }
 
+    public Player(String name, int balance) {
+        super(name, 0);
+        this.balance = balance;
+        this.stock = new Stock();
+
+        for (SkillType skill : SkillType.values()) {
+            SkillLevel.put(skill, 0);
+        }
+    }
+
     public int getSkillLevel(SkillType skill){
         return SkillLevel.get(skill);
     }
 
+    public boolean updateSkillLevel(SkillType skill, int updateValue){
+        if (getSkillLevel(skill) + updateValue > MAX_LV) return false;
+        SkillLevel.computeIfPresent(skill, (k, v) -> v += updateValue);
+        return true;
+    }
 
+    public static int getMaxLevel(){
+        return Player.MAX_LV;
+    }
     
     // เริ่มการเจรจา (เลือกของ)
     // public void sentOfferTo(NPC npc, ClothingItem item) {
@@ -59,6 +78,10 @@ public class Player extends GameCharacter {
         return this.stock;
     }
 
+    public Map<SkillType, Integer> getSkillLevel() {
+        return SkillLevel;
+    }
+
     private void setBalance(double amount) {
         this.balance += amount;
     }
@@ -72,5 +95,16 @@ public class Player extends GameCharacter {
         
         if (npc instanceof BuyerNPC) setBalance(npc.getCurrentOffer());
         else setBalance(-npc.getCurrentOffer());
+    }
+
+    public void buyItem(long sumCost) {
+        setBalance(-sumCost);
+
+    }
+
+    public void updateSkillLevel(Map<SkillType,Integer> skillsLevel) {
+        for (Map.Entry<SkillType, Integer> entry : skillsLevel.entrySet()) {
+            SkillLevel.computeIfPresent(entry.getKey(), (k, v) -> v += entry.getValue());
+        }
     }
 }

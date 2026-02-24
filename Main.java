@@ -3,15 +3,17 @@ import DataBase.Loader.*;
 import Enums.OfferState;
 import GameSystem.*;
 import OOPGameCharacter.*;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.Queue;
-//import java.util.Scanner;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        //Scanner sc = new Scanner(System.in);
-        //PrintWriter log = new PrintWriter(new FileWriter("Test_log.txt", true));
+        Scanner sc = new Scanner(System.in);
+        PrintWriter log = new PrintWriter(new FileWriter("Test_log.txt", true));
 
         /* ================= INIT DATABASE ================= */
         ItemLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
@@ -100,21 +102,21 @@ public class Main {
                         System.out.println("NPC เสนอราคา : " + offer);
                         System.out.println("ใส่ราคาที่คุณจะเสนอ : ");
 
-                        //double playerOffer = sc.nextDouble();
+                        double playerOffer = sc.nextDouble();
 
                         if (npc instanceof BuyerNPC buyer) {
-                            state = player.sellItemTo(buyer, offer);
+                            state = player.sellItemTo(buyer, playerOffer);
                         } else if (npc instanceof SellerNPC seller) {
-                            state = player.buyItemFrom(seller, offer);
+                            state = player.buyItemFrom(seller, playerOffer);
                         }
 
-                        //log.println("Week " + time.getWeek() + " Day " + day);
-                        //log.println("NPC: " + npc.getClass().getSimpleName());
-                        //log.println("NPC Offer: " + offer);
-                        //log.println("Player Offer: " + playerOffer);
-                        //log.println("Result: " + state);
-                        //log.println("------------------");
-                        //log.flush();
+                        log.println("Week " + time.getWeek() + " Day " + day);
+                        log.println("NPC: " + npc.getClass().getSimpleName());
+                        log.println("NPC Offer: " + offer);
+                        log.println("Player Offer: " + offer);
+                        log.println("Result: " + state);
+                        log.println("------------------");
+                        log.flush();
                     }
 
                     score.updateDeal(state, npc);
@@ -137,8 +139,8 @@ public class Main {
 
         System.out.println("\n=== GAME OVER ===");
 
-        //log.close();
-        //sc.close();
+        log.close();
+        sc.close();
     }
 
     /* ================= CREATE NPC ================= */

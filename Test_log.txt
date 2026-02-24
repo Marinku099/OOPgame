@@ -910,3 +910,1191 @@ NPC Offer: 133.61725733233112
 Player Offer: 12.0
 Result: FAIL
 ------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 116.52838802480224
+Player Offer: 116.52838802480224
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 962.6867892797219
+Player Offer: 962.6867892797219
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 1022.6275399200565
+Player Offer: 1022.6275399200565
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 81.02328935263195
+Player Offer: 81.02328935263195
+Result: SUCCESS
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 834.3327796556389
+Player Offer: 834.3327796556389
+Result: SUCCESS
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 289.50854316579307
+Player Offer: 289.50854316579307
+Result: SUCCESS
+------------------
+Week 1 Day 3
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 1027.2961757456503
+Player Offer: 1027.2961757456503
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 107.01173832542192
+Player Offer: 107.01173832542192
+Result: SUCCESS
+------------------
+Week 1 Day 5
+NPC: BuyerNPC
+NPC Offer: 2.3661646295821144
+Player Offer: 2.3661646295821144
+Result: SUCCESS
+------------------
+Week 1 Day 5
+NPC: SellerNPC
+NPC Offer: 913.1459162172223
+Player Offer: 913.1459162172223
+Result: SUCCESS
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 733.9226304235456
+Player Offer: 733.9226304235456
+Result: SUCCESS
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 156.9238903326801
+Player Offer: 156.9238903326801
+Result: SUCCESS
+------------------
+Week 1 Day 6
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 1211.5426837001332
+Player Offer: 1211.5426837001332
+Result: SUCCESS
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 1796.2390157406944
+Player Offer: 1796.2390157406944
+Result: SUCCESS
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 703.7067998118952
+Player Offer: 703.7067998118952
+Result: SUCCESS
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 670.2153431447852
+Player Offer: 670.2153431447852
+Result: SUCCESS
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 323.49999832265394
+Player Offer: 323.49999832265394
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: SellerNPC
+NPC Offer: 476.4282410917597
+Player Offer: 476.4282410917597
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: SellerNPC
+NPC Offer: 215.2297629121048
+Player Offer: 215.2297629121048
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: BuyerNPC
+NPC Offer: 2.0570405034128694
+Player Offer: 2.0570405034128694
+Result: SUCCESS
+------------------
+Week 2 Day 2
+NPC: SellerNPC
+NPC Offer: 335.3797764971441
+Player Offer: 335.3797764971441
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 91.81149076743512
+Player Offer: 91.81149076743512
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 890.4035281031815
+Player Offer: 890.4035281031815
+Result: SUCCESS
+------------------
+Week 2 Day 4
+NPC: SellerNPC
+NPC Offer: 652.68988837781
+Player Offer: 652.68988837781
+Result: SUCCESS
+------------------
+Week 2 Day 4
+NPC: SellerNPC
+NPC Offer: 243.80575540104704
+Player Offer: 243.80575540104704
+Result: SUCCESS
+------------------
+Week 2 Day 4
+NPC: SellerNPC
+NPC Offer: 1063.8318610488113
+Player Offer: 1063.8318610488113
+Result: SUCCESS
+------------------
+Week 2 Day 5
+NPC: SellerNPC
+NPC Offer: 757.3792998600699
+Player Offer: 757.3792998600699
+Result: SUCCESS
+------------------
+Week 2 Day 5
+NPC: SellerNPC
+NPC Offer: 302.1598547279069
+Player Offer: 302.1598547279069
+Result: SUCCESS
+------------------
+Week 2 Day 6
+NPC: SellerNPC
+NPC Offer: 174.53678294181114
+Player Offer: 174.53678294181114
+Result: SUCCESS
+------------------
+Week 2 Day 6
+NPC: SellerNPC
+NPC Offer: 455.46551050991354
+Player Offer: 455.46551050991354
+Result: SUCCESS
+------------------
+Week 2 Day 6
+NPC: SellerNPC
+NPC Offer: 71.51449322695218
+Player Offer: 71.51449322695218
+Result: SUCCESS
+------------------
+Week 2 Day 6
+NPC: SellerNPC
+NPC Offer: 784.3568886511483
+Player Offer: 784.3568886511483
+Result: SUCCESS
+------------------
+Week 2 Day 7
+NPC: SellerNPC
+NPC Offer: 564.1082797858146
+Player Offer: 564.1082797858146
+Result: SUCCESS
+------------------
+Week 2 Day 7
+NPC: SellerNPC
+NPC Offer: 182.02254046752475
+Player Offer: 182.02254046752475
+Result: SUCCESS
+------------------
+Week 3 Day 1
+NPC: SellerNPC
+NPC Offer: 137.90323283883907
+Player Offer: 137.90323283883907
+Result: SUCCESS
+------------------
+Week 3 Day 1
+NPC: SellerNPC
+NPC Offer: 736.8948322238946
+Player Offer: 736.8948322238946
+Result: SUCCESS
+------------------
+Week 3 Day 2
+NPC: SellerNPC
+NPC Offer: 557.936046125466
+Player Offer: 557.936046125466
+Result: SUCCESS
+------------------
+Week 3 Day 2
+NPC: SellerNPC
+NPC Offer: 1032.8710437808993
+Player Offer: 1032.8710437808993
+Result: SUCCESS
+------------------
+Week 3 Day 3
+NPC: SellerNPC
+NPC Offer: 537.8370789093261
+Player Offer: 537.8370789093261
+Result: SUCCESS
+------------------
+Week 3 Day 3
+NPC: SellerNPC
+NPC Offer: 478.2205654664684
+Player Offer: 478.2205654664684
+Result: SUCCESS
+------------------
+Week 3 Day 3
+NPC: SellerNPC
+NPC Offer: 97.2376197554943
+Player Offer: 97.2376197554943
+Result: SUCCESS
+------------------
+Week 3 Day 4
+NPC: SellerNPC
+NPC Offer: 513.7943011465056
+Player Offer: 513.7943011465056
+Result: SUCCESS
+------------------
+Week 3 Day 4
+NPC: SellerNPC
+NPC Offer: 742.0740264332458
+Player Offer: 742.0740264332458
+Result: SUCCESS
+------------------
+Week 3 Day 4
+NPC: SellerNPC
+NPC Offer: 319.72286108950266
+Player Offer: 319.72286108950266
+Result: SUCCESS
+------------------
+Week 3 Day 4
+NPC: SellerNPC
+NPC Offer: 1007.0020570206409
+Player Offer: 1007.0020570206409
+Result: SUCCESS
+------------------
+Week 3 Day 5
+NPC: SellerNPC
+NPC Offer: 604.5511390438145
+Player Offer: 604.5511390438145
+Result: SUCCESS
+------------------
+Week 3 Day 5
+NPC: SellerNPC
+NPC Offer: 987.0974363600446
+Player Offer: 987.0974363600446
+Result: SUCCESS
+------------------
+Week 3 Day 5
+NPC: SellerNPC
+NPC Offer: 686.0794532760049
+Player Offer: 686.0794532760049
+Result: SUCCESS
+------------------
+Week 3 Day 5
+NPC: SellerNPC
+NPC Offer: 908.6414035956916
+Player Offer: 908.6414035956916
+Result: SUCCESS
+------------------
+Week 3 Day 5
+NPC: SellerNPC
+NPC Offer: 285.40105256352956
+Player Offer: 285.40105256352956
+Result: SUCCESS
+------------------
+Week 3 Day 6
+NPC: SellerNPC
+NPC Offer: 209.47009442429837
+Player Offer: 209.47009442429837
+Result: SUCCESS
+------------------
+Week 3 Day 6
+NPC: SellerNPC
+NPC Offer: 1167.1823698959931
+Player Offer: 1167.1823698959931
+Result: SUCCESS
+------------------
+Week 3 Day 7
+NPC: SellerNPC
+NPC Offer: 1051.1544367010804
+Player Offer: 1051.1544367010804
+Result: SUCCESS
+------------------
+Week 3 Day 7
+NPC: SellerNPC
+NPC Offer: 271.8220388556481
+Player Offer: 271.8220388556481
+Result: SUCCESS
+------------------
+Week 3 Day 7
+NPC: SellerNPC
+NPC Offer: 411.2967489150288
+Player Offer: 411.2967489150288
+Result: SUCCESS
+------------------
+Week 3 Day 7
+NPC: SellerNPC
+NPC Offer: 632.3491671420065
+Player Offer: 632.3491671420065
+Result: SUCCESS
+------------------
+Week 4 Day 1
+NPC: SellerNPC
+NPC Offer: 466.574746873785
+Player Offer: 466.574746873785
+Result: SUCCESS
+------------------
+Week 4 Day 1
+NPC: SellerNPC
+NPC Offer: 259.44786576088654
+Player Offer: 259.44786576088654
+Result: SUCCESS
+------------------
+Week 4 Day 1
+NPC: SellerNPC
+NPC Offer: 864.606517585636
+Player Offer: 864.606517585636
+Result: SUCCESS
+------------------
+Week 4 Day 1
+NPC: SellerNPC
+NPC Offer: 925.5195432550244
+Player Offer: 925.5195432550244
+Result: SUCCESS
+------------------
+Week 4 Day 2
+NPC: SellerNPC
+NPC Offer: 681.1069175622248
+Player Offer: 681.1069175622248
+Result: SUCCESS
+------------------
+Week 4 Day 2
+NPC: SellerNPC
+NPC Offer: 743.5078839808564
+Player Offer: 743.5078839808564
+Result: SUCCESS
+------------------
+Week 4 Day 2
+NPC: SellerNPC
+NPC Offer: 231.28709305456326
+Player Offer: 231.28709305456326
+Result: SUCCESS
+------------------
+Week 4 Day 3
+NPC: SellerNPC
+NPC Offer: 681.0391817875878
+Player Offer: 681.0391817875878
+Result: SUCCESS
+------------------
+Week 4 Day 3
+NPC: SellerNPC
+NPC Offer: 1076.9786921679477
+Player Offer: 1076.9786921679477
+Result: SUCCESS
+------------------
+Week 4 Day 4
+NPC: SellerNPC
+NPC Offer: 350.505071236261
+Player Offer: 350.505071236261
+Result: SUCCESS
+------------------
+Week 4 Day 4
+NPC: SellerNPC
+NPC Offer: 1135.0360396282492
+Player Offer: 1135.0360396282492
+Result: SUCCESS
+------------------
+Week 4 Day 5
+NPC: SellerNPC
+NPC Offer: 277.41758783809075
+Player Offer: 277.41758783809075
+Result: SUCCESS
+------------------
+Week 4 Day 5
+NPC: SellerNPC
+NPC Offer: 441.8006625268077
+Player Offer: 441.8006625268077
+Result: SUCCESS
+------------------
+Week 4 Day 6
+NPC: SellerNPC
+NPC Offer: 166.84538570292472
+Player Offer: 166.84538570292472
+Result: SUCCESS
+------------------
+Week 4 Day 6
+NPC: SellerNPC
+NPC Offer: 151.8789359489901
+Player Offer: 151.8789359489901
+Result: SUCCESS
+------------------
+Week 4 Day 6
+NPC: SellerNPC
+NPC Offer: 772.9246532646924
+Player Offer: 772.9246532646924
+Result: SUCCESS
+------------------
+Week 4 Day 6
+NPC: SellerNPC
+NPC Offer: 416.88667862350616
+Player Offer: 416.88667862350616
+Result: SUCCESS
+------------------
+Week 4 Day 7
+NPC: SellerNPC
+NPC Offer: 245.3714171351092
+Player Offer: 245.3714171351092
+Result: SUCCESS
+------------------
+Week 4 Day 7
+NPC: SellerNPC
+NPC Offer: 532.3313962132246
+Player Offer: 532.3313962132246
+Result: SUCCESS
+------------------
+Week 4 Day 7
+NPC: SellerNPC
+NPC Offer: 563.1507815745015
+Player Offer: 563.1507815745015
+Result: SUCCESS
+------------------
+Week 4 Day 7
+NPC: SellerNPC
+NPC Offer: 1016.3463667304696
+Player Offer: 1016.3463667304696
+Result: SUCCESS
+------------------
+Week 4 Day 7
+NPC: SellerNPC
+NPC Offer: 291.9363584440304
+Player Offer: 291.9363584440304
+Result: SUCCESS
+------------------
+Week 5 Day 1
+NPC: SellerNPC
+NPC Offer: 811.3550040290022
+Player Offer: 811.3550040290022
+Result: SUCCESS
+------------------
+Week 5 Day 1
+NPC: SellerNPC
+NPC Offer: 521.0295051551476
+Player Offer: 521.0295051551476
+Result: SUCCESS
+------------------
+Week 5 Day 1
+NPC: SellerNPC
+NPC Offer: 1073.5151514095257
+Player Offer: 1073.5151514095257
+Result: SUCCESS
+------------------
+Week 5 Day 2
+NPC: SellerNPC
+NPC Offer: 732.515504949752
+Player Offer: 732.515504949752
+Result: SUCCESS
+------------------
+Week 5 Day 2
+NPC: SellerNPC
+NPC Offer: 1169.5310982336334
+Player Offer: 1169.5310982336334
+Result: SUCCESS
+------------------
+Week 5 Day 2
+NPC: SellerNPC
+NPC Offer: 331.6011333683593
+Player Offer: 331.6011333683593
+Result: SUCCESS
+------------------
+Week 5 Day 2
+NPC: SellerNPC
+NPC Offer: 857.69431040866
+Player Offer: 857.69431040866
+Result: SUCCESS
+------------------
+Week 5 Day 3
+NPC: SellerNPC
+NPC Offer: 306.61604151182627
+Player Offer: 306.61604151182627
+Result: SUCCESS
+------------------
+Week 5 Day 3
+NPC: SellerNPC
+NPC Offer: 257.165582850281
+Player Offer: 257.165582850281
+Result: SUCCESS
+------------------
+Week 5 Day 4
+NPC: SellerNPC
+NPC Offer: 853.0113204339635
+Player Offer: 853.0113204339635
+Result: SUCCESS
+------------------
+Week 5 Day 4
+NPC: SellerNPC
+NPC Offer: 179.3035741671492
+Player Offer: 179.3035741671492
+Result: SUCCESS
+------------------
+Week 5 Day 4
+NPC: SellerNPC
+NPC Offer: 291.4313656801352
+Player Offer: 291.4313656801352
+Result: SUCCESS
+------------------
+Week 5 Day 5
+NPC: SellerNPC
+NPC Offer: 544.8692088860844
+Player Offer: 544.8692088860844
+Result: SUCCESS
+------------------
+Week 5 Day 5
+NPC: SellerNPC
+NPC Offer: 789.6138103227014
+Player Offer: 789.6138103227014
+Result: SUCCESS
+------------------
+Week 5 Day 5
+NPC: SellerNPC
+NPC Offer: 1176.5685750220414
+Player Offer: 1176.5685750220414
+Result: SUCCESS
+------------------
+Week 5 Day 6
+NPC: SellerNPC
+NPC Offer: 1084.6443396399623
+Player Offer: 1084.6443396399623
+Result: SUCCESS
+------------------
+Week 5 Day 6
+NPC: SellerNPC
+NPC Offer: 240.35758368962303
+Player Offer: 240.35758368962303
+Result: SUCCESS
+------------------
+Week 5 Day 7
+NPC: SellerNPC
+NPC Offer: 895.5495046676456
+Player Offer: 895.5495046676456
+Result: SUCCESS
+------------------
+Week 5 Day 7
+NPC: SellerNPC
+NPC Offer: 322.769040769777
+Player Offer: 322.769040769777
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 197.89705639519892
+Player Offer: 197.89705639519892
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 233.16220674081632
+Player Offer: 233.16220674081632
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 741.8081820587507
+Player Offer: 741.8081820587507
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 195.46621267772352
+Player Offer: 195.46621267772352
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 693.0379335197133
+Player Offer: 693.0379335197133
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: BuyerNPC
+NPC Offer: 4.43309640837744
+Player Offer: 4.43309640837744
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 743.5095397182281
+Player Offer: 743.5095397182281
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: BuyerNPC
+NPC Offer: 16.75305821957414
+Player Offer: 16.75305821957414
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 976.9874729645229
+Player Offer: 976.9874729645229
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 315.21464610953626
+Player Offer: 315.21464610953626
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 546.3157431611869
+Player Offer: 546.3157431611869
+Result: FAIL
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 225.50112373083715
+Player Offer: 225.50112373083715
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: FAIL
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 151.59244504607133
+Player Offer: 151.59244504607133
+Result: FAIL
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 1083.0322817938363
+Player Offer: 1083.0322817938363
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 6
+NPC: BuyerNPC
+NPC Offer: 1.0
+Player Offer: 1.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 950.1528840347098
+Player Offer: 950.1528840347098
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 887.7398737125077
+Player Offer: 887.7398737125077
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: BuyerNPC
+NPC Offer: 14.348068387730883
+Player Offer: 14.348068387730883
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 933.5917767169371
+Player Offer: 933.5917767169371
+Result: FAIL
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 2026.488685428928
+Player Offer: 2026.488685428928
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 1046.0439818236623
+Player Offer: 1046.0439818236623
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 941.439583641296
+Player Offer: 941.439583641296
+Result: FAIL
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 1084.6830864432447
+Player Offer: 1084.6830864432447
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 846.6779620228662
+Player Offer: 846.6779620228662
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 530.648514729309
+Player Offer: 530.648514729309
+Result: PENDING
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 477.5836632563781
+Player Offer: 477.5836632563781
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 819.7504803423387
+Player Offer: 819.7504803423387
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 676.0854857109452
+Player Offer: 676.0854857109452
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 928.6231026859577
+Player Offer: 928.6231026859577
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 683.2775858780657
+Player Offer: 683.2775858780657
+Result: PENDING
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 661.4564703107969
+Player Offer: 661.4564703107969
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: BuyerNPC
+NPC Offer: 22.483713260282766
+Player Offer: 22.483713260282766
+Result: SUCCESS
+------------------
+Week 1 Day 2
+NPC: SellerNPC
+NPC Offer: 202.81175519122766
+Player Offer: 202.81175519122766
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 1345.0346075712825
+Player Offer: 1345.0346075712825
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 1286.138337100657
+Player Offer: 1286.138337100657
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 801.269509545253
+Player Offer: 801.269509545253
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 761.8620948348524
+Player Offer: 761.8620948348524
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: BuyerNPC
+NPC Offer: 27.375647791924152
+Player Offer: 27.375647791924152
+Result: SUCCESS
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 251.5547134751571
+Player Offer: 251.5547134751571
+Result: FAIL
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 1235.4468143279785
+Player Offer: 1235.4468143279785
+Result: PENDING
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 1167.3449155267265
+Player Offer: 1167.3449155267265
+Result: FAIL
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 743.5318432735642
+Player Offer: 743.5318432735642
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 153.31038971606418
+Player Offer: 153.31038971606418
+Result: SUCCESS
+------------------
+Week 1 Day 5
+NPC: SellerNPC
+NPC Offer: 380.0598711023669
+Player Offer: 380.0598711023669
+Result: SUCCESS
+------------------
+Week 1 Day 5
+NPC: SellerNPC
+NPC Offer: 810.0247481196928
+Player Offer: 810.0247481196928
+Result: PENDING
+------------------
+Week 1 Day 5
+NPC: SellerNPC
+NPC Offer: 769.8285342428244
+Player Offer: 769.8285342428244
+Result: SUCCESS
+------------------
+Week 1 Day 5
+NPC: SellerNPC
+NPC Offer: 1232.077286681328
+Player Offer: 1232.077286681328
+Result: SUCCESS
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 892.089804013353
+Player Offer: 892.089804013353
+Result: PENDING
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 841.1610752630496
+Player Offer: 841.1610752630496
+Result: FAIL
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 1132.526018925638
+Player Offer: 1132.526018925638
+Result: PENDING
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 1078.515140549755
+Player Offer: 1078.515140549755
+Result: PENDING
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 1088.1683475131988
+Player Offer: 1088.1683475131988
+Result: FAIL
+------------------
+Week 1 Day 6
+NPC: SellerNPC
+NPC Offer: 816.5156251891009
+Player Offer: 816.5156251891009
+Result: SUCCESS
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 395.2950652654782
+Player Offer: 395.2950652654782
+Result: SUCCESS
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 1087.1224601019294
+Player Offer: 1087.1224601019294
+Result: PENDING
+------------------
+Week 1 Day 7
+NPC: SellerNPC
+NPC Offer: 1041.0039779458284
+Player Offer: 1041.0039779458284
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: SellerNPC
+NPC Offer: 155.3333475863268
+Player Offer: 155.3333475863268
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: SellerNPC
+NPC Offer: 68.96318699781148
+Player Offer: 68.96318699781148
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: SellerNPC
+NPC Offer: 773.4298256771647
+Player Offer: 773.4298256771647
+Result: SUCCESS
+------------------
+Week 2 Day 1
+NPC: SellerNPC
+NPC Offer: 1056.0304285972536
+Player Offer: 1056.0304285972536
+Result: SUCCESS
+------------------
+Week 2 Day 2
+NPC: SellerNPC
+NPC Offer: 1189.0025416652495
+Player Offer: 1189.0025416652495
+Result: SUCCESS
+------------------
+Week 2 Day 2
+NPC: SellerNPC
+NPC Offer: 851.3505150433396
+Player Offer: 851.3505150433396
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 1305.2847037409297
+Player Offer: 1305.2847037409297
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 596.901269726182
+Player Offer: 596.901269726182
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 921.7352369498492
+Player Offer: 921.7352369498492
+Result: PENDING
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 885.6971057491139
+Player Offer: 885.6971057491139
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 701.279976179569
+Player Offer: 701.279976179569
+Result: SUCCESS
+------------------
+Week 2 Day 3
+NPC: SellerNPC
+NPC Offer: 172.05784154323226
+Player Offer: 172.05784154323226
+Result: FAIL
+------------------
+Week 2 Day 4
+NPC: SellerNPC
+NPC Offer: 763.9150067208818
+Player Offer: 763.9150067208818
+Result: SUCCESS
+------------------
+Week 2 Day 4
+NPC: SellerNPC
+NPC Offer: 967.7250456806778
+Player Offer: 967.7250456806778
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 178.0
+Player Offer: 178.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 176.0
+Player Offer: 176.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 1237.0
+Player Offer: 1237.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 848.0
+Player Offer: 848.0
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 797.0
+Player Offer: 797.0
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 806.0
+Player Offer: 806.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 273.0
+Player Offer: 273.0
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 260.0
+Player Offer: 260.0
+Result: FAIL
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 307.0
+Player Offer: 307.0
+Result: SUCCESS
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 827.0
+Player Offer: 827.0
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 793.0
+Player Offer: 793.0
+Result: PENDING
+------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 792.0
+Player Offer: 792.0
+Result: SUCCESS
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 320.0
+Player Offer: 320.0
+Result: PENDING
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 305.0
+Player Offer: 305.0
+Result: SUCCESS
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 656.0
+Player Offer: 656.0
+Result: FAIL
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 615.0
+Player Offer: 615.0
+Result: PENDING
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 584.0
+Player Offer: 584.0
+Result: PENDING
+------------------
+Week 1 Day 3
+NPC: SellerNPC
+NPC Offer: 584.0
+Player Offer: 584.0
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 1330.0
+Player Offer: 1330.0
+Result: PENDING
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 1266.0
+Player Offer: 1266.0
+Result: FAIL
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 127.0
+Player Offer: 127.0
+Result: SUCCESS
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 582.0
+Player Offer: 582.0
+Result: PENDING
+------------------
+Week 1 Day 4
+NPC: SellerNPC
+NPC Offer: 552.0
+Player Offer: 552.0
+Result: SUCCESS
+------------------

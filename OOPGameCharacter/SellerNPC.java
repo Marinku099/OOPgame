@@ -2,6 +2,7 @@ package OOPGameCharacter;
 
 import Enums.OfferState;
 import GameItem.ClothingItem;
+import GameSystem.GameRNG;
 import java.util.List;
 
 public class SellerNPC extends NPC {
@@ -9,13 +10,14 @@ public class SellerNPC extends NPC {
 
     public SellerNPC(List<ClothingItem> cloths, List<String> names) {
         super(cloths, names);
-        this.greed = Math.min(1.5, Math.max(this.greed, 0.8));
+        this.greed = 1.0 + (GameRNG.genGreed() - 0.9);
     }
 
     @Override
     public double getStartingOffer() {
         // คนขาย -> ตั้งราคาเริ่ม "แพงกว่าราคาประเมิน"
-        return Math.max(1, estimatedValue * (1 + greed));
+        return estimatedValue * (1.3 + greed * 0.3);
+        //return Math.max(1, estimatedValue * (1 + greed));
     }
 
     // จำเป็นต้องเช็กด้วยหรอ? บอกด้วยคลาสแล้วนะ
@@ -37,8 +39,8 @@ public class SellerNPC extends NPC {
             this.estimatedValue = 10; // MIN_PRICE กลาง ๆ
         }   
 
-        this.limitPrice = Math.max(1, this.estimatedValue * this.greed); // คำนวณลิมิต (คนขายเอาแพง -> คูณความงก)
-        this.currentOffer = Math.max(1, getStartingOffer()); // ตั้งราคาเริ่มต้น
+        this.limitPrice = estimatedValue * (0.85 + greed * 0.1); // คำนวณลิมิต (คนขายเอาแพง -> คูณความงก)
+        this.currentOffer = (int) Math.max(1, getStartingOffer()); // ตั้งราคาเริ่มต้น
     }
 
     @Override
@@ -74,7 +76,7 @@ public class SellerNPC extends NPC {
     protected OfferState reducePatience() {
         this.patience--;
 
-        this.currentOffer = Math.max(1, this.currentOffer * 0.9);
+        this.currentOffer = Math.max(1, this.currentOffer);
 
         if (this.patience <= 0) {
             System.out.println(name + ": ไม่ขายแล้ว รำคาญ (เดินหนี)");

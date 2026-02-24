@@ -14,7 +14,9 @@ public class BuyerNPC extends NPC {
     @Override
     public double getStartingOffer() {
         // คนซื้อ -> เริ่มจากราคาต่ำกว่าราคาประเมิน
-        return Math.max(1, estimatedValue * (1 - greed));
+        double base = estimatedValue * 0.6;
+        double greedEffect = estimatedValue * greed * 0.2;
+        return Math.max(estimatedValue * 0.3, base - greedEffect);
     }
 
     // ต้องเช็กด้วยหรอ?
@@ -38,10 +40,10 @@ public class BuyerNPC extends NPC {
         }
 
         // 2. คำนวณลิมิต (คนซื้อเอาถูก -> หารด้วยความงก)
-        this.limitPrice = Math.max(1, this.estimatedValue * (1 - greed * 0.8));
+        this.limitPrice = estimatedValue * (0.75 - greed * 0.15);
         
         // 3. ตั้งราคาเริ่มต้น (Logic จาก Interface)
-        this.currentOffer = Math.max(1, getStartingOffer());
+        this.currentOffer = Math.max(1, (int) Math.round(getStartingOffer()));
     }
 
     @Override
@@ -77,7 +79,7 @@ public class BuyerNPC extends NPC {
     protected OfferState reducePatience() {
         this.patience--;
         
-        this.currentOffer = Math.max(1, this.currentOffer * 1.1);
+        this.currentOffer = Math.max(1, this.currentOffer);
 
         if (this.patience <= 0) {
             System.out.println(name + ": ไม่เอาแล้ว (เดินหนี)");

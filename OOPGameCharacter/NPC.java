@@ -5,7 +5,6 @@ import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
 import GameSystem.GameRNG;
 import java.util.List;
-import Enums.OfferState;
 
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {
@@ -13,7 +12,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected double greed;
     protected double estimatedValue;
     protected double limitPrice;
-    protected double currentOffer;
+    protected int currentOffer;
     protected ClothingItem item;
 
     public NPC(String name, int knowledge, double greed, int patience, List<ClothingItem> cloths) {
@@ -88,7 +87,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
             makeDeal(player, playerPrice);
             return OfferState.SUCCESS;
         } else {
-            //recalculatePrice(playerPrice);
+            recalculatePrice(playerPrice);
             return reducePatience();
         }
     }
@@ -102,10 +101,10 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     public double getGreed() { return this.greed; }
 
     @Override 
-    public double getCurrentOffer() { return this.currentOffer; }
+    public int getCurrentOffer() { return this.currentOffer; }
     
     @Override 
-    public void setCurrentOffer(double price) { this.currentOffer = price; }
+    public void setCurrentOffer(int price) { this.currentOffer = price; }
     
     public String getName() { return name; }
 }

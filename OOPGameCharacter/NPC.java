@@ -3,15 +3,12 @@ package OOPGameCharacter;
 import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
 import GameSystem.GameRNG;
-
 import java.util.List;
-
 import Enums.OfferState;
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;
     protected double greed;
-
     protected double estimatedValue;
     protected double limitPrice;
     protected double currentOffer;

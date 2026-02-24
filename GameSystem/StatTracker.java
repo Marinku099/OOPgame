@@ -23,7 +23,7 @@ public class StatTracker {
         return this.best;
     }
 
-    private void setCurrent(double curr){
+    public void setCurrent(double curr){
         this.current = curr;
     }
 

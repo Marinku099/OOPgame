@@ -9,7 +9,7 @@ import java.util.Map;
 public class Player extends GameCharacter {
     private static final int MAX_LV = 5;
     private int balance;
-    private int luck = 1;
+    private int luck = 0;
     private Stock stock;
     Map<SkillType, Integer> SkillLevel = new HashMap<>();
 
@@ -92,12 +92,8 @@ public class Player extends GameCharacter {
         return SkillLevel;
     }
 
-    private void setBalance(double amount) {
+    public void setBalance(double amount) {
         this.balance += amount;
-    }
-
-    private void addLuck() {
-        this.luck += 1;
     }
 
     /*public void updateBalance(OfferState state, NPC npc, double finalPrice){
@@ -128,7 +124,6 @@ public class Player extends GameCharacter {
 
     public void buyItem(long sumCost) {
         setBalance(-sumCost);
-
     }
 
     public void updateSkillLevel(Map<SkillType,Integer> skillsLevel) {

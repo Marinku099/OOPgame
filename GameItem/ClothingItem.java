@@ -35,6 +35,7 @@ public class ClothingItem implements CalculateClothPrice {
         this.rarity = rarity;
         this.basePrice = type.getBasePrice();
 
+        //FIXME: แก้ imagePath
         this.imagePath = null;
 
         // ค่าพวกนี้ควรสุ่มมาจากข้างนอก แล้วส่งเข้ามา

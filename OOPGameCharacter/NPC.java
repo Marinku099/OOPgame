@@ -107,6 +107,8 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     public void setCurrentOffer(int price) { this.currentOffer = price; }
     
     public String getName() { return name; }
+
+    public ClothingItem getItem() { return this.item; }
 }
 
 /*

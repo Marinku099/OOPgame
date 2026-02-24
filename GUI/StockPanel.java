@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import GameItem.ClothingItem;
+import GameSystem.FontManagement;
 import OOPGameCharacter.Player;
 
 public class StockPanel extends JPanel {
@@ -135,7 +136,8 @@ public class StockPanel extends JPanel {
         txtItemDescription.setEditable(false);
         txtItemDescription.setLineWrap(true);
         txtItemDescription.setWrapStyleWord(true);
-        txtItemDescription.setFont(new Font("SansSerif", Font.PLAIN, 16)); // ปรับฟอนต์ให้ใหญ่ขึ้นนิดหน่อย
+        // txtItemDescription.setFont(new Font("SansSerif", Font.PLAIN, 16)); // ปรับฟอนต์ให้ใหญ่ขึ้นนิดหน่อย
+        txtItemDescription.setFont(FontManagement.getFont("GameSystem\\NotoSansThai-VariableFont_wdth,wght.ttf", 16f));
         txtItemDescription.setMargin(new Insets(10, 10, 10, 10));
         
         JScrollPane descScrollPane = new JScrollPane(txtItemDescription);

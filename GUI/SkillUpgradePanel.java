@@ -128,6 +128,7 @@ public class SkillUpgradePanel extends JPanel {
 
         });
 
+        sumSkillCost.setFont(FontManagement.getFont("GameSystem\\Acme-Regular.ttf", 50f));
         box.add(sumSkillCost);
         box.add(confirmButton);
         this.add(box);
@@ -145,13 +146,12 @@ public class SkillUpgradePanel extends JPanel {
         boolean isAnySkillOverLimit = false;
         boolean hasAnyUpgrade = false;
 
-        // 1. กวาดข้อมูลทุกสกิลในตะกร้ามาเช็กบิล
         for (SkillType s : skillsLevel.keySet()) {
             int addedLv = skillsLevel.get(s);
             
             if (addedLv > 0) {
                 hasAnyUpgrade = true;
-                int currentLv = player.getSkillLevel(s); // ดึงเลเวลปัจจุบันมาจากผู้เล่น
+                int currentLv = player.getSkillLevel(s);
                 
                 if (currentLv + addedLv > Player.getMaxLevel()) {
                     isAnySkillOverLimit = true;
@@ -160,24 +160,21 @@ public class SkillUpgradePanel extends JPanel {
             totalCost += skillsCost.getOrDefault(s, 0L);
         }
 
-        // 2. โชว์ราคารวม
         sumSkillCost.setText(String.valueOf(totalCost));
 
-        // 3. กฎเหล็กการเปิดปุ่ม! ต้องผ่านเงื่อนไข "ทุกข้อ"
         boolean isAffordable = totalCost <= player.getBalance();
         
         if (hasAnyUpgrade && isAffordable && !isAnySkillOverLimit) {
             confirmButton.setEnabled(true);
             confirmButton.setText("Confirm Upgrade");
         } else {
-            // ถ้าไม่ผ่านเงื่อนไข สั่งปิดปุ่ม พร้อมบอกเหตุผล
             confirmButton.setEnabled(false);
             if (isAnySkillOverLimit) {
                 confirmButton.setText("level Over limit");
             } else if (!isAffordable) {
                 confirmButton.setText("Your Balance is too low");
             } else {
-                confirmButton.setText("Select level"); // กรณีที่ยังไม่ได้กรอกเลขอะไรเลย
+                confirmButton.setText("Select level");
             }
         }
     }
@@ -198,6 +195,7 @@ public class SkillUpgradePanel extends JPanel {
 
         //TODO: ตกแต่ง costLabel
         JLabel costLabel = new JLabel("0");
+        costLabel.setFont(FontManagement.getFont("GameSystem\\Acme-Regular.ttf", 30f));
 
         // ==== TextField ====
         JTextField inp = new JTextField("0", 2);
@@ -225,7 +223,6 @@ public class SkillUpgradePanel extends JPanel {
             }
 
             private void calculateSkillCost() {
-                //TODO: ดัก maximum level
                 String text = inp.getText().trim();
 
                 if (text.isEmpty()) {

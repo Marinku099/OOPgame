@@ -27,6 +27,7 @@ public class GameWindow extends JFrame {
     private JPanel mainPanel;
 
     private Player player;
+    private ShopPanel shopPanel;
     private Map<SkillType, Integer> skillsMap;
 
     public GameWindow() {
@@ -81,7 +82,7 @@ public class GameWindow extends JFrame {
         mainPanel = new JPanel(cardLayout);
 
         GameOpeningPanel startGame = new GameOpeningPanel(this);
-        ShopPanel shopPanel = new ShopPanel(this);
+        shopPanel = new ShopPanel(this, player);
         StockPanel stockPanel = new StockPanel(this);
         SkillUpgradePanel skillPanel =
                 new SkillUpgradePanel(skillsMap, player);
@@ -117,5 +118,9 @@ public class GameWindow extends JFrame {
             GameWindow window = new GameWindow();
             window.setVisible(true);
         });
+    }
+
+    public ShopPanel getShopPanel() {
+        return this.shopPanel;
     }
 }

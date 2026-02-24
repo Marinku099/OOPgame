@@ -15,20 +15,35 @@ import GameSystem.StatTracker;
 
 public class SummaryPanel extends JPanel {
     private ScoreManagement sm;
+    private PageNavigator navigator;
+
     private Image bgImage = new ImageIcon("GameElement\\Summary\\Summarysi.png").getImage();
 
-    public SummaryPanel(ScoreManagement sm){
+    public SummaryPanel(ScoreManagement sm /* , PageNavigator nav*/){
         this.sm = sm;
+        this.navigator = null /*nav*/;
         this.setLayout(null);
 
         buildStatLabelByDay(sm.getBuyAmount(), 430, 245);
         buildStatLabelByDay(sm.getSellAmount(), 890, 245);
         buildStatLabelByDay(sm.getBalance(), 430, 465);
 
-        //TODO: เพิ่มปุ่ม next
         JButton nextButton = new JButton("Next");
-        nextButton.setBounds(800, 800, 100, 100);
+        nextButton.setBackground(Color.white);
+        nextButton.setFont(FontManagement.getFont("GameSystem\\Acme-Regular.ttf", 30f));
+        nextButton.setBounds(1100, 600, 100, 50);
+        nextButton.setFocusable(false);
+        nextButton.addActionListener(e -> {
+            if (navigator != null) {
+                //TODO: แก้ชื่อให้ถูก
+                navigator.navigateTo("MENU_PAGE");
+            } else {
+                System.out.println("ยังไม่ได้เสียบปลั๊กรีโมทโว้ย!");
+            }
+        });
+
         this.add(nextButton);
+
     }
 
     private void buildStatLabelByDay(StatTracker st, int x, int y) {

@@ -4,14 +4,20 @@ import Enums.OfferState;
 import GameItem.ClothingItem;
 import GameSystem.GameController;
 import OOPGameCharacter.NPC;
+import OOPGameCharacter.Player;
 import OOPGameCharacter.BuyerNPC;
 import javax.swing.*;
+
+import DataBase.Database;
+
 import java.awt.*;
 
 public class ShopPanel extends JPanel {
 
     private GameWindow mainFrame;
     private Image bgImage;
+
+    private Player player;
     
     // UI Components
     private JLabel lblNpcName, lblNpcDialogue, lblNpcImage;
@@ -22,8 +28,9 @@ public class ShopPanel extends JPanel {
 
     private NPC currentNPC;
 
-    public ShopPanel(GameWindow frame) {
+    public ShopPanel(GameWindow frame, Player player) {
         this.mainFrame = frame;
+        this.player = player;
         setLayout(null); // ใช้ Absolute Layout เพื่อวาง Component ตามตำแหน่งในภาพพื้นหลัง
         
         // 1. โหลดพื้นหลัง

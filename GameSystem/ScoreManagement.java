@@ -13,16 +13,22 @@ public class ScoreManagement {
 
     public ScoreManagement(Player player){
         this.player = player;
-        this.balance = new StatTracker(0, 0, 0);
+        this.balance = new StatTracker(0, player.getBalance(), 0);
         this.buyAmount = new StatTracker(0, 0, 0);
         this.sellAmount = new StatTracker(0, 0, 0);
     }
 
     public void scoreByDay(){
         updateSummaryScore();
+        this.balance.setCurrent(player.getBalance());
+
         this.balance.updateByDay();
         this.sellAmount.updateByDay();
         this.buyAmount.updateByDay();
+    }
+
+    public void updateBalanceByPlayer(){
+        this.balance.setCurrent(player.getBalance());
     }
 
     private void updateSummaryScore(){
@@ -34,9 +40,21 @@ public class ScoreManagement {
     public void updateDeal(OfferState state, NPC npc) {
         if (state != OfferState.SUCCESS) return ;
 
-        if (npc instanceof BuyerNPC) sellAmount.updateCurr(1);
-        else buyAmount.updateCurr(1);
-        balance.updateCurr(npc.getCurrentOffer());
+        double cost = npc.getCurrentOffer();
+        if (npc instanceof BuyerNPC) {
+            sellAmount.updateCurr(1);
+        }
+        else {
+            buyAmount.updateCurr(1);
+            cost = -cost;
+        }
+        balance.updateCurr(cost);
+        player.setBalance(cost);
+    }
+
+    public void updateBuying(double cost) {
+        balance.updateCurr(-cost);
+        player.setBalance(-cost);
     }
 
     public void printDailySummary() {

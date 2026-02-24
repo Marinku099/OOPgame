@@ -84,7 +84,7 @@ public class GameWindow extends JFrame {
         ShopPanel shopPanel = new ShopPanel(this);
         StockPanel stockPanel = new StockPanel(this);
         SkillUpgradePanel skillPanel =
-                new SkillUpgradePanel(this, skillsMap, player);
+                new SkillUpgradePanel(skillsMap, player);
 
         mainPanel.add(startGame, "StartGame");
         mainPanel.add(shopPanel, "ShopPanel");

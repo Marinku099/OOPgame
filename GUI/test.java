@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
+import javax.swing.JFrame;
+
 import Enums.SkillType;
 import GameSystem.ScoreManagement;
 import OOPGameCharacter.Player;
@@ -12,6 +14,11 @@ import GUI.GameWindow;
 
 public class test {
     public static void main(String[] args) {
+        GameWindow a = new GameWindow();
+        a.setVisible(true);
+        // Player player = new Player("player", 5000);
+        // // GameWindow gameWindow = new GameWindow(player);
+        // JFrame frame = new JFrame();
         GameWindow a = new GameWindow();
         a.setVisible(true);
         // Player player = new Player("player", 5000);

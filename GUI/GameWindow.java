@@ -93,6 +93,7 @@ public class GameWindow extends JFrame {
 
         mainPanel.add(startGame, "StartGame");
         // mainPanel.add(shopPanel, "ShopPanel");
+        // mainPanel.add(shopPanel, "ShopPanel");
         mainPanel.add(stockPanel, "StockPanel");
         mainPanel.add(skillPanel, "SkillUpgradePanel");
 

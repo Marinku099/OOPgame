@@ -1,46 +1,121 @@
 package GUI;
+
 import java.awt.*;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import DataBase.Database;
+import DataBase.Loader.CsvItemLoader;
+import DataBase.Loader.CsvNameLoader;
+import DataBase.Loader.ItemLoader;
+import DataBase.Loader.NameLoader;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import Enums.SkillType;
+import GameItem.ClothingItem;
+import GameSystem.GameRNG;
 import OOPGameCharacter.Player;
 
-public class GameWindow extends JFrame{
+import Enums.ClothingType;
+import Enums.Rarity;
+import Enums.Size;
 
-    Dimension screenSize;
-    int screenWidth;
-    int screenHight;
+public class GameWindow extends JFrame {
 
-    public GameWindow(Player player){
-        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.screenWidth = screenSize.width;
-        this.screenHight = screenSize.height;
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
 
-        String GameName = "Geme name";
-        this.setTitle(GameName);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        settingLayout();
+    private Player player;
+    private Map<SkillType, Integer> skillsMap;
 
-        this.setResizable(true);
-        this.setSize(screenSize);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setMinimumSize(new Dimension(800, 600)); // not sure yet
-        this.setLocationRelativeTo(null);
+    public GameWindow() {
 
-        // String logoPath = "path";
-        // ImageIcon icon = new ImageIcon(logoPath);
-        // this.setIconImage(icon.getImage());
-        // this.getContentPane().setBackground(new Color(255, 255, 255));
+        setTitle("Play On Wear , Trade & Talk");
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // ==============================
+        // 1️⃣ สร้าง Player
+        // ==============================
+        player = new Player("Tar", 1000, 1, 1);
+
+        // ==============================
+        // สร้างไอเทมทดสอบใส่ใน Stock
+        // ==============================
+
+        ItemLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
+        NameLoader nameLoader = new CsvNameLoader("Csv/NPC_name.csv");
+        Database database = new Database(itemLoader, nameLoader);
+        ClothingItem testItem = GameRNG.pickRandomCloth(database.getListClothingItems());
+
+
+      //  ClothingItem testItem = new ClothingItem(
+      //          "Vintage Hoodie",
+      //          "90s oversized street hoodie in perfect condition.",
+      //          ClothingType.HOODIE,   // ใช้ enum ที่มีจริง
+      //          Rarity.VINTAGE,
+      //          Size.L,
+      //          0.95,                  // 95% condition
+      //          false,                 // ไม่ใช่ของปลอม
+      //          0.0
+//
+      //          
+      //  );
+
+        // เพิ่มเข้า inventory ผู้เล่น
+        player.getStock().addItem(testItem);
+
+        // ==============================
+        // 3️⃣ เตรียม Skill Map
+        // ==============================
+        skillsMap = new HashMap<>();
+        for (SkillType type : SkillType.values()) {
+            skillsMap.put(type, 0);
+        }
+
+        // ==============================
+        // 4️⃣ CardLayout
+        // ==============================
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        GameOpeningPanel startGame = new GameOpeningPanel(this);
+        ShopPanel shopPanel = new ShopPanel(this);
+        StockPanel stockPanel = new StockPanel(this);
+        SkillUpgradePanel skillPanel =
+                new SkillUpgradePanel(this, skillsMap, player);
+
+        mainPanel.add(startGame, "StartGame");
+        mainPanel.add(shopPanel, "ShopPanel");
+        mainPanel.add(stockPanel, "StockPanel");
+        mainPanel.add(skillPanel, "SkillUpgradePanel");
+
+        add(mainPanel);
+
+        // ==============================
+        // 5️⃣ เปิดหน้า Inventory ทันที
+        // ==============================
+        cardLayout.show(mainPanel, "StockPanel");
+
+        // โหลดข้อมูลเข้าตาราง
+        stockPanel.updateStockData();
     }
 
-    private void settingLayout(){
-        this.setLayout(new BorderLayout());
+    // ให้ StockPanel เรียกใช้
+    public Player getPlayer() {
+        return player;
+    }
 
-        // JPanel basePane = (JPanel) this.getContentPane();
+    public void showScreen(String screenName) {
+        cardLayout.show(mainPanel, screenName);
+    }
 
-        // basePane.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(() -> {
+            GameWindow window = new GameWindow();
+            window.setVisible(true);
+        });
     }
 }

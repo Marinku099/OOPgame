@@ -22,6 +22,9 @@ public class ClothingItem implements CalculateClothPrice {
     protected boolean isFake;
     protected double fakeAuthenticity;
 
+    // --- Image Path ---
+    protected String imagePath;
+
     // --- Constructor ---
     public ClothingItem(String name, String description, ClothingType type, Rarity rarity, 
                         Size size, double condition, boolean isFake, double fakeAuthenticity) {
@@ -31,6 +34,8 @@ public class ClothingItem implements CalculateClothPrice {
         this.type = type;
         this.rarity = rarity;
         this.basePrice = type.getBasePrice();
+
+        this.imagePath = null;
 
         // ค่าพวกนี้ควรสุ่มมาจากข้างนอก แล้วส่งเข้ามา
         this.size = size;
@@ -48,6 +53,8 @@ public class ClothingItem implements CalculateClothPrice {
         this.rarity = item.getRarity();
         this.basePrice = item.getType().getBasePrice();
 
+        this.imagePath = item.getImagePath();
+
         this.size = GameRNG.genSize();
         this.condition = GameRNG.genCondition();
         this.isFake = GameRNG.genIsFake();
@@ -61,6 +68,8 @@ public class ClothingItem implements CalculateClothPrice {
         this.type = item.getType();
         this.rarity = item.getRarity();
         this.basePrice = this.type.getBasePrice();
+
+        this.imagePath = item.getImagePath();
 
         this.size = GameRNG.genSize();
         this.condition = GameRNG.genCondition();
@@ -80,6 +89,11 @@ public class ClothingItem implements CalculateClothPrice {
     public String getName() { return name; }
     public String getDescription() { return description; }
     public ClothingType getType() { return type; }
+    public String getImagePath() { return imagePath;}
+
+    protected void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }
 
 /*

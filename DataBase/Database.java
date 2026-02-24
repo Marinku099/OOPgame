@@ -1,12 +1,11 @@
 package DataBase;
 
-import java.util.List;
-import java.util.Map;
-
 import DataBase.Loader.ItemLoader;
 import DataBase.Loader.NameLoader;
 import Enums.Rarity;
 import GameItem.ClothingItem;
+import java.util.List;
+import java.util.Map;
 
 public class Database {
     
@@ -23,7 +22,8 @@ public class Database {
 
     //ดูเฉพาะ rarity นั้นๆ
     public List<ItemData> getItemsByRarity(Rarity rarity) {
-        return itemMap.get(rarity);
+        //return itemMap.get(rarity);
+        return itemMap.getOrDefault(rarity, List.of());
     }
     
     //ดูทุก items

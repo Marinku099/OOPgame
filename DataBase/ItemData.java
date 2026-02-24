@@ -9,14 +9,14 @@ public class ItemData {
     private ClothingType type;
     private Rarity rarity;
     private String description;
-    private String imagepath;
+    private String imagePath;
 
     public ItemData(String name, ClothingType type, Rarity rarity, String description, String imagepath) {
         this.name = name;
         this.type = type;
         this.rarity = rarity;
         this.description = description;
-        this.imagepath = imagepath;
+        this.imagePath = imagepath;
     }
 
     public String getName() {
@@ -35,8 +35,8 @@ public class ItemData {
         return description;
     }
 
-    public String getImagepath() {
-        return imagepath;
+    public String getImagePath() {
+        return imagePath;
     }
 
     public ClothingItem toClothingItem(){

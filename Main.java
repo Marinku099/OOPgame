@@ -3,8 +3,6 @@ import DataBase.Loader.*;
 import Enums.OfferState;
 import GameSystem.*;
 import OOPGameCharacter.*;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.Queue;
 //import java.util.Scanner;
@@ -13,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         //Scanner sc = new Scanner(System.in);
-        PrintWriter log = new PrintWriter(new FileWriter("Test_log.txt", true));
+        //PrintWriter log = new PrintWriter(new FileWriter("Test_log.txt", true));
 
         /* ================= INIT DATABASE ================= */
         ItemLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
@@ -51,6 +49,11 @@ public class Main {
 
                     /* ===== NPC CHOOSE ITEM ===== */
                     npc.chooseItem();
+
+                    if (npc.getCurrentOffer() <= 0) {
+                        continue;
+                    }
+
                     // if (npc instanceof BuyerNPC) {
                     //     npc.chooseItem();
                     // } else if (npc instanceof SellerNPC) {
@@ -94,8 +97,8 @@ public class Main {
                     while (state == OfferState.PENDING) {
                         double offer = npc.getCurrentOffer();
 
-                        //System.out.println("NPC เสนอราคา : " + offer);
-                        //System.out.println("ใส่ราคาที่คุณจะเสนอ : ");
+                        System.out.println("NPC เสนอราคา : " + offer);
+                        System.out.println("ใส่ราคาที่คุณจะเสนอ : ");
 
                         //double playerOffer = sc.nextDouble();
 

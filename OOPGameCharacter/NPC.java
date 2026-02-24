@@ -5,10 +5,8 @@ import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
 import GameSystem.GameRNG;
 import java.util.List;
-<<<<<<< HEAD
 import Enums.OfferState;
-=======
->>>>>>> 92f7c576f2aa2c9a03ad22b184af5b817429ea64
+
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;

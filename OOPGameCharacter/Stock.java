@@ -1,7 +1,7 @@
 package OOPGameCharacter;
 
-import java.util.ArrayList;
 import GameItem.ClothingItem;
+import java.util.ArrayList;
 
 public class Stock {
     private ArrayList<ClothingItem> items;
@@ -16,6 +16,10 @@ public class Stock {
 
     public void addItem(ClothingItem item) {
         items.add(item);
+    }
+
+    public void removeItem(ClothingItem item) {
+        items.remove(item);
     }
 
     public ClothingItem removeItem(int index) {

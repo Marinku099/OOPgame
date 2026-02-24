@@ -8,7 +8,7 @@ import OOPGameCharacter.Player;
 
 public class test {
     public static void main(String[] args) {
-        Player player = new Player("player", 1, 1000, 1);
+        Player player = new Player("player", 1000);
         GameWindow gameWindow = new GameWindow(player);
         Map<SkillType, Integer> skills = new HashMap<>();
         skills.put(SkillType.LUCK, 1);

@@ -7,7 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -34,10 +36,15 @@ public class SkillUpgradePanel extends JPanel {
     private Map<SkillType, Integer> skills;
     // private Map<String, JTextField> skillLevelInp;
     private Player player;
+    private Map<SkillType, Long> skillsCost = new HashMap<>();
+    private Map<SkillType, Integer> skillsLevel = new HashMap<>();
+    private JLabel sumSkillCost = new JLabel("0");
+    JButton confirmButton = new JButton("Confirm Upgrade");
 
     public SkillUpgradePanel(Map<SkillType, Integer> skills, Player player){
         this.setBackground(Color.white);
         this.skills = skills;
+        setDefaultSkill();
         this.player = player;
         this.innerPadding = BorderFactory.createEmptyBorder(120, 50, 70, 50);
         this.lineBorder = BorderFactory.createLineBorder(Color.black, 30);
@@ -47,7 +54,14 @@ public class SkillUpgradePanel extends JPanel {
         drawAllSkillBox();
         drawHeader("Skill Upgrade");
 
-        
+        drawConfirmButton();        
+    }
+
+    private void setDefaultSkill(){
+        for (SkillType sk : this.skills.keySet()) {
+            skillsCost.put(sk, 0L);
+            skillsLevel.put(sk, 0);
+        }
     }
 
     private void drawAllSkillBox(){
@@ -77,10 +91,80 @@ public class SkillUpgradePanel extends JPanel {
         this.add(skillBox);
     }
 
-    //TODO: สร้างปุ่ม Submit ว่าซื้อแล้วนะ + อัปเดตเลเวลผู้เล่น
+    private void drawConfirmButton() {
+        // TODO: ตกแต่งปุ่ม
+        JPanel box = new JPanel(new FlowLayout(FlowLayout.RIGHT, 50, 0));
+        box.setBackground(this.getBackground());
+        // long sumCost = calculateSumCost();
+        confirmButton.addActionListener(e -> {
+            player.buyItem(calculateSumCost());
+            player.updateSkillLevel(skillsLevel);
+            System.out.println("Player balance: " + player.getBalance());
+            for (Map.Entry<SkillType, Integer> entry : player.getSkillLevel().entrySet()) {
+                System.out.println("Player skill " + entry.getKey() + " : " + entry.getValue());
+            }
+        });
 
-    private void updateCostLabel(JPanel box, String name){
-        //TODO: รองรับการสร้างปุ่ม costLabel แต่ตอนนี้ยัดใส่ drawNumberScanner ไปก่อน
+        box.add(sumSkillCost);
+        box.add(confirmButton);
+        this.add(box);
+    }
+
+    private void updateSumSkillCost(SkillType skill, long newValue, int lv){
+        skillsCost.put(skill, newValue);
+        skillsLevel.put(skill, lv);
+
+        validateGlobalState();
+    }
+
+    private void validateGlobalState() {
+        long totalCost = 0;
+        boolean isAnySkillOverLimit = false;
+        boolean hasAnyUpgrade = false;
+
+        // 1. กวาดข้อมูลทุกสกิลในตะกร้ามาเช็กบิล
+        for (SkillType s : skillsLevel.keySet()) {
+            int addedLv = skillsLevel.get(s);
+            
+            if (addedLv > 0) {
+                hasAnyUpgrade = true;
+                int currentLv = player.getSkillLevel(s); // ดึงเลเวลปัจจุบันมาจากผู้เล่น
+                
+                if (currentLv + addedLv > Player.getMaxLevel()) {
+                    isAnySkillOverLimit = true;
+                }
+            }
+            totalCost += skillsCost.getOrDefault(s, 0L);
+        }
+
+        // 2. โชว์ราคารวม
+        sumSkillCost.setText(String.valueOf(totalCost));
+
+        // 3. กฎเหล็กการเปิดปุ่ม! ต้องผ่านเงื่อนไข "ทุกข้อ"
+        boolean isAffordable = totalCost <= player.getBalance();
+        
+        if (hasAnyUpgrade && isAffordable && !isAnySkillOverLimit) {
+            confirmButton.setEnabled(true);
+            confirmButton.setText("Confirm Upgrade");
+        } else {
+            // ถ้าไม่ผ่านเงื่อนไข สั่งปิดปุ่ม พร้อมบอกเหตุผล
+            confirmButton.setEnabled(false);
+            if (isAnySkillOverLimit) {
+                confirmButton.setText("level Over limit");
+            } else if (!isAffordable) {
+                confirmButton.setText("Your Balance is too low");
+            } else {
+                confirmButton.setText("Select level"); // กรณีที่ยังไม่ได้กรอกเลขอะไรเลย
+            }
+        }
+    }
+
+    private long calculateSumCost(){
+        long sum = 0;
+        for (long cost : skillsCost.values()){
+            sum += cost;
+        }
+        return sum;
     }
 
     private void drawNumberScanner(JPanel box, String name){
@@ -92,7 +176,6 @@ public class SkillUpgradePanel extends JPanel {
         //TODO: ตกแต่ง costLabel
         JLabel costLabel = new JLabel("0");
 
-
         // ==== TextField ====
         JTextField inp = new JTextField("0", 2);
         inp.setFont(FontManagement.getFont("GameSystem\\Acme-Regular.ttf", 30f));
@@ -100,7 +183,7 @@ public class SkillUpgradePanel extends JPanel {
         inp.setPreferredSize(new Dimension(50, 50));
 
         AbstractDocument doc = (AbstractDocument) inp.getDocument();
-        doc.setDocumentFilter(new IntLimitFilter(0, 99));
+        doc.setDocumentFilter(new IntLimitFilter(0, 5));
 
         inp.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -124,6 +207,7 @@ public class SkillUpgradePanel extends JPanel {
 
                 if (text.isEmpty()) {
                     costLabel.setText("0");
+                    updateSumSkillCost(skill, 0L, 0);
                     return ;
                 }
 
@@ -133,11 +217,15 @@ public class SkillUpgradePanel extends JPanel {
 
                 if (inputLv == 0) {
                     costLabel.setText("0");
+                    updateSumSkillCost(skill, 0L, inputLv);
                 }
                 else {
                     long currentLvCost = costFromOneLevel(currentLv);
                     long lvToUpgradeCost = costFromOneLevel(lvToUpgrade);
-                    costLabel.setText(String.valueOf(lvToUpgradeCost - currentLvCost));
+                    long sumCost = lvToUpgradeCost - currentLvCost;
+                    updateSumSkillCost(skill, sumCost, inputLv);
+                    // skillsCost.replace(skill, sumCost);
+                    costLabel.setText(String.valueOf(sumCost));
                 }
             }
 
@@ -148,7 +236,7 @@ public class SkillUpgradePanel extends JPanel {
 
                 int A = skill.getCost();
                 int B = 1;
-                int C = 67;
+                int C = 1000;
                 return (A * squares) + (B * integer) + (C * constant);
             }
         });

@@ -122,34 +122,34 @@ public class GameRNG implements WeeklyListener{
 
     // คำนวณเปอร์เซ็นต์ Rarity
     private static Rarity determineRarity() {
-        double roll = random.nextDouble() * 100; // สุ่มเลข 0.0 - 100.0
+        double roll = random.nextDouble() * 100; // สุ่มเลข 0.0 - 100.0  // 100%
 
         if (week == 1) {
-            if (roll < 70) return Rarity.COMMON /*"Common"*/;
-            if (roll < 95) return Rarity.UNCOMMON /*"Uncommon"*/;
-            return Rarity.RARE /*"Rare"*/;
+            if (roll < 70) return Rarity.COMMON /*"Common"*/;        // 70%
+            if (roll < 95) return Rarity.UNCOMMON /*"Uncommon"*/;    // 25%
+            return Rarity.RARE /*"Rare"*/;                          // 5%
         } 
         else if (week == 2) {
-            if (roll < 65) return Rarity.COMMON /*"Common"*/;
-            if (roll < 93) return Rarity.UNCOMMON/*"Uncommon"*/;
-            if (roll < 99) return Rarity.RARE /*"Rare"*/;
-            return Rarity.VINTAGE /*"Vintage"*/;
+            if (roll < 65) return Rarity.COMMON /*"Common"*/;      // 65%
+            if (roll < 93) return Rarity.UNCOMMON/*"Uncommon"*/;   // 28%
+            if (roll < 99) return Rarity.RARE /*"Rare"*/;          // 6%
+            return Rarity.VINTAGE /*"Vintage"*/;                  // 1%
         } 
         else if (week == 3) {
-            if (roll < 65) return Rarity.UNCOMMON /*"Uncommon"*/;
-            if (roll < 90) return Rarity.RARE /*"Rare"*/;
-            return Rarity.VINTAGE /*"Vintage"*/;
+            if (roll < 65) return Rarity.UNCOMMON /*"Uncommon"*/;  // 65%
+            if (roll < 90) return Rarity.RARE /*"Rare"*/;         // 25%
+            return Rarity.VINTAGE /*"Vintage"*/;                  // 10%
         } 
         else if (week == 4) {
-            if (roll < 50) return Rarity.UNCOMMON /*"Uncommon"*/;
-            if (roll < 85) return Rarity.RARE /*"Rare"*/;
-            if (roll < 98) return Rarity.VINTAGE /*"Vintage"*/;
-            return Rarity.LEGENDARY /*"Legendary"*/;
+            if (roll < 50) return Rarity.UNCOMMON /*"Uncommon"*/;  // 50%
+            if (roll < 85) return Rarity.RARE /*"Rare"*/;         // 35%
+            if (roll < 98) return Rarity.VINTAGE /*"Vintage"*/;   // 13%
+            return Rarity.LEGENDARY /*"Legendary"*/;              // 2%
         } 
         else { // Week 5 เป็นต้นไป
-            if (roll < 60) return Rarity.RARE /*"Rare"*/;
-            if (roll < 90) return Rarity.VINTAGE /*"Vintage"*/;
-            return Rarity.LEGENDARY /*"Legendary"*/;
+            if (roll < 60) return Rarity.RARE /*"Rare"*/;         // 60%
+            if (roll < 90) return Rarity.VINTAGE /*"Vintage"*/;   // 30%
+            return Rarity.LEGENDARY /*"Legendary"*/;              // 10%
         }
     } 
 

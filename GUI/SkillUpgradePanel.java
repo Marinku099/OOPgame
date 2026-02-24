@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -30,16 +29,22 @@ import GameSystem.FontManagement;
 import OOPGameCharacter.Player;
 
 public class SkillUpgradePanel extends JPanel {
+    private PageNavigator navigator;
+
     private Border innerPadding;
     private Border lineBorder;
-    // private Border compoundBorder;
     private Map<SkillType, Integer> skills;
-    // private Map<String, JTextField> skillLevelInp;
     private Player player;
     private Map<SkillType, Long> skillsCost = new HashMap<>();
     private Map<SkillType, Integer> skillsLevel = new HashMap<>();
     private JLabel sumSkillCost = new JLabel("0");
     JButton confirmButton = new JButton("Confirm Upgrade");
+
+    public interface UpgradeListener {
+        void onUpgradeConfirmed(long totalCost);
+    }
+
+    private UpgradeListener upgradeListener;
 
     public SkillUpgradePanel(Map<SkillType, Integer> skills, Player player){
         this.setBackground(Color.white);
@@ -55,6 +60,10 @@ public class SkillUpgradePanel extends JPanel {
         drawHeader("Skill Upgrade");
 
         drawConfirmButton();        
+    }
+
+    public void setUpgradeListener(UpgradeListener listener){
+        this.upgradeListener = listener;
     }
 
     private void setDefaultSkill(){
@@ -97,12 +106,26 @@ public class SkillUpgradePanel extends JPanel {
         box.setBackground(this.getBackground());
         // long sumCost = calculateSumCost();
         confirmButton.addActionListener(e -> {
-            player.buyItem(calculateSumCost());
+            long totalCost = calculateSumCost();
+            player.buyItem(totalCost);
             player.updateSkillLevel(skillsLevel);
+
             System.out.println("Player balance: " + player.getBalance());
             for (Map.Entry<SkillType, Integer> entry : player.getSkillLevel().entrySet()) {
                 System.out.println("Player skill " + entry.getKey() + " : " + entry.getValue());
             }
+
+            if (upgradeListener != null) {
+                upgradeListener.onUpgradeConfirmed(totalCost);
+            }
+
+            //TODO: ไปทำบน frame ด้วย
+            if (navigator != null) {
+                navigator.navigateTo("MENU_PAGE");
+            } else {
+                System.out.println("ยังไม่ได้เสียบปลั๊กรีโมทโว้ย!");
+            }
+
         });
 
         box.add(sumSkillCost);

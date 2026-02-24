@@ -40,6 +40,7 @@ public class test {
 
         //  SummaryPanel sum = new SummaryPanel(sm);
 
+<<<<<<< Updated upstream
         // // gameWindow.add(sum);
         // // gameWindow.setVisible(true);
         // // frame.add(sum);
@@ -47,6 +48,15 @@ public class test {
         // // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // // frame.setVisible(true);
+=======
+        // gameWindow.add(sum);
+        // gameWindow.setVisible(true);
+        // frame.add(sum);
+        // frame.setTitle("Play On Wear , Trade & Talk");
+        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.setVisible(true);
+>>>>>>> Stashed changes
 
         //  java.net.URL imgUrl = skilPane.getClass().getResource("/GameElement/Status/AddButton.png");
         //  if (imgUrl != null) System.out.println("found it!");

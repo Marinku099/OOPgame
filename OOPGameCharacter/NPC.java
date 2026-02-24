@@ -1,10 +1,14 @@
 package OOPGameCharacter;
 
+import Enums.OfferState;
 import GameItem.ClothingItem;
 import GameSystem.CalculateNPC;
 import GameSystem.GameRNG;
 import java.util.List;
+<<<<<<< HEAD
 import Enums.OfferState;
+=======
+>>>>>>> 92f7c576f2aa2c9a03ad22b184af5b817429ea64
 
 public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;
@@ -23,7 +27,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
 
     public NPC(List<ClothingItem> cloths, List<String> names) {
         super(GameRNG.pickRandomNPCName(names), GameRNG.genKnowledge());
-        this.greed = GameRNG.genGreed();
+        this.greed = Math.min(1.0, Math.max(GameRNG.genGreed(), 0.3));
         this.patience = GameRNG.genPatience();
         this.item = GameRNG.pickRandomCloth(cloths);
     }
@@ -37,12 +41,15 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     
     // ตัวรับการเริ่มเจรจา
     public void receiveOffer(Player player) {
-        inspectItem(); // ประเมินของ
-        this.currentOffer = getStartingOffer(); // ตั้งราคาเปิด
+        //inspectItem(); // ประเมินของ
+        //this.currentOffer = getStartingOffer(); // ตั้งราคาเปิด
+        inspectItem();
+        chooseItem();
     }
     
     protected void inspectItem() {
-        this.estimatedValue = item.getPerceivedPrice(this.knowledge);
+        if (item == null) return;
+        this.estimatedValue = Math.max(1, item.getPerceivedPrice(this.knowledge));
     }
 
     public abstract void chooseItem();
@@ -57,6 +64,16 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
 
     // ต่อราคา
     public OfferState processOffer(double playerPrice, Player player) {
+        if (this.currentOffer <= 0 || this.item == null) {
+            System.out.println(name + ": ยังไม่พร้อมเจรจา");
+            return OfferState.FAIL;
+        }
+        
+        if (playerPrice <= 0) {
+            System.out.println("ราคาต้องมากกว่า 0");
+            return OfferState.FAIL;
+        }
+
         if (isPriceAcceptable(playerPrice)) {
             makeDeal(player, playerPrice);
             return OfferState.SUCCESS;
@@ -73,7 +90,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
             makeDeal(player, playerPrice);
             return OfferState.SUCCESS;
         } else {
-            recalculatePrice(playerPrice);
+            //recalculatePrice(playerPrice);
             return reducePatience();
         }
     }

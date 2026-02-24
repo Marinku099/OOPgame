@@ -25,7 +25,7 @@ public class Main {
         TimeManagement time = TimeManagement.getInstance();
         ScoreManagement score = new ScoreManagement(player);
 
-        System.out.println("=== OOP Merchant Game ===");
+        System.out.println("=== POWTT GAME ===");
 
         /* ================= GAME LOOP : 5 WEEKS ================= */
         while (time.getWeek() <= 5 && player.getBalance() > 0) {

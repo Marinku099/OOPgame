@@ -85,13 +85,14 @@ public class GameWindow extends JFrame {
 <<<<<<< Updated upstream
         shopPanel = new ShopPanel(this, player);
 =======
-        // ShopPanel shopPanel = new ShopPanel(this);
+        // // ShopPanel shopPanel = new ShopPanel(this);
 >>>>>>> Stashed changes
         StockPanel stockPanel = new StockPanel(this);
         SkillUpgradePanel skillPanel =
                 new SkillUpgradePanel(skillsMap, player);
 
         mainPanel.add(startGame, "StartGame");
+        // mainPanel.add(shopPanel, "ShopPanel");
         // mainPanel.add(shopPanel, "ShopPanel");
         // mainPanel.add(shopPanel, "ShopPanel");
         mainPanel.add(stockPanel, "StockPanel");

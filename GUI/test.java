@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import javax.swing.JFrame;
-
 import Enums.SkillType;
 import GameSystem.ScoreManagement;
 import OOPGameCharacter.Player;
@@ -14,11 +12,6 @@ import GUI.GameWindow;
 
 public class test {
     public static void main(String[] args) {
-        GameWindow a = new GameWindow();
-        a.setVisible(true);
-        // Player player = new Player("player", 5000);
-        // // GameWindow gameWindow = new GameWindow(player);
-        // JFrame frame = new JFrame();
         GameWindow a = new GameWindow();
         a.setVisible(true);
         // Player player = new Player("player", 5000);
@@ -63,11 +56,10 @@ public class test {
         // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // frame.setVisible(true);
->>>>>>> Stashed changes
 
-        //  java.net.URL imgUrl = skilPane.getClass().getResource("/GameElement/Status/AddButton.png");
-        //  if (imgUrl != null) System.out.println("found it!");
-        //  else System.out.println("nah TT");
+        // java.net.URL imgUrl = skilPane.getClass().getResource("/GameElement/Status/AddButton.png");
+        // if (imgUrl != null) System.out.println("found it!");
+        // else System.out.println("nah TT");
 
         // new GameWindow();
     }

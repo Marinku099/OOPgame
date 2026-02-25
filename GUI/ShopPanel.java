@@ -48,10 +48,10 @@ public class ShopPanel extends JPanel {
 
         npcMaskPanel = new JPanel(null);
         npcMaskPanel.setOpaque(false); // ทำให้ล่องหน
-        npcMaskPanel.setBounds(400, 150, 400, 300);
+        npcMaskPanel.setBounds(400, 150, 400, 390);
 
         lblNpcImage = new JLabel();
-        lblNpcImage.setBounds(400, 150, 400, 500); // ตำแหน่งตัวละครตรงกลาง
+        lblNpcImage.setBounds(0, 0, 400, 500); // ตำแหน่งตัวละครตรงกลาง
         
         npcMaskPanel.add(lblNpcImage);
         add(npcMaskPanel);
@@ -63,8 +63,10 @@ public class ShopPanel extends JPanel {
 
         lblNpcDialogue = new JLabel("Hello! I want to trade.", SwingConstants.CENTER);
         lblNpcDialogue.setOpaque(true);
+        lblNpcDialogue.setFont(FontManagement.getFont("GameSystem\\static\\NotoSansThai_Condensed-Bold.ttf", 25f));
+        lblNpcDialogue.setForeground(Color.BLACK);
         lblNpcDialogue.setBackground(new Color(255, 255, 255, 200));
-        lblNpcDialogue.setBounds(300, 650, 600, 80);
+        lblNpcDialogue.setBounds(800, 250, 400, 80);
         add(lblNpcDialogue);
 
         patienceBar = new JProgressBar(0, 10); // สมมติความอดทนเต็ม 10

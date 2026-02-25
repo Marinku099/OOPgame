@@ -8,6 +8,7 @@ import OOPGameCharacter.NPC;
 import OOPGameCharacter.Player;
 import OOPGameCharacter.BuyerNPC;
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 
 import DataBase.Database;
 
@@ -52,7 +53,7 @@ public class ShopPanel extends JPanel {
 
         lblNpcImage = new JLabel();
         lblNpcImage.setBounds(0, 0, 400, 500); // ตำแหน่งตัวละครตรงกลาง
-        
+
         npcMaskPanel.add(lblNpcImage);
         add(npcMaskPanel);
 
@@ -81,23 +82,30 @@ public class ShopPanel extends JPanel {
         txtPlayerOffer = new JTextField();
         txtPlayerOffer.setBounds(950, 600, 250, 40);
         txtPlayerOffer.setFont(new Font("Arial", Font.PLAIN, 20));
+        ((AbstractDocument) txtPlayerOffer.getDocument()).setDocumentFilter(new IntLimitFilter(0, 999999));
         add(txtPlayerOffer);
 
         btnCounter = new JButton("Counter Offer");
-        btnCounter.setBounds(950, 650, 250, 40);
+        btnCounter.setBounds(750, 600, 150, 40);
         btnCounter.addActionListener(e -> processTrade(false));
         add(btnCounter);
 
         btnAccept = new JButton("Accept Offer");
-        btnAccept.setBounds(950, 700, 250, 40);
+        btnAccept.setBounds(550, 600, 150, 40);
         btnAccept.setBackground(Color.GREEN);
         btnAccept.addActionListener(e -> processTrade(true));
         add(btnAccept);
 
         btnReject = new JButton("Reject");
-        btnReject.setBounds(950, 750, 250, 40);
+        btnReject.setBounds(350, 600, 150, 40);
+        btnReject.setBackground(Color.RED);
+        btnReject.setForeground(Color.WHITE);
         btnReject.addActionListener(e -> GameController.getInstance().nextCustomer());
         add(btnReject);
+
+        btnCounter.addActionListener(e -> handleCounterOffer());
+        btnAccept.addActionListener(e -> handleAcceptOffer());
+        btnReject.addActionListener(e -> handleRejectOffer());
 
         // ปุ่มไปหน้าคลัง
         JButton btnStock = new JButton("Inventory");
@@ -108,6 +116,88 @@ public class ShopPanel extends JPanel {
         balancePanel = new BalanceAndDatePanel(player);
         balancePanel.setBounds(950, 500, 250, 90);
         add(balancePanel);
+    }
+
+    private void handleRejectOffer() {
+        if (currentNPC == null)
+            return;
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure?",
+                "Reject Offer",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "You REJECT the offer!");
+            GameController.getInstance().nextCustomer(); // เรียกลูกค้าคนต่อไป
+        }
+    }
+
+    private void handleAcceptOffer() {
+        if (currentNPC == null)
+            return;
+
+        // ดึงราคาล่าสุดที่ NPC เสนอมา
+        double acceptedPrice = currentNPC.getCurrentOffer();
+
+        // ส่งราคานี้ไปให้ประมวลผล (ซึ่ง NPC จะยอมรับ 100% เพราะเป็นราคาตัวเอง)
+        OfferState state = currentNPC.processOffer(acceptedPrice, GameController.getInstance().getPlayer());
+
+        if (state == OfferState.SUCCESS) {
+            JOptionPane.showMessageDialog(this, "Deal Success! the price is $" + (int) acceptedPrice);
+            GameController.getInstance().getScoreManager().updateDeal(state, currentNPC);
+            balancePanel.updateData();
+            GameController.getInstance().nextCustomer(); // เรียกลูกค้าคนต่อไป
+        }
+    }
+
+    private void handleCounterOffer() {
+        if (currentNPC == null)
+            return;
+
+        try {
+            String text = txtPlayerOffer.getText();
+            if (text == null || text.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter your desired negotiation price!");
+                return;
+            }
+            double playerPrice = Double.parseDouble(text);
+
+            // ส่งราคาที่ผู้เล่นพิมพ์ไปให้ Logic NPC ประมวลผล
+            OfferState state = currentNPC.processOffer(playerPrice, GameController.getInstance().getPlayer());
+
+            if (state == OfferState.SUCCESS) {
+                // เคส: ยอมรับราคา
+                JOptionPane.showMessageDialog(this, "Deal Success! NPC satisfied with the price $" + (int) playerPrice);
+                // GameController.getInstance().getScoreManager().updateDeal(state, currentNPC);
+                balancePanel.updateData();
+                GameController.getInstance().nextCustomer();
+
+            } else if (state == OfferState.FAIL || currentNPC.getPatience() <= 0) {
+                // เคส: เสนอราคาหน้าเลือดเกินไป หรือความอดทนหมด
+                JOptionPane.showMessageDialog(this,
+                        "Deal Failed! " + currentNPC.getName() + " not satisfied with the price!");
+                GameController.getInstance().nextCustomer();
+
+            } else if (state == OfferState.PENDING) {
+                // เคส: NPC ยังไม่ยอมรับราคา แต่ความอดทนยังเหลือ เลยเสนอราคามาใหม่
+                int newOffer = currentNPC.getCurrentOffer();
+
+                // อัปเดตข้อความบทสนทนาและราคา Offer ใหม่บนหน้าจอ
+                lblNpcDialogue.setText("์Nah... Take this price instead $" + newOffer);
+                lblNpcOffer.setText("NPC Offer: $" + newOffer);
+
+                // อัปเดตหลอดความอดทน
+                patienceBar.setValue(currentNPC.getPatience());
+
+                // เคลียร์ช่องให้พิมพ์ใหม่
+                txtPlayerOffer.setText("");
+                txtPlayerOffer.requestFocus();
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "กรุณาใส่ตัวเลขราคาที่ถูกต้อง!");
+        }
     }
 
     private void itemCardPanel() {

@@ -48,9 +48,11 @@ public class GameController {
             NPC nextNpc = npcQueue.poll();
             gameWindow.getShopPanel().setNPC(nextNpc);
         } else {
+            //FIXME: logic  แปลก ๆ
             // จบวัน
             TimeManagement.getInstance().nextDay();
-            JOptionPane.showMessageDialog(gameWindow, "จบวันแล้ว! สรุปยอดขายวันนี้...");
+            
+            JOptionPane.showMessageDialog(gameWindow, "End day!");
             startNewDay(); // ในอนาคตต้องเปลี่ยนไปหน้า SummaryPanel
         }
     }

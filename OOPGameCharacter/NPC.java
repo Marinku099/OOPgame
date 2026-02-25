@@ -134,6 +134,10 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     public String getimagePath(){
         return this.imagePath;
     }
+
+    public int getPatience() {
+        return this.patience;
+    }
 }
 
 /*

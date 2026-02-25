@@ -27,7 +27,7 @@ public class ShopPanel extends JPanel {
     private JTextField txtPlayerOffer;
     private JButton btnAccept, btnCounter, btnReject;
     private JProgressBar patienceBar;
-    private BalancePanel balancePanel;
+    private BalanceAndDatePanel balancePanel;
 
     private NPC currentNPC;
 
@@ -95,8 +95,8 @@ public class ShopPanel extends JPanel {
         btnStock.addActionListener(e -> mainFrame.showScreen("StockPanel"));
         add(btnStock);
 
-        balancePanel = new BalancePanel(player);
-        balancePanel.setBounds(950, 500, 250, 70);
+        balancePanel = new BalanceAndDatePanel(player);
+        balancePanel.setBounds(950, 500, 250, 90);
         add(balancePanel);
     }
 
@@ -247,7 +247,7 @@ public class ShopPanel extends JPanel {
             if (state == OfferState.SUCCESS) {
                 JOptionPane.showMessageDialog(this, "Deal Success!");
                 GameController.getInstance().getScoreManager().updateDeal(state, currentNPC);
-                balancePanel.updateBalance();
+                balancePanel.updateData();
                 GameController.getInstance().nextCustomer();
             } else if (state == OfferState.FAIL) {
                 JOptionPane.showMessageDialog(this, "Deal Failed! NPC Walked away.");

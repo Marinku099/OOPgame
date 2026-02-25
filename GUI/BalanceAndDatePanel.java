@@ -15,14 +15,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import GameSystem.TimeManagement;
 import OOPGameCharacter.Player;
 
-public class BalancePanel extends JPanel {
+public class BalanceAndDatePanel extends JPanel {
     private Player player;
     private JLabel lblBalance;
     private JLabel lblTitle;
+    private JLabel lblDate;
 
-    public BalancePanel(Player player) {
+    public BalanceAndDatePanel(Player player) {
         this.player = player;
         initUI();
     }
@@ -32,11 +34,10 @@ public class BalancePanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false); // ต้องใส่นะ ไม่งั้นวาดรูปทรงแปลกๆ แล้วพื้นหลังมันจะทึบเป็นสี่เหลี่ยม
 
-        // ข้อความคำว่า Balance (หรือจะเอาออกก็ได้ถ้าอยากโชว์แค่ตัวเลข)
-        // lblTitle = new JLabel("BALANCE", SwingConstants.CENTER);
-        // lblTitle.setFont(new Font("SansSerif", Font.BOLD, 12));
-        // lblTitle.setForeground(Color.GRAY);
-        // lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblDate = new JLabel();
+        lblDate.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDate.setForeground(new Color(80, 80, 80)); // สีเทาเข้มๆ ให้ดูตัดกับเงิน
+        lblDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // ตัวเลขเงิน
         lblBalance = new JLabel();
@@ -44,19 +45,24 @@ public class BalancePanel extends JPanel {
         lblBalance.setForeground(new Color(46, 139, 87)); // สีเขียวเข้มแบบดูแพง
         lblBalance.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        updateBalance(); 
+        updateData(); 
 
         // add(lblTitle);
+        add(lblDate);
         add(Box.createVerticalStrut(5));
         add(lblBalance);
     }
 
     // เมธอดนี้สำคัญมาก! เอาไว้ให้ระบบเรียกใช้เมื่อเงินมีการเปลี่ยนแปลง
-    public void updateBalance() {
+    public void updateData() {
         if (player != null) {
             // ดึงค่า Balance จาก Player มาแสดงผล
             lblBalance.setText("Balance: $" + player.getBalance());
         }
+
+        int week = TimeManagement.getInstance().getWeek();
+        int day = TimeManagement.getInstance().getDay();
+        lblDate.setText("Week " + week + " - Day " + day);
     }
 
     @Override

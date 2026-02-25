@@ -11,6 +11,7 @@ public class SellerNPC extends NPC {
     public SellerNPC(List<ClothingItem> cloths, List<String> names) {
         super(cloths, names);
         this.greed = 1.0 + (GameRNG.genGreed() - 0.9);
+        chooseItem();
     }
 
     @Override

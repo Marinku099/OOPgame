@@ -34,7 +34,7 @@ public class CsvItemLoader extends CsvLoader<Map<Rarity, List<ItemData>>> implem
         if (row.length >= 4) {
             try {
                 String name = row[0].trim();
-                ClothingType type = ClothingType.valueOf(row[1].trim().toUpperCase());
+                ClothingType type = ClothingType.valueOf(row[1].trim().toUpperCase().replaceAll("-", "_"));
                 Rarity rarity = Rarity.valueOf(row[2].trim().toUpperCase());
                 String description = row[3].trim();
                 String imagepath = "Image/item/" + name + ".png";

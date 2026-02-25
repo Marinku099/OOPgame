@@ -17,6 +17,8 @@ public class StockPanel extends JPanel {
 
     private GameWindow mainFrame;
     private Image bgImage;
+
+    private Player player;
     
     // Components สำหรับตาราง (Master View)
     private JTable itemTable;
@@ -28,8 +30,10 @@ public class StockPanel extends JPanel {
     private JTextArea txtItemDescription;
     private JPanel detailPanel;
 
-    public StockPanel(GameWindow frame) {
+    public StockPanel(GameWindow frame, Player player) {
         this.mainFrame = frame;
+        this.player = player;
+
         setLayout(new BorderLayout());
 
         setOpaque(true);
@@ -120,7 +124,7 @@ public class StockPanel extends JPanel {
         detailPanel = new JPanel();
         detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
         // ตั้งพื้นหลังให้เป็นสีขาวโปร่งแสง (Alpha 200) เพื่อให้อ่านง่ายแต่ยังเห็นฉากหลังรำไร
-        detailPanel.setBackground(new Color(255, 255, 255, 200)); 
+        detailPanel.setBackground(new Color(255, 255, 255)); 
         detailPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.DARK_GRAY, 2), "Item Details"));
 
@@ -176,6 +180,8 @@ public class StockPanel extends JPanel {
     // --- Method แสดงรายละเอียดและรูปภาพของไอเทม ---
     private void showItemDetails(ClothingItem item) {
         // 1. จัดการรูปภาพ (แบบปลอดภัย ป้องกันบั๊กรูปหาย)
+        ImageIcon defaultIcon = new ImageIcon("Image\\item\\MaiMeeSua.png");
+        Image defaultScaledImage = defaultIcon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         if (item.getImagePath() != null && !item.getImagePath().isEmpty()) {
             File imgFile = new File(item.getImagePath());
             if (imgFile.exists()) {
@@ -184,12 +190,12 @@ public class StockPanel extends JPanel {
                 lblItemImage.setIcon(new ImageIcon(scaledImage));
                 lblItemImage.setText("");
             } else {
-                lblItemImage.setIcon(null);
-                lblItemImage.setText("Image File Missing");
+                lblItemImage.setIcon(new ImageIcon(defaultScaledImage));
+                // lblItemImage.setText("Image File Missing");
             }
         } else {
-            lblItemImage.setIcon(null);
-            lblItemImage.setText("No Image Data");
+            lblItemImage.setIcon(new ImageIcon(defaultScaledImage));
+            // lblItemImage.setText("No Image Data");
         }
 
         // 2. จัดการข้อความรายละเอียด

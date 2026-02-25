@@ -2,20 +2,20 @@ package Enums;
 // --- 1. ประเภทสินค้าและราคาฐาน ---
 
 public enum ClothingType {
-    Camisole(110),
-    Tops(180),
-    Blouse(260),
+    CAMISOLE(110),
+    TOPS(180),
+    BLOUSE(260),
     T_SHIRT(260),
-    Shirt(260),
-    Polo(310),
-    Vest(390),
-    Sweater(410),
-    Cardigan(410),
-    Tracktop(460),
-    HOODIE(510),
+    SHIRT(260),
+    POLO(310),
+    VEST(390),
+    SWEATER(410),
+    CARDIGAN(410),
+    TRACKTOP(460),
+    HOODIES(510),
     JACKET(610),
-    Dress(530),
-    Coat(560);
+    DRESS(530),
+    COAT(560);
 
     private final double defaultBasePrice;
 

@@ -9,6 +9,7 @@ public class BuyerNPC extends NPC {
 
     public BuyerNPC(List<ClothingItem> cloths, List<String> names) {
         super(cloths, names);
+        chooseItem();
     }
 
     @Override

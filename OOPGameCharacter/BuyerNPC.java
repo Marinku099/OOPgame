@@ -56,7 +56,7 @@ public class BuyerNPC extends NPC {
 
     @Override
     protected boolean isPriceTooExploit(double playerPrice){
-        return playerPrice >= this.limitPrice * 1.4;
+        return playerPrice >= this.limitPrice * 1.6;
     }
 
     @Override

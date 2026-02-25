@@ -27,6 +27,7 @@ public class ShopPanel extends JPanel {
     private JTextField txtPlayerOffer;
     private JButton btnAccept, btnCounter, btnReject;
     private JProgressBar patienceBar;
+    private BalancePanel balancePanel;
 
     private NPC currentNPC;
 
@@ -65,22 +66,6 @@ public class ShopPanel extends JPanel {
 
         // --- ส่วนของไอเทม (ซ้าย) ---
         itemCardPanel();
-        // JPanel itemCard = new JPanel();
-        // itemCard.setBounds(50, 120, 250, 500);
-        // itemCard.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        // lblItemIcon = new JLabel();
-        // lblItemIcon.setBounds(25, 20, 200, 200);
-        // itemCard.add(lblItemIcon);
-
-        // lblItemName = new JLabel("Item Name", SwingConstants.CENTER);
-        // lblItemName.setBounds(0, 230, 250, 30);
-        // itemCard.add(lblItemName);
-
-        // lblItemPrice = new JLabel("Price: $0", SwingConstants.CENTER);
-        // lblItemPrice.setBounds(0, 260, 250, 30);
-        // itemCard.add(lblItemPrice);
-        // add(itemCard);
 
         // --- แผงควบคุม (ล่างขวา) ---
         txtPlayerOffer = new JTextField();
@@ -109,6 +94,10 @@ public class ShopPanel extends JPanel {
         btnStock.setBounds(50, 50, 120, 40);
         btnStock.addActionListener(e -> mainFrame.showScreen("StockPanel"));
         add(btnStock);
+
+        balancePanel = new BalancePanel(player);
+        balancePanel.setBounds(950, 500, 250, 70);
+        add(balancePanel);
     }
 
     private void itemCardPanel() {
@@ -135,7 +124,9 @@ public class ShopPanel extends JPanel {
         // lblItemPrice.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         lblNpcOffer = new JLabel("NPC Offer: $0", SwingConstants.CENTER);
-        lblNpcOffer.setFont(FontManagement.getFont("GameSystem\\static\\NotoSansThai_Condensed-Bold.ttf", 18f)); // ฟอนต์ตัวหนา ขนาด 18
+        lblNpcOffer.setFont(FontManagement.getFont("GameSystem\\static\\NotoSansThai_Condensed-Bold.ttf", 18f)); // ฟอนต์ตัวหนา
+                                                                                                                 // ขนาด
+                                                                                                                 // 18
         lblNpcOffer.setForeground(new Color(220, 20, 60)); // ใช้สีแดงอมม่วง (Crimson) ให้สะดุดตา
         lblNpcOffer.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -211,8 +202,9 @@ public class ShopPanel extends JPanel {
         StringBuilder details = new StringBuilder();
 
         // [สำคัญ] เพิ่มบรรทัดแสดงราคา Offer ของ NPC
-        // details.append(">> Offer: $").append((int) npc.getCurrentOffer()).append(" <<\n\n");
-        lblNpcOffer.setText("NPC Offer: $" + (int)npc.getCurrentOffer());
+        // details.append(">> Offer: $").append((int) npc.getCurrentOffer()).append("
+        // <<\n\n");
+        lblNpcOffer.setText("NPC Offer: $" + (int) npc.getCurrentOffer());
 
         details.append("Name: ").append(item.getName()).append("\n");
         details.append("Type: ").append(item.getType()).append("\n");
@@ -255,6 +247,7 @@ public class ShopPanel extends JPanel {
             if (state == OfferState.SUCCESS) {
                 JOptionPane.showMessageDialog(this, "Deal Success!");
                 GameController.getInstance().getScoreManager().updateDeal(state, currentNPC);
+                balancePanel.updateBalance();
                 GameController.getInstance().nextCustomer();
             } else if (state == OfferState.FAIL) {
                 JOptionPane.showMessageDialog(this, "Deal Failed! NPC Walked away.");

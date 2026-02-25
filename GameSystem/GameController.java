@@ -35,6 +35,7 @@ public class GameController {
 
     public void startNewDay() {
         // สุ่มจำนวนลูกค้าวันนี้ 3-5 คน
+        // gameWindow.showScreen("SkillUpgradePanel");
         int customerCount = GameRNG.getRandomInt(3, 5);
         npcQueue.clear();
         for (int i = 0; i < customerCount; i++) {

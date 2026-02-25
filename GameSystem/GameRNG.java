@@ -96,7 +96,7 @@ public class GameRNG implements WeeklyListener{
     public static boolean genIsFake() {
         int roll = random.nextInt(100);
         if (week == 1) 
-            return roll < 10;
+            return roll < 80;
         else if (week == 2) 
             return roll < 30;
         else 

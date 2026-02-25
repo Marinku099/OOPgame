@@ -14,7 +14,10 @@ import java.util.Map;
 
 import Enums.SkillType;
 import GameItem.ClothingItem;
+import GameSystem.GameController;
 import GameSystem.GameRNG;
+import GameSystem.ScoreManagement;
+import GameSystem.TimeManagement;
 import OOPGameCharacter.NPC;
 import OOPGameCharacter.Player;
 import OOPGameCharacter.SellerNPC;
@@ -28,6 +31,7 @@ public class GameWindow extends JFrame {
     private JPanel mainPanel;
 
     private Player player;
+    private Database database;
     private ShopPanel shopPanel;
     private Map<SkillType, Integer> skillsMap;
 
@@ -40,7 +44,7 @@ public class GameWindow extends JFrame {
         // ==============================
         // 1️⃣ สร้าง Player
         // ==============================
-        player = new Player("Tar", 1, 10000, 1);
+        this.player = new Player("Tar", 1, 10000, 1);
 
         // ==============================
         // สร้างไอเทมทดสอบใส่ใน Stock
@@ -48,7 +52,7 @@ public class GameWindow extends JFrame {
 
         ItemLoader itemLoader = new CsvItemLoader("Csv/Item.csv");
         NameLoader nameLoader = new CsvNameLoader("Csv/NPC_name.csv");
-        Database database = new Database(itemLoader, nameLoader);
+        this.database = new Database(itemLoader, nameLoader);
         ClothingItem testItem = GameRNG.pickRandomCloth(database.getListClothingItems());
 
         // เพิ่มเข้า inventory ผู้เล่น
@@ -74,7 +78,7 @@ public class GameWindow extends JFrame {
         shopPanel = new ShopPanel(this, player);
         StockPanel stockPanel = new StockPanel(this, player);
         SkillUpgradePanel skillPanel =
-                new SkillUpgradePanel(skillsMap, player);
+                new SkillUpgradePanel(this, skillsMap, player);
 
         mainPanel.add(startGame, "StartGame");
         mainPanel.add(shopPanel, "ShopPanel");
@@ -83,12 +87,12 @@ public class GameWindow extends JFrame {
 
         add(mainPanel);
 
-        shopPanel.setNPC(new SellerNPC(database.getListClothingItems(), database.getAllCustomerNames()));
+        // shopPanel.setNPC(new SellerNPC(database.getListClothingItems(), database.getAllCustomerNames()));
 
         // ==============================
         // 5️⃣ เปิดหน้า Inventory ทันที
         // ==============================
-        cardLayout.show(mainPanel, "StockPanel");
+        cardLayout.show(mainPanel, "StartGame");
 
         // โหลดข้อมูลเข้าตาราง
         stockPanel.updateStockData();
@@ -106,14 +110,23 @@ public class GameWindow extends JFrame {
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
+            // int currDay = 1;
             GameWindow window = new GameWindow();
             window.setVisible(true);
+            GameController.getInstance().init(window.getPlayer(), window.getDatabase(), window);
+            // System.out.println("day " + TimeManagement.getInstance().getDay());
+            // if (TimeManagement.getInstance().getDay() > currDay) {
+            //     currDay = TimeManagement.getInstance().getDay();
+            //     window.cardLayout.show(window, "SkillUpgradePanel");
+            // }
         });
-
-
     }
 
     public ShopPanel getShopPanel() {
         return this.shopPanel;
+    }
+
+    public Database getDatabase() {
+        return database;
     }
 }

@@ -45,10 +45,12 @@ public class SkillUpgradePanel extends JPanel {
     }
 
     private UpgradeListener upgradeListener;
+    private GameWindow frame;
 
-    public SkillUpgradePanel(Map<SkillType, Integer> skills, Player player){
+    public SkillUpgradePanel(GameWindow frame, Map<SkillType, Integer> skills, Player player){
         this.setBackground(Color.white);
         this.skills = skills;
+        this.frame = frame;
         setDefaultSkill();
         this.player = player;
         this.innerPadding = BorderFactory.createEmptyBorder(120, 50, 70, 50);
@@ -115,16 +117,17 @@ public class SkillUpgradePanel extends JPanel {
                 System.out.println("Player skill " + entry.getKey() + " : " + entry.getValue());
             }
 
-            if (upgradeListener != null) {
-                upgradeListener.onUpgradeConfirmed(totalCost);
-            }
+            // if (upgradeListener != null) {
+            //     upgradeListener.onUpgradeConfirmed(totalCost);
+            // }
 
             //TODO: ไปทำบน frame ด้วย
-            if (navigator != null) {
-                navigator.navigateTo("MENU_PAGE");
-            } else {
-                System.out.println("ยังไม่ได้เสียบปลั๊กรีโมทโว้ย!");
-            }
+            // if (navigator != null) {
+            //     navigator.navigateTo("MENU_PAGE");
+            // } else {
+            //     System.out.println("ยังไม่ได้เสียบปลั๊กรีโมทโว้ย!");
+            // }
+            frame.showScreen("SkillUpgradePanel");
 
         });
 

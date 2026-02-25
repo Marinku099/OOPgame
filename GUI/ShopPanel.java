@@ -4,15 +4,12 @@ import Enums.OfferState;
 import GameItem.ClothingItem;
 import GameSystem.FontManagement;
 import GameSystem.GameController;
+import OOPGameCharacter.BuyerNPC;
 import OOPGameCharacter.NPC;
 import OOPGameCharacter.Player;
-import OOPGameCharacter.BuyerNPC;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
-
-import DataBase.Database;
-
-import java.awt.*;
 
 public class ShopPanel extends JPanel {
 
@@ -66,7 +63,7 @@ public class ShopPanel extends JPanel {
         lblNpcDialogue.setOpaque(true);
         lblNpcDialogue.setFont(FontManagement.getFont("GameSystem\\static\\NotoSansThai_Condensed-Bold.ttf", 25f));
         lblNpcDialogue.setForeground(Color.BLACK);
-        lblNpcDialogue.setBackground(new Color(255, 255, 255, 200));
+        lblNpcDialogue.setBackground(new Color(255, 255, 255));
         lblNpcDialogue.setBounds(800, 250, 400, 80);
         add(lblNpcDialogue);
 
@@ -184,7 +181,7 @@ public class ShopPanel extends JPanel {
                 int newOffer = currentNPC.getCurrentOffer();
 
                 // อัปเดตข้อความบทสนทนาและราคา Offer ใหม่บนหน้าจอ
-                lblNpcDialogue.setText("์Nah... Take this price instead $" + newOffer);
+                lblNpcDialogue.setText("Nah... Take this price instead $" + newOffer);
                 lblNpcOffer.setText("NPC Offer: $" + newOffer);
 
                 // อัปเดตหลอดความอดทน

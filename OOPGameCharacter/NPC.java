@@ -6,7 +6,6 @@ import GameSystem.CalculateNPC;
 import GameSystem.GameRNG;
 import java.util.List;
 
-
 public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int patience;
     protected double greed;
@@ -15,11 +14,15 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected int currentOffer;
     protected ClothingItem item;
 
+    protected String imagePath;
+
     public NPC(String name, int knowledge, double greed, int patience, List<ClothingItem> cloths) {
         super(name, knowledge);
         this.greed = greed;
         this.patience = patience;
         this.item = GameRNG.pickRandomCloth(cloths);
+
+        this.imagePath = "Image/NPC/" + name + ".png";
     }
 
     public NPC(List<ClothingItem> cloths, List<String> names) {
@@ -27,25 +30,28 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
         this.greed = Math.min(1.0, Math.max(GameRNG.genGreed(), 0.3));
         this.patience = GameRNG.genPatience();
         this.item = GameRNG.pickRandomCloth(cloths);
+
+        this.imagePath = "Image/NPC/" + name + ".png";
     }
 
     // public NPC(Database database){
-    //     super(GameRNG.pickRandomNPCName(database), GameRNG.genKnowledge());
-    //     this.greed = GameRNG.genGreed();
-    //     this.patience = GameRNG.genPatience();
-    //     this.item = GameRNG.pickRandomCloth(database.getListClothingItems());
+    // super(GameRNG.pickRandomNPCName(database), GameRNG.genKnowledge());
+    // this.greed = GameRNG.genGreed();
+    // this.patience = GameRNG.genPatience();
+    // this.item = GameRNG.pickRandomCloth(database.getListClothingItems());
     // }
-    
+
     // ตัวรับการเริ่มเจรจา
     public void receiveOffer(Player player) {
-        //inspectItem(); // ประเมินของ
-        //this.currentOffer = getStartingOffer(); // ตั้งราคาเปิด
+        // inspectItem(); // ประเมินของ
+        // this.currentOffer = getStartingOffer(); // ตั้งราคาเปิด
         inspectItem();
         chooseItem();
     }
-    
+
     protected void inspectItem() {
-        if (item == null) return;
+        if (item == null)
+            return;
         this.estimatedValue = Math.max(1, item.getPerceivedPrice(this.knowledge));
     }
 
@@ -55,8 +61,11 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     public abstract double getStartingOffer();
 
     protected abstract void makeDeal(Player player, double finalPrice);
+
     protected abstract boolean isPriceAcceptable(double playerPrice);
+
     protected abstract boolean isPriceTooExploit(double playerPrice);
+
     protected abstract String OfferDialogue();
 
     // ต่อราคา
@@ -65,7 +74,7 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
             System.out.println(name + ": ยังไม่พร้อมเจรจา");
             return OfferState.FAIL;
         }
-        
+
         if (playerPrice <= 0) {
             System.out.println("ราคาต้องมากกว่า 0");
             return OfferState.FAIL;
@@ -94,48 +103,65 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
 
     protected abstract OfferState reducePatience();
 
-    @Override 
-    public double getLimit() { return this.limitPrice; }
-    
-    @Override 
-    public double getGreed() { return this.greed; }
+    @Override
+    public double getLimit() {
+        return this.limitPrice;
+    }
 
-    @Override 
-    public int getCurrentOffer() { return this.currentOffer; }
-    
-    @Override 
-    public void setCurrentOffer(int price) { this.currentOffer = price; }
-    
-    public String getName() { return name; }
+    @Override
+    public double getGreed() {
+        return this.greed;
+    }
 
-    public ClothingItem getItem() { return this.item; }
+    @Override
+    public int getCurrentOffer() {
+        return this.currentOffer;
+    }
+
+    @Override
+    public void setCurrentOffer(int price) {
+        this.currentOffer = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ClothingItem getItem() {
+        return this.item;
+    }
+
+    public String getimagePath(){
+        return this.imagePath;
+    }
 }
 
 /*
-public static NPC createRandomNPC(int week, List<ClothingItem> playerItems) {
-    GameRNG rng = GameRNG.getInstance();
-
-    String name = "Customer ";
-
-    int knowledge = rng.getKnowledge(week);
-    double greed = rng.getGreed();
-    int patience = rng.getPatience();
-    
-    boolean isBuyer;
-
-    เช็คว่า Stock player ว่างไหม
-    if (playerItems.isEmpty()) {
-        isBuyer = false; 
-    } else {
-        isBuyer = rng.getRandomBoolean(); 
-    }
-
-    if (isBuyer) {
-        return new BuyerNPC(name, knowledge, greed, patience);
-    } else {
-        return new SellerNPC(name, knowledge, greed, patience);
-    }
-}
-
-ถ้ามี Update Stat โดยไม่ new ต้องสร้าง func เพิ่มรูปแบบคล้ายๆกับ createRandomNPC
-*/
+ * public static NPC createRandomNPC(int week, List<ClothingItem> playerItems) {
+ * GameRNG rng = GameRNG.getInstance();
+ * 
+ * String name = "Customer ";
+ * 
+ * int knowledge = rng.getKnowledge(week);
+ * double greed = rng.getGreed();
+ * int patience = rng.getPatience();
+ * 
+ * boolean isBuyer;
+ * 
+ * เช็คว่า Stock player ว่างไหม
+ * if (playerItems.isEmpty()) {
+ * isBuyer = false;
+ * } else {
+ * isBuyer = rng.getRandomBoolean();
+ * }
+ * 
+ * if (isBuyer) {
+ * return new BuyerNPC(name, knowledge, greed, patience);
+ * } else {
+ * return new SellerNPC(name, knowledge, greed, patience);
+ * }
+ * }
+ * 
+ * ถ้ามี Update Stat โดยไม่ new ต้องสร้าง func เพิ่มรูปแบบคล้ายๆกับ
+ * createRandomNPC
+ */

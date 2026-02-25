@@ -40,7 +40,7 @@ public class GameWindow extends JFrame {
         // ==============================
         // 1️⃣ สร้าง Player
         // ==============================
-        player = new Player("Tar", 1000, 1, 1);
+        player = new Player("Tar", 1, 10000, 1);
 
         // ==============================
         // สร้างไอเทมทดสอบใส่ใน Stock

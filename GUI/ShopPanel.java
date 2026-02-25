@@ -23,6 +23,7 @@ public class ShopPanel extends JPanel {
     // UI Components
     private JLabel lblNpcName, lblNpcDialogue, lblNpcImage, lblNpcOffer;
     private JLabel lblItemName, lblItemPrice, lblItemIcon;
+    private JPanel npcMaskPanel;
     private JTextArea txtItemDetails;
     private JTextField txtPlayerOffer;
     private JButton btnAccept, btnCounter, btnReject;
@@ -44,9 +45,16 @@ public class ShopPanel extends JPanel {
 
     private void initUI() {
         // --- ส่วนของ NPC ---
+
+        npcMaskPanel = new JPanel(null);
+        npcMaskPanel.setOpaque(false); // ทำให้ล่องหน
+        npcMaskPanel.setBounds(400, 150, 400, 300);
+
         lblNpcImage = new JLabel();
         lblNpcImage.setBounds(400, 150, 400, 500); // ตำแหน่งตัวละครตรงกลาง
-        add(lblNpcImage);
+        
+        npcMaskPanel.add(lblNpcImage);
+        add(npcMaskPanel);
 
         lblNpcName = new JLabel("Customer", SwingConstants.CENTER);
         lblNpcName.setFont(new Font("Arial", Font.BOLD, 24));
@@ -158,6 +166,11 @@ public class ShopPanel extends JPanel {
         this.currentNPC = npc;
         lblNpcName.setText(npc.getName());
         lblNpcDialogue.setText(npc instanceof BuyerNPC ? "I want to buy this!" : "I want to sell this!");
+        ImageIcon npcIcon = new ImageIcon(npc.getimagePath());
+        Image scaledNpcImage = npcIcon.getImage().getScaledInstance(400, 500, Image.SCALE_SMOOTH);
+
+        lblNpcImage.setIcon(new ImageIcon(scaledNpcImage));
+        npcMaskPanel.add(lblNpcImage);
 
         // อัปเดตไอเทมที่เขานำเสนอ
         ClothingItem item = npc.getItem();

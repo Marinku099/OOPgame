@@ -13,7 +13,6 @@ public abstract class NPC extends GameCharacter implements CalculateNPC {
     protected double limitPrice;
     protected int currentOffer;
     protected ClothingItem item;
-    protected String portraitPath;
 
     protected String imagePath;
 

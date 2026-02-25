@@ -21,6 +21,7 @@ import GameSystem.TimeManagement;
 import OOPGameCharacter.NPC;
 import OOPGameCharacter.Player;
 import OOPGameCharacter.SellerNPC;
+import OOPGameCharacter.Stock;
 import Enums.ClothingType;
 import Enums.Rarity;
 import Enums.Size;
@@ -33,6 +34,8 @@ public class GameWindow extends JFrame {
     private Player player;
     private Database database;
     private ShopPanel shopPanel;
+    private StockPanel stockPanel;
+    private SkillUpgradePanel skillPanel;
     private Map<SkillType, Integer> skillsMap;
 
     public GameWindow() {
@@ -76,9 +79,8 @@ public class GameWindow extends JFrame {
 
         GameOpeningPanel startGame = new GameOpeningPanel(this);
         shopPanel = new ShopPanel(this, player);
-        StockPanel stockPanel = new StockPanel(this, player);
-        SkillUpgradePanel skillPanel =
-                new SkillUpgradePanel(this, skillsMap, player);
+        stockPanel = new StockPanel(this, player);
+        skillPanel = new SkillUpgradePanel(this, skillsMap, player);
 
         mainPanel.add(startGame, "StartGame");
         mainPanel.add(shopPanel, "ShopPanel");
@@ -110,15 +112,9 @@ public class GameWindow extends JFrame {
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
-            // int currDay = 1;
             GameWindow window = new GameWindow();
             window.setVisible(true);
             GameController.getInstance().init(window.getPlayer(), window.getDatabase(), window);
-            // System.out.println("day " + TimeManagement.getInstance().getDay());
-            // if (TimeManagement.getInstance().getDay() > currDay) {
-            //     currDay = TimeManagement.getInstance().getDay();
-            //     window.cardLayout.show(window, "SkillUpgradePanel");
-            // }
         });
     }
 
@@ -128,5 +124,13 @@ public class GameWindow extends JFrame {
 
     public Database getDatabase() {
         return database;
+    }
+
+    public StockPanel getStockPanel() {
+        return this.stockPanel;
+    }
+
+    public SkillUpgradePanel getSkillUpgradePanel(){
+        return this.skillPanel;
     }
 }

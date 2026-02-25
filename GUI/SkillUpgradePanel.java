@@ -37,6 +37,7 @@ public class SkillUpgradePanel extends JPanel {
     private Player player;
     private Map<SkillType, Long> skillsCost = new HashMap<>();
     private Map<SkillType, Integer> skillsLevel = new HashMap<>();
+    private Map<SkillType, JTextField> skillTextField = new HashMap<>();
     private JLabel sumSkillCost = new JLabel("0");
     JButton confirmButton = new JButton("Confirm Upgrade");
 
@@ -60,7 +61,6 @@ public class SkillUpgradePanel extends JPanel {
 
         drawAllSkillBox();
         drawHeader("Skill Upgrade");
-
         drawConfirmButton();        
     }
 
@@ -72,6 +72,7 @@ public class SkillUpgradePanel extends JPanel {
         for (SkillType sk : this.skills.keySet()) {
             skillsCost.put(sk, 0L);
             skillsLevel.put(sk, 0);
+            skillTextField.put(sk, null);
         }
     }
 
@@ -127,7 +128,7 @@ public class SkillUpgradePanel extends JPanel {
             // } else {
             //     System.out.println("ยังไม่ได้เสียบปลั๊กรีโมทโว้ย!");
             // }
-            frame.showScreen("SkillUpgradePanel");
+            frame.showScreen("ShopPanel");
 
         });
 
@@ -202,6 +203,7 @@ public class SkillUpgradePanel extends JPanel {
 
         // ==== TextField ====
         JTextField inp = new JTextField("0", 2);
+        skillTextField.replace(skill, inp);
         inp.setFont(FontManagement.getFont("GameSystem\\Acme-Regular.ttf", 30f));
         inp.setHorizontalAlignment(JTextField.CENTER);
         inp.setPreferredSize(new Dimension(50, 50));
@@ -347,4 +349,12 @@ public class SkillUpgradePanel extends JPanel {
         headerLabel.setTitleFont(FontManagement.getFont("GameSystem\\Acme-Regular.ttf", 70f));
         this.setBorder(/* this.compoundBorder = */ BorderFactory.createCompoundBorder(this.lineBorder, headerLabel));
     }
+
+    public void clearUserInput(){
+        for (JTextField inp : skillTextField.values()) {
+            inp.setText("0");
+        }
+    }
+
+    //TODO: เปลี่ยนเป็นปุ่ม next ตอนไม่เลือกอะไรเลย
 }

@@ -84,20 +84,20 @@ public class ShopPanel extends JPanel {
 
         btnCounter = new JButton("Counter Offer");
         btnCounter.setBounds(750, 600, 150, 40);
-        btnCounter.addActionListener(e -> processTrade(false));
+        // btnCounter.addActionListener(e -> processTrade(false));
         add(btnCounter);
 
         btnAccept = new JButton("Accept Offer");
         btnAccept.setBounds(550, 600, 150, 40);
         btnAccept.setBackground(Color.GREEN);
-        btnAccept.addActionListener(e -> processTrade(true));
+        // btnAccept.addActionListener(e -> processTrade(true));
         add(btnAccept);
 
         btnReject = new JButton("Reject");
         btnReject.setBounds(350, 600, 150, 40);
         btnReject.setBackground(Color.RED);
         btnReject.setForeground(Color.WHITE);
-        btnReject.addActionListener(e -> GameController.getInstance().nextCustomer());
+        // btnReject.addActionListener(e -> GameController.getInstance().nextCustomer());
         add(btnReject);
 
         btnCounter.addActionListener(e -> handleCounterOffer());
@@ -107,7 +107,10 @@ public class ShopPanel extends JPanel {
         // ปุ่มไปหน้าคลัง
         JButton btnStock = new JButton("Inventory");
         btnStock.setBounds(50, 50, 120, 40);
-        btnStock.addActionListener(e -> mainFrame.showScreen("StockPanel"));
+        btnStock.addActionListener(e -> {
+            mainFrame.getStockPanel().updateStockData();
+            mainFrame.showScreen("StockPanel");
+        });
         add(btnStock);
 
         balancePanel = new BalanceAndDatePanel(player);
@@ -314,10 +317,23 @@ public class ShopPanel extends JPanel {
         details.append("Size: ").append(item.getSize()).append("\n");
         details.append("Condition: ").append(String.format("%.0f%%", item.getCondition() * 100)).append("\n");
 
-        if (item.isFake()) {
-            details.append("\n[!] Counterfeit Item\n(Authenticity: ")
-                    .append(String.format("%.0f%%", item.getFakeAuthenticity() * 100)).append(")\n");
-        }
+        int playerKnowledgeLevel = player.getKnowledge(); 
+        boolean isDetectedFake = item.isFake() && item.checkIfDetected(playerKnowledgeLevel);
+
+        if (isDetectedFake) {
+            details.append("\n[!] COUNTERFEIT DETECTED!\n(Authenticity: ")
+                   .append(String.format("%.0f%%", item.getFakeAuthenticity() * 100)).append(")\n");
+        } 
+
+        double playerPerceivedValue = item.getPerceivedPrice(playerKnowledgeLevel);
+        details.append("Estimated Value: $").append((int) playerPerceivedValue).append("\n");
+
+        // details.append("\n--- Description ---\n");
+
+        // if (item.isFake()) {
+        //     details.append("\n[!] Counterfeit Item\n(Authenticity: ")
+        //             .append(String.format("%.0f%%", item.getFakeAuthenticity() * 100)).append(")\n");
+        // }
 
         details.append("\n--- Description ---\n");
         details.append(item.getDescription() != null ? item.getDescription() : "No description available.");

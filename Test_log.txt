@@ -2098,3 +2098,9 @@ NPC Offer: 552.0
 Player Offer: 552.0
 Result: SUCCESS
 ------------------
+Week 1 Day 1
+NPC: SellerNPC
+NPC Offer: 411.79678060202195
+Player Offer: 411.79678060202195
+Result: SUCCESS
+------------------
